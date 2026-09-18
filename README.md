@@ -3,10 +3,15 @@
 A mobile app demo. The welcome screen — the wordmark on white — inside a handset,
 and nothing else.
 
-On a desktop browser the app draws its own device: a 390 × 812 handset on an ink
-field, with a status bar, dynamic island and home indicator. Opened on a real phone
-(or any viewport under 460px) the mockup disappears and the app fills the glass,
-because there is no point drawing a phone inside a phone.
+On a computer the app draws an iPhone silhouette around itself — a 393 × 852pt
+display in an 11pt bezel, with the dynamic island, home indicator and the four side
+keys, outlined in a hairline against the ink field. It is sized from the viewport
+height, so the whole phone stays on screen on a short laptop window without
+distorting.
+
+On a phone there is no silhouette. Under 500px wide (or 700px tall) the body, keys
+and hardware all go and the app fills the glass, because there is no point drawing
+a phone inside a phone.
 
 ## Run it
 
@@ -32,6 +37,6 @@ with no code change.
 ```
 index.html       Font loading and the mount point
 src/main.tsx     React entry
-src/App.tsx      The device shell, status bar and the welcome screen
-src/styles.css   Palette tokens, the handset mockup and the welcome layout
+src/App.tsx      The silhouette, status bar and the welcome screen
+src/styles.css   Palette tokens, the iPhone silhouette and the welcome layout
 ```

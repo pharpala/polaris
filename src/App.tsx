@@ -29,30 +29,37 @@ function StatusBar() {
             strokeWidth="1.1"
           />
           <rect x="2.2" y="2.2" width="17.8" height="7.6" rx="1.6" fill="currentColor" />
-          <path
-            d="M23.2 4.2v3.6a2 2 0 0 0 0-3.6Z"
-            fill="currentColor"
-            fillOpacity="0.4"
-          />
+          <path d="M23.2 4.2v3.6a2 2 0 0 0 0-3.6Z" fill="currentColor" fillOpacity="0.4" />
         </svg>
       </span>
     </div>
   )
 }
 
+/** The app itself. Everything around it is the silhouette. */
+function Welcome() {
+  return (
+    <main className="welcome">
+      <h1 className="welcome__mark">Polaris</h1>
+    </main>
+  )
+}
+
 export default function App() {
   return (
     <div className="stage">
-      <div className="phone">
-        <div className="phone__screen">
-          <span className="phone__island" aria-hidden />
+      <div className="device">
+        {/* Side hardware. Present on a drawn phone, meaningless on a real one. */}
+        <span className="device__key device__key--action" aria-hidden />
+        <span className="device__key device__key--volUp" aria-hidden />
+        <span className="device__key device__key--volDown" aria-hidden />
+        <span className="device__key device__key--power" aria-hidden />
+
+        <div className="device__screen">
+          <span className="device__island" aria-hidden />
           <StatusBar />
-
-          <main className="welcome">
-            <h1 className="welcome__mark">Polaris</h1>
-          </main>
-
-          <span className="phone__home" aria-hidden />
+          <Welcome />
+          <span className="device__home" aria-hidden />
         </div>
       </div>
     </div>

@@ -1,9 +1,10 @@
 /* ============================================================================
    Polaris design system
    The palette is exactly three colours: #FFFFFF, #324AFE, #181B1F.
-   Corners are square everywhere — the only exceptions are the device mockup
-   and its hardware, which are physical objects rather than UI. Surfaces are
-   flat: no gradients, no glows, no shadows.
+   Corners are square everywhere — the only exceptions are the device
+   silhouette and its hardware, which are physical objects rather than UI.
+   Surfaces are flat: no gradients, no glows, no shadows. Separation comes
+   from hairlines.
    ========================================================================== */
 
 :root {
@@ -11,11 +12,17 @@
   --blue: #324afe;
   --ink: #181b1f;
 
+  /* The only non-palette value: white at low alpha over ink, which is what
+     draws the silhouette's edge against the field it sits on. */
+  --edge: rgba(255, 255, 255, 0.16);
+
   --font: 'Calibre', 'Calibre Web', 'General Sans', 'Inter', -apple-system,
     'Segoe UI', sans-serif;
 
-  --phone-w: 390px;
-  --phone-h: 812px;
+  /* iPhone 15/16 Pro: a 393 × 852pt display inside an 11pt bezel. */
+  --bezel: 11px;
+  --device-h: 874px;
+  --device-ratio: 415 / 874;
 }
 
 * {
@@ -45,62 +52,107 @@ body {
 
 /* ----------------------------------------------------------------- stage -- */
 
-/* The dark field the handset sits on. */
+/* The field the handset sits on. */
 .stage {
   block-size: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px 20px;
+  padding: 28px 20px;
 }
 
-/* ----------------------------------------------------------------- phone -- */
+/* ------------------------------------------------------- iPhone silhouette -- */
 
-.phone {
+/* Ink on ink: the body reads as an outline rather than an object, and the
+   white screen is what carries the light. Sized from the viewport height so
+   the whole phone is always on screen, with the aspect ratio held. */
+.device {
   position: relative;
-  inline-size: var(--phone-w);
-  block-size: var(--phone-h);
+  block-size: min(var(--device-h), calc(100dvh - 56px));
+  aspect-ratio: var(--device-ratio);
   flex: none;
   background: var(--ink);
-  border: 10px solid var(--ink);
-  border-radius: 44px;
-  overflow: hidden;
-  /* Shrink to fit short windows rather than overflowing them. */
-  max-block-size: 100%;
+  border: var(--bezel) solid var(--ink);
+  border-radius: 56px;
+  outline: 1px solid var(--edge);
 }
 
-.phone__screen {
+.device__screen {
   position: relative;
   block-size: 100%;
   display: flex;
   flex-direction: column;
   background: var(--white);
-  border-radius: 34px;
+  border-radius: 45px;
   overflow: hidden;
 }
 
-.phone__island {
+/* Volume, action and side keys. Percentages so they ride the body when it
+   scales to a short window. */
+.device__key {
   position: absolute;
-  inset-block-start: 9px;
+  inline-size: 3px;
+  background: var(--ink);
+  border: 1px solid var(--edge);
+}
+
+.device__key--action,
+.device__key--volUp,
+.device__key--volDown {
+  inset-inline-start: calc(-1px - var(--bezel) - 3px);
+  border-inline-end: none;
+  border-start-start-radius: 2px;
+  border-end-start-radius: 2px;
+}
+
+.device__key--power {
+  inset-inline-end: calc(-1px - var(--bezel) - 3px);
+  border-inline-start: none;
+  border-start-end-radius: 2px;
+  border-end-end-radius: 2px;
+}
+
+.device__key--action {
+  inset-block-start: 16.4%;
+  block-size: 3.8%;
+}
+
+.device__key--volUp {
+  inset-block-start: 23%;
+  block-size: 7.3%;
+}
+
+.device__key--volDown {
+  inset-block-start: 31.9%;
+  block-size: 7.3%;
+}
+
+.device__key--power {
+  inset-block-start: 25.2%;
+  block-size: 11.7%;
+}
+
+.device__island {
+  position: absolute;
+  inset-block-start: 11px;
   inset-inline-start: 50%;
   transform: translateX(-50%);
-  inline-size: 112px;
-  block-size: 30px;
+  inline-size: 126px;
+  block-size: 37px;
   background: var(--ink);
   border-radius: 999px;
   z-index: 2;
 }
 
-.phone__home {
+.device__home {
   position: absolute;
-  inset-block-end: 8px;
+  inset-block-end: 9px;
   inset-inline-start: 50%;
   transform: translateX(-50%);
-  inline-size: 134px;
+  inline-size: 139px;
   block-size: 5px;
   background: var(--ink);
   border-radius: 999px;
-  opacity: 0.85;
 }
 
 /* ------------------------------------------------------------- statusbar -- */
@@ -110,7 +162,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 26px 0;
+  /* Sits level with the island rather than above it. */
+  padding: 19px 30px 0;
   color: var(--ink);
 }
 
@@ -165,30 +218,38 @@ body {
   }
 }
 
-/* On an actual handset there is no handset to draw: the app fills the glass
-   and the device's own status bar and home indicator take over. */
-@media (max-width: 460px), (max-height: 720px) {
+/* ---------------------------------------------------------------- phones -- */
+
+/* On a real handset there is no handset to draw. The silhouette, its keys and
+   its hardware all go, the app fills the glass, and the device's own status
+   bar and home indicator take over. */
+@media (max-width: 500px), (max-height: 700px) {
   .stage {
     padding: 0;
   }
 
-  .phone {
-    inline-size: 100%;
+  .device {
     block-size: 100%;
+    inline-size: 100%;
+    aspect-ratio: auto;
     border: 0;
     border-radius: 0;
+    outline: 0;
   }
 
-  .phone__screen {
+  .device__screen {
     border-radius: 0;
   }
 
-  .phone__island,
-  .phone__home {
+  .device__key,
+  .device__island,
+  .device__home {
     display: none;
   }
 
   .statusbar {
-    padding-block-start: max(15px, env(safe-area-inset-top, 0px));
+    padding-block-start: max(19px, env(safe-area-inset-top, 0px));
+    padding-inline: max(24px, env(safe-area-inset-left, 0px))
+      max(24px, env(safe-area-inset-right, 0px));
   }
 }
