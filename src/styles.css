@@ -191,12 +191,15 @@ body {
   padding: 24px;
 }
 
+/* Small and quiet. At display size the wordmark announces itself; at this
+   size it simply sits there, which is the more confident read. Tracking is
+   eased off because negative tracking that flatters 46px closes up at 26px. */
 .welcome__mark {
   margin: 0;
-  font-size: 46px;
-  font-weight: 700;
+  font-size: 26px;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   color: var(--ink);
   animation: markIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
