@@ -1,8 +1,9 @@
 /* ============================================================================
    Polaris design system
    The palette is exactly three colours: #FFFFFF, #324AFE, #181B1F.
-   Corners are square everywhere. Surfaces are flat — no gradients, no glows,
-   no shadows.
+   Corners are square everywhere — the only exceptions are the device mockup
+   and its hardware, which are physical objects rather than UI. Surfaces are
+   flat: no gradients, no glows, no shadows.
    ========================================================================== */
 
 :root {
@@ -12,6 +13,9 @@
 
   --font: 'Calibre', 'Calibre Web', 'General Sans', 'Inter', -apple-system,
     'Segoe UI', sans-serif;
+
+  --phone-w: 390px;
+  --phone-h: 812px;
 }
 
 * {
@@ -27,7 +31,7 @@ body,
 }
 
 body {
-  background: var(--white);
+  background: var(--ink);
   color: var(--ink);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
@@ -39,11 +43,95 @@ body {
   color: var(--white);
 }
 
+/* ----------------------------------------------------------------- stage -- */
+
+/* The dark field the handset sits on. */
+.stage {
+  block-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
+
+/* ----------------------------------------------------------------- phone -- */
+
+.phone {
+  position: relative;
+  inline-size: var(--phone-w);
+  block-size: var(--phone-h);
+  flex: none;
+  background: var(--ink);
+  border: 10px solid var(--ink);
+  border-radius: 44px;
+  overflow: hidden;
+  /* Shrink to fit short windows rather than overflowing them. */
+  max-block-size: 100%;
+}
+
+.phone__screen {
+  position: relative;
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border-radius: 34px;
+  overflow: hidden;
+}
+
+.phone__island {
+  position: absolute;
+  inset-block-start: 9px;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  inline-size: 112px;
+  block-size: 30px;
+  background: var(--ink);
+  border-radius: 999px;
+  z-index: 2;
+}
+
+.phone__home {
+  position: absolute;
+  inset-block-end: 8px;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  inline-size: 134px;
+  block-size: 5px;
+  background: var(--ink);
+  border-radius: 999px;
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------- statusbar -- */
+
+.statusbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 26px 0;
+  color: var(--ink);
+}
+
+.statusbar__time {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.statusbar__icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 /* --------------------------------------------------------------- welcome -- */
 
-/* The whole page is the welcome: a white field and the wordmark. */
+/* The app's only screen: a white field and the wordmark. */
 .welcome {
-  block-size: 100%;
+  flex: 1;
+  min-block-size: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,7 +139,8 @@ body {
 }
 
 .welcome__mark {
-  font-size: clamp(38px, 7vw, 76px);
+  margin: 0;
+  font-size: 46px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.035em;
@@ -73,5 +162,33 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .welcome__mark {
     animation: none;
+  }
+}
+
+/* On an actual handset there is no handset to draw: the app fills the glass
+   and the device's own status bar and home indicator take over. */
+@media (max-width: 460px), (max-height: 720px) {
+  .stage {
+    padding: 0;
+  }
+
+  .phone {
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .phone__screen {
+    border-radius: 0;
+  }
+
+  .phone__island,
+  .phone__home {
+    display: none;
+  }
+
+  .statusbar {
+    padding-block-start: max(15px, env(safe-area-inset-top, 0px));
   }
 }

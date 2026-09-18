@@ -1,6 +1,12 @@
 # Polaris
 
-The welcome page: the wordmark on white, and nothing else.
+A mobile app demo. The welcome screen — the wordmark on white — inside a handset,
+and nothing else.
+
+On a desktop browser the app draws its own device: a 390 × 812 handset on an ink
+field, with a status bar, dynamic island and home indicator. Opened on a real phone
+(or any viewport under 460px) the mockup disappears and the app fills the glass,
+because there is no point drawing a phone inside a phone.
 
 ## Run it
 
@@ -12,8 +18,9 @@ npm run dev
 ## Design system
 
 Three colours, and nothing else: `#FFFFFF`, `#324AFE` electric blue, `#181B1F` ink.
-Corners are square — `border-radius: 0` is set globally. Surfaces are flat: no
-gradients, no glows, no shadows.
+Corners are square — `border-radius: 0` is set globally. The only exceptions are the
+device mockup and its hardware, which are physical objects rather than UI. Surfaces
+are flat: no gradients, no glows, no shadows.
 
 Type is **Calibre**, the brand face. It is not freely licensable, so the stack loads
 [General Sans](https://www.fontshare.com/fonts/general-sans) as the closest available
@@ -25,6 +32,6 @@ with no code change.
 ```
 index.html       Font loading and the mount point
 src/main.tsx     React entry
-src/App.tsx      The welcome page
-src/styles.css   Palette tokens and the welcome layout
+src/App.tsx      The device shell, status bar and the welcome screen
+src/styles.css   Palette tokens, the handset mockup and the welcome layout
 ```
