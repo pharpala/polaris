@@ -175,6 +175,19 @@ npm install
 npm run dev
 ```
 
+The camera needs a secure context, which `localhost` counts as. Over plain HTTP from
+another machine `getUserMedia` is refused and capture falls back to its coaching sequence.
+
+## Deploy it
+
+Pushing to `main` builds and publishes to GitHub Pages via
+`.github/workflows/deploy.yml`. The workflow sets `BASE=/polaris/` because a project site
+is served from a subpath; local dev and `npm run preview` stay at the root. `tsc -b` runs
+before the bundle, so a type error fails the deploy rather than shipping.
+
+**One manual step:** in the repository settings, under Pages, set the source to **GitHub
+Actions**. The first push cannot do this for you.
+
 ## The mark
 
 The compass rose is redrawn as a single-colour glyph from the symbol in the Polaris
