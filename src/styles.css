@@ -1,10 +1,12 @@
 /* ============================================================================
    Polaris design system
-   The palette is exactly three colours: #FFFFFF, #324AFE, #181B1F.
-   Corners are square everywhere — the only exceptions are the device
-   silhouette and its hardware, which are physical objects rather than UI.
+   The palette is exactly three colours: #FFFFFF, #324AFE, #181B1F. Every
+   other value is one of the two non-white colours mixed with white, so there
+   is no fourth hue anywhere.
+   Corners are square. The only exceptions are the device silhouette and its
+   hardware, which are physical objects rather than UI.
    Surfaces are flat: no gradients, no glows, no shadows. Separation comes
-   from hairlines.
+   from hairlines and from adjoining blocks of ink, blue and white.
    ========================================================================== */
 
 :root {
@@ -12,14 +14,26 @@
   --blue: #324afe;
   --ink: #181b1f;
 
-  /* The only non-palette value: white at low alpha over ink, which is what
-     draws the silhouette's edge against the field it sits on. */
-  --edge: rgba(255, 255, 255, 0.16);
+  /* #181B1F over white */
+  --ink-06: #f1f1f2;
+  --ink-10: #e8e8e9;
+  --ink-14: #dfdfe0;
+  --ink-22: #cccdce;
+  --ink-45: #97989a;
+  --ink-62: #707274;
 
+  /* #324AFE over white */
+  --blue-06: #f3f4ff;
+  --blue-12: #e6e9ff;
+
+  --line: var(--ink-14);
+  --muted: var(--ink-62);
+
+  --edge: rgba(255, 255, 255, 0.16);
   --font: 'Calibre', 'Calibre Web', 'General Sans', 'Inter', -apple-system,
     'Segoe UI', sans-serif;
 
-  /* iPhone 15/16 Pro: a 393 × 852pt display inside an 11pt bezel. */
+  --gut: 24px;
   --bezel: 11px;
   --device-h: 874px;
   --device-ratio: 415 / 874;
@@ -41,8 +55,23 @@ body {
   background: var(--ink);
   color: var(--ink);
   font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 ::selection {
@@ -52,7 +81,6 @@ body {
 
 /* ----------------------------------------------------------------- stage -- */
 
-/* The field the handset sits on. */
 .stage {
   block-size: 100%;
   display: flex;
@@ -61,11 +89,10 @@ body {
   padding: 28px 20px;
 }
 
-/* ------------------------------------------------------- iPhone silhouette -- */
+/* ------------------------------------------------------ iPhone silhouette -- */
 
-/* Ink on ink: the body reads as an outline rather than an object, and the
-   white screen is what carries the light. Sized from the viewport height so
-   the whole phone is always on screen, with the aspect ratio held. */
+/* Ink on ink: the body reads as an outline and the white screen carries the
+   light. Sized from viewport height so the whole phone stays on screen. */
 .device {
   position: relative;
   block-size: min(var(--device-h), calc(100dvh - 56px));
@@ -87,8 +114,6 @@ body {
   overflow: hidden;
 }
 
-/* Volume, action and side keys. Percentages so they ride the body when it
-   scales to a short window. */
 .device__key {
   position: absolute;
   inline-size: 3px;
@@ -101,36 +126,17 @@ body {
 .device__key--volDown {
   inset-inline-start: calc(-1px - var(--bezel) - 3px);
   border-inline-end: none;
-  border-start-start-radius: 2px;
-  border-end-start-radius: 2px;
 }
 
 .device__key--power {
   inset-inline-end: calc(-1px - var(--bezel) - 3px);
   border-inline-start: none;
-  border-start-end-radius: 2px;
-  border-end-end-radius: 2px;
 }
 
-.device__key--action {
-  inset-block-start: 16.4%;
-  block-size: 3.8%;
-}
-
-.device__key--volUp {
-  inset-block-start: 23%;
-  block-size: 7.3%;
-}
-
-.device__key--volDown {
-  inset-block-start: 31.9%;
-  block-size: 7.3%;
-}
-
-.device__key--power {
-  inset-block-start: 25.2%;
-  block-size: 11.7%;
-}
+.device__key--action { inset-block-start: 16.4%; block-size: 3.8%; }
+.device__key--volUp { inset-block-start: 23%; block-size: 7.3%; }
+.device__key--volDown { inset-block-start: 31.9%; block-size: 7.3%; }
+.device__key--power { inset-block-start: 25.2%; block-size: 11.7%; }
 
 .device__island {
   position: absolute;
@@ -141,7 +147,7 @@ body {
   block-size: 37px;
   background: var(--ink);
   border-radius: 999px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .device__home {
@@ -153,6 +159,7 @@ body {
   block-size: 5px;
   background: var(--ink);
   border-radius: 999px;
+  z-index: 3;
 }
 
 /* ------------------------------------------------------------- statusbar -- */
@@ -162,7 +169,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* Sits level with the island rather than above it. */
   padding: 19px 30px 0;
   color: var(--ink);
 }
@@ -179,23 +185,82 @@ body {
   gap: 6px;
 }
 
-/* --------------------------------------------------------------- welcome -- */
+/* ---------------------------------------------------------------- appbar -- */
 
-/* The app's only screen: a white field and the wordmark. */
-.welcome {
+.appbar {
+  flex: none;
+  padding-block-start: 14px;
+  border-block-end: 1px solid var(--line);
+}
+
+.appbar__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px 12px;
+}
+
+.appbar__back {
+  inline-size: 40px;
+  block-size: 40px;
+  display: grid;
+  place-items: center;
+  margin-inline-start: -8px;
+}
+
+.appbar__back:hover { background: var(--ink-06); }
+
+.appbar__title {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.appbar__pad { inline-size: 40px; flex: none; }
+
+.rail {
+  block-size: 2px;
+  background: var(--ink-10);
+}
+
+.rail__fill {
+  display: block;
+  block-size: 100%;
+  background: var(--blue);
+  transition: inline-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.appbar__step {
+  display: block;
+  padding: 8px 24px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------- screens -- */
+
+.screen {
   flex: 1;
   min-block-size: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
+  flex-direction: column;
+  background: var(--white);
+  animation: screenIn 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Small and quiet. At display size the wordmark announces itself; at this
-   size it simply sits there, which is the more confident read. Tracking is
-   eased off because negative tracking that flatters 46px closes up at 26px. */
-.welcome__mark {
-  margin: 0;
+@keyframes screenIn {
+  from { opacity: 0; transform: translateX(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------- the mark -- */
+
+.mark {
   display: inline-flex;
   align-items: center;
   gap: 0.36em;
@@ -204,12 +269,11 @@ body {
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--ink);
-  animation: markIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Sized in em so the lockup holds together at any type size. The glyph is
-   optically centred on the cap height rather than the full line box, which
-   sits a shade high once there are no descenders to balance it. */
+.mark--sm { font-size: 17px; letter-spacing: -0.015em; }
+
+/* Sized in em so the lockup holds together at any type size. */
 .mark__glyph {
   inline-size: 1.08em;
   block-size: 1.08em;
@@ -217,32 +281,387 @@ body {
   transform: translateY(0.02em);
 }
 
-@keyframes markIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* --------------------------------------------------------------- launch -- */
+
+.launch {
+  align-items: center;
+  justify-content: center;
+  padding-block-end: 30px;
+  cursor: pointer;
+  animation: markIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .welcome__mark {
-    animation: none;
-  }
+@keyframes markIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* -------------------------------------------------------------- welcome -- */
+
+.welcome { padding-block-end: 22px; }
+
+.welcome__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px var(--gut) 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.chip:hover { border-color: var(--ink); }
+
+.welcome__deck {
+  flex: 1;
+  min-block-size: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 var(--gut);
+  touch-action: pan-y;
+}
+
+.welcome__art {
+  display: block;
+  padding-block-end: 12px;
+  animation: fadeUp 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.art { inline-size: 100%; block-size: auto; }
+
+.art__label {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--ink-45);
+}
+
+.art__label--on { fill: var(--blue); }
+
+.art__glyph {
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.welcome__copy {
+  animation: fadeUp 0.42s 0.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.welcome__h {
+  margin: 0 0 10px;
+  font-size: 29px;
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.032em;
+}
+
+.welcome__p {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-inline-size: 31ch;
+}
+
+/* Square language for a square system: bars, not dots. */
+.pips {
+  flex: none;
+  display: flex;
+  gap: 6px;
+  padding: 20px var(--gut) 18px;
+}
+
+.pip {
+  inline-size: 26px;
+  block-size: 3px;
+  background: var(--ink-14);
+}
+
+.pip--on { background: var(--blue); }
+.pip:hover { background: var(--ink-45); }
+.pip--on:hover { background: var(--blue); }
+
+.welcome__foot {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 var(--gut);
+}
+
+/* --------------------------------------------------------------- buttons -- */
+
+.btn {
+  min-block-size: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: background 0.14s, color 0.14s, border-color 0.14s;
+}
+
+.btn--primary {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.btn--primary:hover:not(:disabled) { background: var(--blue); }
+
+.btn--primary:disabled {
+  background: var(--ink-06);
+  color: var(--ink-45);
+  cursor: not-allowed;
+}
+
+.btn--ghost {
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.btn--ghost:hover { border-color: var(--ink); }
+
+.btn__busy { display: inline-flex; align-items: center; gap: 10px; }
+
+.spinner {
+  inline-size: 15px;
+  block-size: 15px;
+  border: 2px solid var(--ink-22);
+  border-block-start-color: var(--ink-62);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.note {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--muted);
+}
+
+.note--faint { margin-top: 2px; color: var(--ink-45); }
+
+/* ----------------------------------------------------------------- forms -- */
+
+.form { justify-content: space-between; }
+
+.form__body { padding: 22px var(--gut) 0; }
+
+.field {
+  position: relative;
+  display: block;
+  border: 1px solid var(--ink-22);
+  padding: 9px 14px 8px;
+  background: var(--white);
+  transition: border-color 0.14s;
+}
+
+.field:focus-within { border-color: var(--blue); box-shadow: inset 0 0 0 1px var(--blue); }
+
+.field__label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--muted);
+}
+
+.field__input {
+  inline-size: 100%;
+  border: 0;
+  outline: none;
+  padding: 2px 0 1px;
+  font-size: 16.5px;
+  background: none;
+}
+
+.field__input:disabled { color: var(--ink-45); }
+
+.field__prefix {
+  position: absolute;
+  inset-block-end: 9px;
+  inset-inline-start: 14px;
+  font-size: 16.5px;
+  color: var(--muted);
+}
+
+.field__input--prefixed { padding-inline-start: 28px; }
+
+.field__toggle {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 10px;
+  transform: translateY(-50%);
+  inline-size: 38px;
+  block-size: 38px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.field__toggle:hover { color: var(--ink); background: var(--ink-06); }
+
+/* The deck's future state explains why each piece of information is asked
+   for at the point it is asked. The blue rule marks that line. */
+.why {
+  margin: 8px 0 20px;
+  padding-inline-start: 11px;
+  border-inline-start: 2px solid var(--blue);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.form__foot {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 var(--gut) 26px;
+}
+
+.legal {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-45);
+}
+
+.legal a { color: var(--ink); text-underline-offset: 3px; }
+
+/* ----------------------------------------------------------------- sheet -- */
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.sheet--open { pointer-events: auto; visibility: visible; }
+
+.sheet__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0;
+  transition: opacity 0.26s;
+  cursor: default;
+}
+
+.sheet--open .sheet__scrim { opacity: 0.45; }
+
+.sheet__panel {
+  position: relative;
+  background: var(--white);
+  border-block-start: 1px solid var(--line);
+  padding: 22px var(--gut) 30px;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sheet--open .sheet__panel { transform: none; }
+
+.sheet__h {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.sheet__p {
+  margin: 0 0 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.langRow {
+  inline-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 0;
+  border-block-start: 1px solid var(--line);
+  font-size: 16px;
+  font-weight: 500;
+  text-align: start;
+}
+
+.langRow:last-of-type { border-block-end: 1px solid var(--line); margin-block-end: 18px; }
+
+.langRow__note {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink-45);
+}
+
+.tick {
+  inline-size: 22px;
+  block-size: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: var(--blue);
+  color: var(--white);
+}
+
+/* ------------------------------------------------------------------- end -- */
+
+.end {
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 var(--gut) 30px;
+  text-align: center;
+}
+
+.end__note {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-inline-size: 26ch;
 }
 
 /* ---------------------------------------------------------------- phones -- */
 
-/* On a real handset there is no handset to draw. The silhouette, its keys and
-   its hardware all go, the app fills the glass, and the device's own status
-   bar and home indicator take over. */
+/* On a real handset there is no handset to draw. */
 @media (max-width: 500px), (max-height: 700px) {
-  .stage {
-    padding: 0;
-  }
+  .stage { padding: 0; }
 
   .device {
     block-size: 100%;
@@ -253,19 +672,23 @@ body {
     outline: 0;
   }
 
-  .device__screen {
-    border-radius: 0;
-  }
+  .device__screen { border-radius: 0; }
 
   .device__key,
   .device__island,
-  .device__home {
-    display: none;
-  }
+  .device__home { display: none; }
 
   .statusbar {
     padding-block-start: max(19px, env(safe-area-inset-top, 0px));
     padding-inline: max(24px, env(safe-area-inset-left, 0px))
       max(24px, env(safe-area-inset-right, 0px));
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .launch,
+  .welcome__art,
+  .welcome__copy { animation: none; }
+  .spinner { animation-duration: 2s; }
 }

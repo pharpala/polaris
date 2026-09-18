@@ -1,88 +1,40 @@
+import { useState } from 'react'
 import './styles.css'
+import { ArrowLeft, Check, Compass, StatusIcons } from './Icons'
+import { dicts, langOrder, type LangCode } from './i18n'
+import Launch from './screens/Launch'
+import Phone from './screens/Phone'
+import SignUp from './screens/SignUp'
+import Welcome from './screens/Welcome'
 
-/** Device chrome, not UI — the status strip a real handset would draw. */
+type Step = 'launch' | 'welcome' | 'signup' | 'phone' | 'end'
+
+/** The two steps that sit inside the account-setup section and show the rail. */
+const RAIL: Step[] = ['signup', 'phone']
+
 function StatusBar() {
   return (
     <div className="statusbar" aria-hidden>
       <span className="statusbar__time">9:41</span>
-      <span className="statusbar__icons">
-        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor">
-          <rect x="0" y="7.5" width="3" height="3.5" rx="0.5" />
-          <rect x="4.6" y="5" width="3" height="6" rx="0.5" />
-          <rect x="9.2" y="2.5" width="3" height="8.5" rx="0.5" />
-          <rect x="13.8" y="0" width="3" height="11" rx="0.5" />
-        </svg>
-        <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor">
-          <path d="M1 3.4a10 10 0 0 1 14 0" strokeWidth="1.6" strokeLinecap="round" />
-          <path d="M3.8 6.2a6 6 0 0 1 8.4 0" strokeWidth="1.6" strokeLinecap="round" />
-          <circle cx="8" cy="9.2" r="1.3" fill="currentColor" stroke="none" />
-        </svg>
-        <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
-          <rect
-            x="0.6"
-            y="0.6"
-            width="21"
-            height="10.8"
-            rx="2.6"
-            stroke="currentColor"
-            strokeOpacity="0.4"
-            strokeWidth="1.1"
-          />
-          <rect x="2.2" y="2.2" width="17.8" height="7.6" rx="1.6" fill="currentColor" />
-          <path d="M23.2 4.2v3.6a2 2 0 0 0 0-3.6Z" fill="currentColor" fillOpacity="0.4" />
-        </svg>
-      </span>
+      <StatusIcons />
     </div>
   )
 }
 
-/**
- * The Polaris compass rose, redrawn in one colour from the symbol in the case
- * brief: a four-point star on a long north–south axis, a bearing ring with
- * diagonal ticks, and a square hub knocked out of the centre. The brief's
- * navy tile is dropped — only the symbol carries over.
- */
-function Compass() {
-  const tick = (x1: number, y1: number, x2: number, y2: number) => (
-    <line key={`${x1}${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} />
-  )
-
-  return (
-    <svg className="mark__glyph" viewBox="0 0 32 32" aria-hidden focusable="false">
-      <g stroke="currentColor" strokeOpacity="0.34" strokeWidth="1.15" fill="none">
-        <circle cx="16" cy="16" r="14.1" />
-        <g strokeLinecap="round">
-          {tick(21.7, 10.3, 24.8, 7.2)}
-          {tick(21.7, 21.7, 24.8, 24.8)}
-          {tick(10.3, 21.7, 7.2, 24.8)}
-          {tick(10.3, 10.3, 7.2, 7.2)}
-        </g>
-      </g>
-
-      <path
-        d="M16 1.6 17.6 14.4 29 16 17.6 17.6 16 30.4 14.4 17.6 3 16 14.4 14.4Z"
-        fill="currentColor"
-      />
-
-      {/* The hub is knocked out to the screen colour rather than drawn. */}
-      <rect x="14.4" y="14.4" width="3.2" height="3.2" fill="var(--white)" />
-    </svg>
-  )
-}
-
-/** The app itself. Everything around it is the silhouette. */
-function Welcome() {
-  return (
-    <main className="welcome">
-      <h1 className="welcome__mark">
-        <Compass />
-        Polaris
-      </h1>
-    </main>
-  )
-}
-
 export default function App() {
+  const [lang, setLang] = useState<LangCode>('en')
+  const [step, setStep] = useState<Step>('launch')
+  const [langOpen, setLangOpen] = useState(false)
+
+  const t = dicts[lang]
+  const railIndex = RAIL.indexOf(step)
+  const onRail = railIndex >= 0
+  const bare = step === 'launch' || step === 'welcome'
+
+  const back = () => setStep(step === 'phone' ? 'signup' : 'welcome')
+
+  const title = step === 'signup' ? t.signup.stage : step === 'phone' ? t.phone.stage : t.brand
+
   return (
     <div className="stage">
       <div className="device">
@@ -92,10 +44,95 @@ export default function App() {
         <span className="device__key device__key--volDown" aria-hidden />
         <span className="device__key device__key--power" aria-hidden />
 
-        <div className="device__screen">
+        <div className="device__screen" lang={lang}>
           <span className="device__island" aria-hidden />
           <StatusBar />
-          <Welcome />
+
+          {!bare && (
+            <div className="appbar">
+              <div className="appbar__row">
+                <button className="appbar__back" onClick={back} aria-label={t.back}>
+                  <ArrowLeft />
+                </button>
+                <span className="appbar__title">{title}</span>
+                <span className="appbar__pad" />
+              </div>
+              {onRail && (
+                <>
+                  <div
+                    className="rail"
+                    role="progressbar"
+                    aria-valuenow={railIndex + 1}
+                    aria-valuemax={RAIL.length}
+                  >
+                    <span
+                      className="rail__fill"
+                      style={{ inlineSize: `${((railIndex + 1) / RAIL.length) * 100}%` }}
+                    />
+                  </div>
+                  <span className="appbar__step">{t.signup.step(railIndex + 1, RAIL.length)}</span>
+                </>
+              )}
+            </div>
+          )}
+
+          {step === 'launch' && <Launch t={t} onDone={() => setStep('welcome')} />}
+          {step === 'welcome' && (
+            <Welcome t={t} onStart={() => setStep('signup')} onLang={() => setLangOpen(true)} />
+          )}
+          {step === 'signup' && <SignUp t={t} onNext={() => setStep('phone')} />}
+          {step === 'phone' && <Phone t={t} onNext={() => setStep('end')} />}
+          {step === 'end' && (
+            <div className="screen end">
+              <span className="mark">
+                <Compass />
+                {t.brand}
+              </span>
+              <p className="end__note">
+                End of the built flow. Stage 1 of the journey — the guided questions — comes next.
+              </p>
+              <button className="btn btn--ghost" onClick={() => setStep('launch')}>
+                Restart
+              </button>
+            </div>
+          )}
+
+          {/* Language is offered before anything else, because for a newcomer
+              the language of the disclosures is the first barrier. */}
+          <div className={`sheet${langOpen ? ' sheet--open' : ''}`}>
+            <button
+              className="sheet__scrim"
+              onClick={() => setLangOpen(false)}
+              aria-label={t.lang.done}
+              tabIndex={langOpen ? 0 : -1}
+            />
+            <div className="sheet__panel" role="dialog" aria-modal="true" aria-label={t.lang.title}>
+              <h2 className="sheet__h">{t.lang.title}</h2>
+              <p className="sheet__p">{t.lang.body}</p>
+              {langOrder.map((l) => (
+                <button
+                  key={l}
+                  className="langRow"
+                  onClick={() => setLang(l)}
+                  aria-pressed={lang === l}
+                >
+                  <span>
+                    {dicts[l].meta.native}
+                    <span className="langRow__note">{dicts[l].meta.note}</span>
+                  </span>
+                  {lang === l && (
+                    <span className="tick">
+                      <Check />
+                    </span>
+                  )}
+                </button>
+              ))}
+              <button className="btn btn--primary" onClick={() => setLangOpen(false)}>
+                {t.lang.done}
+              </button>
+            </div>
+          </div>
+
           <span className="device__home" aria-hidden />
         </div>
       </div>
