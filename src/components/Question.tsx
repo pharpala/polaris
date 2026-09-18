@@ -10,6 +10,7 @@ export type Option = { id: string; label: string; note?: string }
  */
 export function Question({
   t,
+  chip,
   title,
   sub,
   foot,
@@ -20,6 +21,7 @@ export function Question({
   children,
 }: {
   t: { saved: string; skip: string; help: string }
+  chip?: string
   title: string
   sub: string
   foot?: string
@@ -32,7 +34,11 @@ export function Question({
   return (
     <div className="screen q">
       <div className="q__scroll">
-        <p className="q__saved">{t.saved}</p>
+        {chip ? (
+          <p className="q__chip">{chip}</p>
+        ) : (
+          <p className="q__saved">{t.saved}</p>
+        )}
         <h1 className="q__h">{title}</h1>
         <p className="q__sub">{sub}</p>
 

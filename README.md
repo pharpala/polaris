@@ -8,18 +8,27 @@ resolves and stage 1 of the journey — understand intent — starts asking. Thr
 establish life stage, residency and goals, which is what the recommendation is ranked
 against and what decides which identity documents the capture step has to accept.
 
-| Screen | What it establishes |
+**The path is not fixed.** The first question is a multi-select, and each thing the
+customer picks opens its own follow-up, so the question set is built from their answers
+rather than declared up front. The dot count in the app bar changes as they choose.
+
+| Answer | The follow-up it opens |
 |---|---|
-| Launch | The mark on white. Locale and any saved application resolve behind it. |
-| Which of these sounds most like you? | Life stage. Newcomers lead the list — the segment the deck names, abandoning at 48.9% against 37% overall. |
-| Your status in Canada | Residency. Behind a field rather than on the page, because the list is long and the answer is one fact. |
-| What do you need the account for? | Goals, multi-select. The inputs the recommendation ranks against. |
+| I'm a newcomer to Canada | How long have you been here? — first year and fifth year need different guidance |
+| I'm a student | Where are you in your studies? — changes what a student account waives, and for how long |
+| I just graduated | What comes next? — a first salary and a job hunt are not the same account |
+| I'm retirement planning | How far off is it? — nearer means income and access over growth |
+| Other | Free text, routed to whoever reviews the file |
+
+Every follow-up carries a chip naming the answer that opened it, and every question can be
+skipped. The last question — what the account is for — is what the recommendation gets
+ranked against.
 
 Three things carried from the deck that a stock sign-up flow does not have: every question
-says **why it is asked** and states plainly what it does *not* decide; a **progress rail**
-sits on every screen, because "no visible application status" is on the current-state
-failure list; and the **AI disclosure** rides the first screen read rather than a settings
-page, because disclosure by default is one of the program's Responsible AI controls.
+says **why it is asked** and states plainly what it does *not* decide; progress is stated
+in **words and dots** on every screen, because "no visible application status" is on the
+current-state failure list; and the **assistant** sits in a floating Need help pill,
+reached when someone is stuck rather than standing between them and the account.
 
 Copy is complete in **English and French**, switchable from the globe chip on every
 question — the deck's claim is that translation is embedded in the journey rather than
@@ -76,6 +85,6 @@ src/i18n.ts        All customer-facing copy, English and French
 src/Icons.tsx      Inline SVG set, including the compass rose
 src/App.tsx        The silhouette, app bar, language sheet and step router
 src/components/    The question shell, choice cards and the bottom sheet
-src/screens/       One file per question
+src/screens/       Launch, Profile, Follow (every branch) and Goals
 src/styles.css     Palette tokens, the silhouette and the component styles
 ```

@@ -331,6 +331,21 @@ button {
   color: var(--muted);
 }
 
+/* The follow-up names the answer that opened it, so the journey visibly
+   bends around what the customer said. */
+.q__chip {
+  display: inline-flex;
+  align-items: center;
+  margin: 6.8px 0 11.9px;
+  padding: 4px 10px 5px;
+  border-radius: var(--pill);
+  background: var(--blue-06);
+  color: var(--blue);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
 /* ---------------------------------------------------------------- choices -- */
 
 .choices {
@@ -387,43 +402,42 @@ button {
 
 .choice--on .choice__box { background: var(--blue); border-color: var(--blue); }
 
-/* ----------------------------------------------------------------- select -- */
+/* -------------------------------------------------------------- textField -- */
 
-.select {
-  display: flex;
-  align-items: center;
-  gap: 10.2px;
-  inline-size: 100%;
-  padding: 10.2px 15.3px 11px;
+.textField {
+  display: block;
+  padding: 11px 15px 12px;
   background: var(--white);
   border: 1px solid var(--line-soft);
   border-radius: var(--r);
-  text-align: start;
-  color: var(--muted);
   transition: border-color 0.14s;
 }
 
-.select:hover { border-color: var(--line); }
+.textField:focus-within { border-color: var(--blue); }
 
-.select__text { flex: 1; min-inline-size: 0; }
-
-.select__label {
+.textField__label {
   display: block;
-  font-size: 10.6px;
-  font-weight: 500;
+  margin-block-end: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
   color: var(--muted);
 }
 
-.select__value {
+.textField__input {
   display: block;
-  margin-block-start: 1px;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  inline-size: 100%;
+  border: 0;
+  outline: none;
+  padding: 0;
+  resize: none;
+  background: none;
+  font: inherit;
+  font-size: 13.6px;
+  line-height: 1.5;
   color: var(--ink);
 }
 
-.select__value--empty { color: var(--faint); font-weight: 400; }
+.textField__input::placeholder { color: var(--faint); }
 
 /* --------------------------------------------------------------- buttons -- */
 

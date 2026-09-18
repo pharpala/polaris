@@ -7,6 +7,78 @@
 
 export type LangCode = 'en' | 'fr'
 
+/**
+ * A follow-up question, opened by one of the answers to the first question.
+ * The set a customer sees is built from what they told us, so two people
+ * never walk the same path.
+ */
+export type FollowQ = {
+  chip: string
+  title: string
+  sub: string
+  options?: { id: string; label: string }[]
+  input?: { label: string; placeholder: string }
+}
+
+const followEn: Record<string, FollowQ> = {
+  newcomer: {
+    chip: 'Newcomer to Canada',
+    title: 'How long have you been here?',
+    sub: 'Newcomers get different guidance in the first year than in the fifth.',
+    options: [
+      { id: 'soon', label: 'I haven’t arrived yet' },
+      { id: 'u6', label: 'Less than 6 months' },
+      { id: '6to12', label: '6 to 12 months' },
+      { id: '1to3', label: '1 to 3 years' },
+      { id: 'o3', label: 'More than 3 years' },
+    ],
+  },
+  student: {
+    chip: 'Student',
+    title: 'Where are you in your studies?',
+    sub: 'It changes what a student account should waive and for how long.',
+    options: [
+      { id: 'starting', label: 'Just starting' },
+      { id: 'partway', label: 'Partway through' },
+      { id: 'final', label: 'Final year' },
+      { id: 'between', label: 'Between programs' },
+    ],
+  },
+  grad: {
+    chip: 'Just graduated',
+    title: 'What comes next for you?',
+    sub: 'The account that suits a first salary is not the one that suits a job hunt.',
+    options: [
+      { id: 'job', label: 'Starting a job' },
+      { id: 'looking', label: 'Looking for work' },
+      { id: 'study', label: 'More study' },
+      { id: 'travel', label: 'Travelling first' },
+      { id: 'unsure', label: 'Still working it out' },
+    ],
+  },
+  retirement: {
+    chip: 'Retirement planning',
+    title: 'How far off is retirement?',
+    sub: 'Nearer means income and access matter more than growth.',
+    options: [
+      { id: 'already', label: 'I’m already retired' },
+      { id: 'u2', label: 'Within 2 years' },
+      { id: '2to5', label: '2 to 5 years' },
+      { id: '5to10', label: '5 to 10 years' },
+      { id: 'o10', label: 'More than 10 years' },
+    ],
+  },
+  other: {
+    chip: 'Something else',
+    title: 'Tell us in your own words.',
+    sub: 'A sentence is plenty. It goes to the person who reviews your file, if one needs to.',
+    input: {
+      label: 'What should we know?',
+      placeholder: 'I’m self-employed and my income varies month to month…',
+    },
+  },
+}
+
 const en = {
   meta: { native: 'English', note: 'English', chip: 'EN' },
   brand: 'Polaris',
@@ -47,23 +119,7 @@ const en = {
     ],
   },
 
-  status: {
-    title: 'Your status in Canada',
-    sub: 'The accounts we can open and the documents we can accept depend on it.',
-    label: 'Status',
-    placeholder: 'Choose your status',
-    sheetTitle: 'Your status in Canada',
-    sheetBody: 'Pick the one on your document. Foreign passports, work permits and study permits are all accepted here.',
-    foot: 'We ask so we know which identity documents to accept — not to decide whether you are eligible.',
-    cta: 'Continue',
-    options: [
-      { id: 'citizen', label: 'Canadian citizen' },
-      { id: 'pr', label: 'Permanent resident' },
-      { id: 'work', label: 'Work permit' },
-      { id: 'study', label: 'Study permit' },
-      { id: 'other', label: 'Visitor, or something else' },
-    ],
-  },
+  follow: followEn,
 
   goals: {
     title: 'What do you need the account for?',
@@ -81,6 +137,65 @@ const en = {
 }
 
 export type Dict = typeof en
+
+const followFr: Record<string, FollowQ> = {
+  newcomer: {
+    chip: 'Nouvel arrivant',
+    title: 'Depuis combien de temps êtes-vous ici ?',
+    sub: 'Les conseils de la première année ne sont pas ceux de la cinquième.',
+    options: [
+      { id: 'soon', label: 'Je ne suis pas encore arrivé' },
+      { id: 'u6', label: 'Moins de 6 mois' },
+      { id: '6to12', label: 'De 6 à 12 mois' },
+      { id: '1to3', label: 'De 1 à 3 ans' },
+      { id: 'o3', label: 'Plus de 3 ans' },
+    ],
+  },
+  student: {
+    chip: 'Étudiant',
+    title: 'Où en êtes-vous dans vos études ?',
+    sub: 'Cela change ce qu’un compte étudiant devrait exempter, et pour combien de temps.',
+    options: [
+      { id: 'starting', label: 'Je commence' },
+      { id: 'partway', label: 'En cours de programme' },
+      { id: 'final', label: 'Dernière année' },
+      { id: 'between', label: 'Entre deux programmes' },
+    ],
+  },
+  grad: {
+    chip: 'Nouveau diplômé',
+    title: 'Qu’est-ce qui suit pour vous ?',
+    sub: 'Le compte qui convient à un premier salaire n’est pas celui d’une recherche d’emploi.',
+    options: [
+      { id: 'job', label: 'Je commence un emploi' },
+      { id: 'looking', label: 'Je cherche du travail' },
+      { id: 'study', label: 'Je poursuis mes études' },
+      { id: 'travel', label: 'Je voyage d’abord' },
+      { id: 'unsure', label: 'Je ne sais pas encore' },
+    ],
+  },
+  retirement: {
+    chip: 'Planification de la retraite',
+    title: 'Dans combien de temps la retraite ?',
+    sub: 'Plus c’est proche, plus le revenu et l’accès comptent davantage que la croissance.',
+    options: [
+      { id: 'already', label: 'Je suis déjà retraité' },
+      { id: 'u2', label: 'D’ici 2 ans' },
+      { id: '2to5', label: 'De 2 à 5 ans' },
+      { id: '5to10', label: 'De 5 à 10 ans' },
+      { id: 'o10', label: 'Plus de 10 ans' },
+    ],
+  },
+  other: {
+    chip: 'Autre situation',
+    title: 'Dites-le dans vos mots.',
+    sub: 'Une phrase suffit. Elle ira à la personne qui examinera votre dossier, si nécessaire.',
+    input: {
+      label: 'Que devrions-nous savoir ?',
+      placeholder: 'Je suis travailleur autonome et mes revenus varient chaque mois…',
+    },
+  },
+}
 
 const fr: Dict = {
   meta: { native: 'Français', note: 'French', chip: 'FR' },
@@ -121,23 +236,7 @@ const fr: Dict = {
     ],
   },
 
-  status: {
-    title: 'Votre statut au Canada',
-    sub: 'Les comptes que nous pouvons ouvrir et les documents que nous acceptons en dépendent.',
-    label: 'Statut',
-    placeholder: 'Choisissez votre statut',
-    sheetTitle: 'Votre statut au Canada',
-    sheetBody: 'Choisissez celui qui figure sur votre document. Les passeports étrangers, les permis de travail et les permis d’études sont tous acceptés.',
-    foot: 'Nous le demandons pour savoir quels documents d’identité accepter, non pour juger votre admissibilité.',
-    cta: 'Continuer',
-    options: [
-      { id: 'citizen', label: 'Citoyen canadien' },
-      { id: 'pr', label: 'Résident permanent' },
-      { id: 'work', label: 'Permis de travail' },
-      { id: 'study', label: 'Permis d’études' },
-      { id: 'other', label: 'Visiteur, ou autre situation' },
-    ],
-  },
+  follow: followFr,
 
   goals: {
     title: 'À quoi vous servira ce compte ?',

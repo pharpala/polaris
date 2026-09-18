@@ -1,25 +1,24 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import './styles.css'
 import Sheet from './components/Sheet'
 import { Check, ChevronLeft, Compass, Globe, StatusIcons } from './Icons'
 import { dicts, langOrder, type LangCode } from './i18n'
+import Follow from './screens/Follow'
 import Goals from './screens/Goals'
 import Launch from './screens/Launch'
 import Profile from './screens/Profile'
-import Status from './screens/Status'
 
 /**
  * The customer is already signed in, so there is no home screen and no
  * credentials step. The mark resolves, then stage 1 of the journey —
  * understand intent — starts asking.
+ *
+ * The path is not fixed. The first question is a multi-select, and each thing
+ * the customer picks opens its own follow-up, so the queue below is built
+ * from their answers rather than declared up front. Two people never see the
+ * same set of questions, and the dot count changes as they choose.
  */
-type Step = 'launch' | 'profile' | 'status' | 'goals' | 'end'
-
-const RAIL: Step[] = ['profile', 'status', 'goals']
-
-/** The target design shows six dots: the three questions here, then the
- *  recommendation, identity capture and review still to build. */
-const DOTS = 6
+type Step = 'launch' | 'profile' | 'goals' | 'end' | `follow:${string}`
 
 function StatusBar() {
   return (
@@ -36,21 +35,36 @@ export default function App() {
   const [langOpen, setLangOpen] = useState(false)
 
   const [profile, setProfile] = useState<string[]>([])
-  const [status, setStatus] = useState<string | null>(null)
+  const [follows, setFollows] = useState<Record<string, string>>({})
+  const [otherText, setOtherText] = useState('')
   const [goals, setGoals] = useState<string[]>([])
 
   const t = dicts[lang]
-  const railIndex = RAIL.indexOf(step)
-  const onRail = railIndex >= 0
 
-  const back = () => setStep(railIndex > 0 ? RAIL[railIndex - 1] : 'launch')
+  // Built from the answers, in the order the options were offered so the
+  // sequence stays predictable.
+  const queue = useMemo<Step[]>(() => {
+    const opened = t.profile.options
+      .filter((o) => profile.includes(o.id) && t.follow[o.id])
+      .map((o) => `follow:${o.id}` as Step)
+    return ['profile', ...opened, 'goals']
+  }, [profile, t])
+
+  const index = queue.indexOf(step)
+  const onQueue = index >= 0
+
+  const next = () => setStep(queue[index + 1] ?? 'end')
+  const back = () => setStep(index > 0 ? queue[index - 1] : 'launch')
 
   const restart = () => {
     setProfile([])
-    setStatus(null)
+    setFollows({})
+    setOtherText('')
     setGoals([])
     setStep('launch')
   }
+
+  const followId = step.startsWith('follow:') ? step.slice('follow:'.length) : null
 
   return (
     <div className="stage">
@@ -65,7 +79,7 @@ export default function App() {
           <span className="device__island" aria-hidden />
           <StatusBar />
 
-          {onRail && (
+          {onQueue && (
             <div className="appbar">
               <button className="appbar__back" onClick={back} aria-label={t.back}>
                 <ChevronLeft />
@@ -74,17 +88,21 @@ export default function App() {
               <span
                 className="dots"
                 role="progressbar"
-                aria-valuenow={railIndex + 1}
-                aria-valuemax={DOTS}
+                aria-valuenow={index + 1}
+                aria-valuemax={queue.length}
               >
-                {Array.from({ length: DOTS }, (_, i) => (
-                  <span key={i} className={`dot${i === railIndex ? ' dot--on' : ''}`} />
+                {queue.map((s, i) => (
+                  <span key={s} className={`dot${i === index ? ' dot--on' : ''}`} />
                 ))}
               </span>
               {/* Language stays in reach on every question, because for a
                   newcomer the language of the disclosures is the first
                   barrier, not the last. */}
-              <button className="langBtn" onClick={() => setLangOpen(true)} aria-label={t.lang.open}>
+              <button
+                className="langBtn"
+                onClick={() => setLangOpen(true)}
+                aria-label={t.lang.open}
+              >
                 <Globe />
               </button>
             </div>
@@ -99,12 +117,21 @@ export default function App() {
               onToggle={(id) =>
                 setProfile((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]))
               }
-              onNext={() => setStep('status')}
+              onNext={next}
             />
           )}
 
-          {step === 'status' && (
-            <Status t={t} value={status} onPick={setStatus} onNext={() => setStep('goals')} />
+          {followId && t.follow[followId] && (
+            <Follow
+              key={followId}
+              t={t}
+              q={t.follow[followId]}
+              value={follows[followId]}
+              text={otherText}
+              onPick={(id) => setFollows((f) => ({ ...f, [followId]: id }))}
+              onText={setOtherText}
+              onNext={next}
+            />
           )}
 
           {step === 'goals' && (
@@ -114,7 +141,7 @@ export default function App() {
               onToggle={(id) =>
                 setGoals((g) => (g.includes(id) ? g.filter((x) => x !== id) : [...g, id]))
               }
-              onNext={() => setStep('end')}
+              onNext={next}
             />
           )}
 
@@ -125,8 +152,8 @@ export default function App() {
                 {t.brand}
               </span>
               <p className="end__note">
-                End of the built flow. Stage 2 — the recommendation, with the reasoning
-                attached — comes next.
+                End of the built flow. Stage 2 — the recommendation, ranked against these
+                answers with the reasoning attached — comes next.
               </p>
               <button className="btn btn--ghost" onClick={restart}>
                 Restart
@@ -142,12 +169,7 @@ export default function App() {
             done={t.lang.done}
           >
             {langOrder.map((l) => (
-              <button
-                key={l}
-                className="row"
-                onClick={() => setLang(l)}
-                aria-pressed={lang === l}
-              >
+              <button key={l} className="row" onClick={() => setLang(l)} aria-pressed={lang === l}>
                 <span>
                   {dicts[l].meta.native}
                   <span className="row__note">{dicts[l].meta.note}</span>
