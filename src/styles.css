@@ -196,12 +196,25 @@ body {
    eased off because negative tracking that flatters 46px closes up at 26px. */
 .welcome__mark {
   margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.36em;
   font-size: 26px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--ink);
   animation: markIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Sized in em so the lockup holds together at any type size. The glyph is
+   optically centred on the cap height rather than the full line box, which
+   sits a shade high once there are no descenders to balance it. */
+.mark__glyph {
+  inline-size: 1.08em;
+  block-size: 1.08em;
+  flex: none;
+  transform: translateY(0.02em);
 }
 
 @keyframes markIn {

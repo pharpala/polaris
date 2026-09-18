@@ -20,6 +20,14 @@ npm install
 npm run dev
 ```
 
+## The mark
+
+The compass rose is redrawn as a single-colour glyph from the symbol in the Polaris
+case brief: a four-point star on a long north–south axis, a bearing ring with
+diagonal ticks, and a square hub knocked out of the centre. The brief's navy tile is
+dropped — only the symbol carries over. It is inline SVG sized in `em`, so the
+lockup holds together at any type size.
+
 ## Design system
 
 Three colours, and nothing else: `#FFFFFF`, `#324AFE` electric blue, `#181B1F` ink.

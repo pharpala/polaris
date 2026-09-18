@@ -36,11 +36,48 @@ function StatusBar() {
   )
 }
 
+/**
+ * The Polaris compass rose, redrawn in one colour from the symbol in the case
+ * brief: a four-point star on a long north–south axis, a bearing ring with
+ * diagonal ticks, and a square hub knocked out of the centre. The brief's
+ * navy tile is dropped — only the symbol carries over.
+ */
+function Compass() {
+  const tick = (x1: number, y1: number, x2: number, y2: number) => (
+    <line key={`${x1}${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} />
+  )
+
+  return (
+    <svg className="mark__glyph" viewBox="0 0 32 32" aria-hidden focusable="false">
+      <g stroke="currentColor" strokeOpacity="0.34" strokeWidth="1.15" fill="none">
+        <circle cx="16" cy="16" r="14.1" />
+        <g strokeLinecap="round">
+          {tick(21.7, 10.3, 24.8, 7.2)}
+          {tick(21.7, 21.7, 24.8, 24.8)}
+          {tick(10.3, 21.7, 7.2, 24.8)}
+          {tick(10.3, 10.3, 7.2, 7.2)}
+        </g>
+      </g>
+
+      <path
+        d="M16 1.6 17.6 14.4 29 16 17.6 17.6 16 30.4 14.4 17.6 3 16 14.4 14.4Z"
+        fill="currentColor"
+      />
+
+      {/* The hub is knocked out to the screen colour rather than drawn. */}
+      <rect x="14.4" y="14.4" width="3.2" height="3.2" fill="var(--white)" />
+    </svg>
+  )
+}
+
 /** The app itself. Everything around it is the silhouette. */
 function Welcome() {
   return (
     <main className="welcome">
-      <h1 className="welcome__mark">Polaris</h1>
+      <h1 className="welcome__mark">
+        <Compass />
+        Polaris
+      </h1>
     </main>
   )
 }
