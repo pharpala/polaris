@@ -1,0 +1,77 @@
+/* ============================================================================
+   Polaris design system
+   The palette is exactly three colours: #FFFFFF, #324AFE, #181B1F.
+   Corners are square everywhere. Surfaces are flat — no gradients, no glows,
+   no shadows.
+   ========================================================================== */
+
+:root {
+  --white: #ffffff;
+  --blue: #324afe;
+  --ink: #181b1f;
+
+  --font: 'Calibre', 'Calibre Web', 'General Sans', 'Inter', -apple-system,
+    'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--blue);
+  color: var(--white);
+}
+
+/* --------------------------------------------------------------- welcome -- */
+
+/* The whole page is the welcome: a white field and the wordmark. */
+.welcome {
+  block-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.welcome__mark {
+  font-size: clamp(38px, 7vw, 76px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  animation: markIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes markIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome__mark {
+    animation: none;
+  }
+}
