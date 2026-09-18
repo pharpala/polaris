@@ -4,10 +4,12 @@ import Assistant from './components/Assistant'
 import Sheet from './components/Sheet'
 import { Check, ChevronLeft, Compass, Globe, StatusIcons } from './Icons'
 import { dicts, langOrder, type LangCode } from './i18n'
+import Compare from './screens/Compare'
 import Follow from './screens/Follow'
 import Goals from './screens/Goals'
 import Launch from './screens/Launch'
 import Profile from './screens/Profile'
+import Recommend from './screens/Recommend'
 
 /**
  * The customer is already signed in, so there is no home screen and no
@@ -19,7 +21,7 @@ import Profile from './screens/Profile'
  * from their answers rather than declared up front. Two people never see the
  * same set of questions, and the dot count changes as they choose.
  */
-type Step = 'launch' | 'profile' | 'goals' | 'end' | `follow:${string}`
+type Step = 'launch' | 'profile' | 'goals' | 'recommend' | 'end' | `follow:${string}`
 
 function StatusBar() {
   return (
@@ -40,6 +42,8 @@ export default function App() {
   const [follows, setFollows] = useState<Record<string, string>>({})
   const [otherText, setOtherText] = useState('')
   const [goals, setGoals] = useState<string[]>([])
+  const [product, setProduct] = useState<string | null>(null)
+  const [compareOpen, setCompareOpen] = useState(false)
 
   const t = dicts[lang]
 
@@ -49,14 +53,14 @@ export default function App() {
     const opened = t.profile.options
       .filter((o) => profile.includes(o.id) && t.follow[o.id])
       .map((o) => `follow:${o.id}` as Step)
-    return ['profile', ...opened, 'goals']
+    return ['profile', ...opened, 'goals', 'recommend']
   }, [profile, t])
 
   const index = queue.indexOf(step)
   const onQueue = index >= 0
 
-  /** Recommendation, identity capture and review are still to come. */
-  const dots = queue.length + 3
+  /** Identity capture and review are still to come. */
+  const dots = queue.length + 2
 
   const next = () => setStep(queue[index + 1] ?? 'end')
   const back = () => setStep(index > 0 ? queue[index - 1] : 'launch')
@@ -66,6 +70,7 @@ export default function App() {
     setFollows({})
     setOtherText('')
     setGoals([])
+    setProduct(null)
     setStep('launch')
   }
 
@@ -73,7 +78,7 @@ export default function App() {
 
   /** What the assistant needs to know: where it was opened from, and whether
    *  the customer has told us they are new to Canada. */
-  const helpStep = followId ? 'follow' : step === 'goals' ? 'goals' : 'profile'
+  const helpStep = followId ? 'follow' : step === 'goals' || step === 'recommend' ? 'goals' : 'profile'
   const isNewcomer = profile.includes('newcomer')
 
   return (
@@ -157,6 +162,18 @@ export default function App() {
             />
           )}
 
+          {step === 'recommend' && (
+            <Recommend
+              t={t}
+              profile={profile}
+              goals={goals}
+              chosen={product}
+              onCompare={() => setCompareOpen(true)}
+              onNext={next}
+              onHelp={() => setHelpOpen(true)}
+            />
+          )}
+
           {step === 'end' && (
             <div className="screen end">
               <span className="mark">
@@ -164,14 +181,24 @@ export default function App() {
                 {t.brand}
               </span>
               <p className="end__note">
-                End of the built flow. Stage 2 — the recommendation, ranked against these
-                answers with the reasoning attached — comes next.
+                End of the built flow. Identity capture — where a newcomer’s documents
+                are read at the point they are taken — comes next.
               </p>
               <button className="btn btn--ghost" onClick={restart}>
                 Restart
               </button>
             </div>
           )}
+
+          <Compare
+            t={t}
+            open={compareOpen}
+            profile={profile}
+            goals={goals}
+            chosen={product}
+            onPick={setProduct}
+            onClose={() => setCompareOpen(false)}
+          />
 
           <Assistant
             t={t}

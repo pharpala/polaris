@@ -502,6 +502,149 @@ button {
   color: var(--muted);
 }
 
+/* ----------------------------------------------------------------- cards -- */
+
+/* Every fee on the card rather than behind a link: a recommendation the
+   customer cannot check is a sales pitch. */
+.card {
+  padding: 17px 17px 18px;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
+}
+
+.card--on { border-color: var(--blue); }
+
+.card__badge {
+  display: inline-block;
+  margin: 0 0 11px;
+  padding: 4px 10px 5px;
+  border-radius: var(--pill);
+  background: var(--blue-06);
+  color: var(--blue);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.card__name {
+  margin: 0 0 3px;
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.008em;
+}
+
+.card__tagline {
+  margin: 0 0 13px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+/* The terms sit in their own block so nobody has to hunt for the price. */
+.card__terms {
+  margin: 0;
+  padding: 11px 13px 12px;
+  background: var(--paper);
+  border: 1px solid rgba(24, 27, 31, 0.06);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.card__trade {
+  margin: 11px 0 0;
+  padding-inline-start: 10px;
+  border-inline-start: 2px solid var(--blue);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.card .btn { min-block-size: 44px; margin-block-start: 14px; font-size: 14.5px; }
+
+/* --------------------------------------------------------------- compare -- */
+
+.compare {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  display: flex;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.compare--open { pointer-events: auto; visibility: visible; }
+
+.compare__panel {
+  flex: 1;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border-radius: 45px 45px 0 0;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.compare--open .compare__panel { transform: none; }
+
+.compare__bar {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 46px var(--gut) 14px;
+  border-block-end: 1px solid var(--line-soft);
+}
+
+.compare__id { flex: 1; min-inline-size: 0; }
+
+.compare__title {
+  display: block;
+  margin-block-end: 3px;
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.008em;
+}
+
+.compare__sub {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.compare__close {
+  inline-size: 30px;
+  block-size: 30px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(24, 27, 31, 0.07);
+}
+
+.compare__close:hover { background: rgba(24, 27, 31, 0.14); }
+
+.compare__list {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 16px var(--gut) 30px;
+  scrollbar-width: none;
+}
+
+.compare__list::-webkit-scrollbar { display: none; }
+
 /* ------------------------------------------------------------- assistant -- */
 
 /* Reached when someone is stuck, never imposed on someone who is not. */
@@ -877,7 +1020,10 @@ button {
 
   .help { inset-block-end: max(22px, env(safe-area-inset-bottom, 0px)); }
 
-  .assist__panel { border-radius: 0; }
+  .assist__panel,
+  .compare__panel { border-radius: 0; }
+
+  .compare__bar { padding-block-start: max(46px, calc(env(safe-area-inset-top, 0px) + 16px)); }
 
   .assist__bar { padding-block-start: max(44px, calc(env(safe-area-inset-top, 0px) + 14px)); }
 

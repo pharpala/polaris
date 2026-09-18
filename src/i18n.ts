@@ -7,6 +7,9 @@
 
 import type { Intent } from './assistant'
 
+/** A product's words. The rules that rank them live in `products.ts`. */
+export type ProductCopy = { name: string; tagline: string; terms: string; trade: string }
+
 export type LangCode = 'en' | 'fr'
 
 /**
@@ -161,6 +164,8 @@ const en = {
   brand: 'Polaris',
   back: 'Back',
   legal: 'Polaris Bank of Canada · Member CDIC',
+  /** Joins the phrases the recommendation quotes back. */
+  and: ' and ',
 
   /* Disclosure by default — one of the program's Responsible AI controls. */
   aiNote: 'AI guides this application. A person is always one tap away.',
@@ -198,6 +203,98 @@ const en = {
 
   follow: followEn,
   assist: assistEn,
+  /** Phrases the recommendation quotes back, one per goal. */
+  goalPhrase: {
+    rent: 'cover everyday expenses',
+    pay: 'receive pay',
+    transfer: 'move money into Canada',
+    abroad: 'send money to family abroad',
+    budget: 'plan your spending',
+    credit: 'build a credit history',
+    rainy: 'put something aside for surprises',
+    home: 'save toward a home',
+    learn: 'learn about investing',
+    debt: 'pay down debt',
+    unsure: '',
+  } as Record<string, string>,
+
+  products: {
+    newcomer: {
+      name: 'Polaris Newcomer Chequing',
+      tagline: 'Your first year, on us.',
+      terms:
+        'No monthly fee for your first 12 months, then $15.95 on the same waivers as Everyday Chequing. Foreign passports and permits accepted, and no fee on transfers into Canada.',
+      trade: 'The most generous account for a first year here, and it reverts to Everyday Chequing pricing after it.',
+    },
+    student: {
+      name: 'Student Chequing',
+      tagline: 'Free while you study.',
+      terms:
+        'No monthly fee while you are enrolled, and no limit on transactions. Proof of enrolment once a year.',
+      trade: 'Free, but it needs proof of enrolment each year and ends when you finish.',
+    },
+    sixty: {
+      name: 'Sixty Plus Chequing',
+      tagline: 'No fee from sixty.',
+      terms:
+        'No monthly fee for customers 60 and over, with no charge for paper statements, drafts or certified cheques.',
+      trade: 'Free for good, with no balance to maintain — it just needs you to be 60 or over.',
+    },
+    everyday: {
+      name: 'Everyday Chequing',
+      tagline: 'Spend day to day.',
+      terms:
+        '$15.95 each month, waived with a direct deposit of $500 or more in a statement period, or a $2,000 minimum daily balance.',
+      trade: 'Unlimited transactions, and free if your pay lands here — but $15.95 if it does not.',
+    },
+    simple: {
+      name: 'Simple Chequing',
+      tagline: 'Low cost, low volume.',
+      terms:
+        '$4.95 each month for 12 transactions, then 65¢ each. Waived with a $1,000 minimum daily balance.',
+      trade: 'Cheaper than Everyday Chequing, but only worth it under about twelve transactions a month.',
+    },
+    savings: {
+      name: 'Everyday Savings',
+      tagline: 'Keep it separate, and growing.',
+      terms: 'No monthly fee and no minimum. 2.75% on every dollar, paid monthly.',
+      trade: 'Pays interest, but it is not a spending account — pair it with a chequing account.',
+    },
+    builder: {
+      name: 'Credit Builder Card',
+      tagline: 'Start a credit history.',
+      terms:
+        'No annual fee. A refundable deposit from $300 sets your limit, and we report to both credit bureaus every month.',
+      trade: 'The fastest way to a Canadian credit file, but the deposit is money you cannot spend.',
+    },
+    invest: {
+      name: 'Starter Investing Account',
+      tagline: 'Begin with twenty-five dollars.',
+      terms:
+        'No account fee. Start from $25 in a TFSA, FHSA or RRSP, with every fee and holding explained in plain language. An advisor is there when you ask for one.',
+      trade: 'Built for learning by doing, so the balance can move down as well as up.',
+    },
+  } as Record<string, ProductCopy>,
+
+  rec: {
+    title: 'Start with this account.',
+    /** Quotes the customer, then names the product. */
+    because: (said: string, product: string) =>
+      `You said you want to ${said}. ${product} is built for that.`,
+    generic: (product: string) => `${product} is the closest fit to what you told us.`,
+    badge: 'Suggested',
+    cta: 'Continue with this account',
+    compare: 'Compare other accounts',
+  },
+
+  compare: {
+    title: 'The ones that fit, and why.',
+    sub: 'Ranked on what you told us, not on what earns us the most. Every fee is here.',
+    badge: 'Suggested',
+    pick: 'Choose this one',
+    close: 'Back to the suggestion',
+  },
+
 
   goals: {
     title: 'What would you like your banking to do?',
@@ -388,6 +485,7 @@ const fr: Dict = {
   brand: 'Polaris',
   back: 'Retour',
   legal: 'Banque Polaris du Canada · Membre de la SADC',
+  and: ' et ',
 
   aiNote: "L'IA vous guide dans cette demande. Une personne est toujours à un geste près.",
   saved: 'Enregistré sur cet appareil. Arrêtez et reprenez quand vous voulez.',
@@ -424,6 +522,96 @@ const fr: Dict = {
 
   follow: followFr,
   assist: assistFr,
+  goalPhrase: {
+    rent: 'payer le loyer et les dépenses courantes',
+    pay: 'recevoir votre paie',
+    transfer: 'transférer de l’argent au Canada',
+    abroad: 'envoyer de l’argent à votre famille à l’étranger',
+    budget: 'planifier vos dépenses',
+    credit: 'bâtir un historique de crédit',
+    rainy: 'mettre de l’argent de côté pour les imprévus',
+    home: 'épargner pour une maison',
+    learn: 'en apprendre sur le placement',
+    debt: 'rembourser vos dettes',
+    unsure: '',
+  } as Record<string, string>,
+
+  products: {
+    newcomer: {
+      name: 'Compte Chèques Nouvel Arrivant',
+      tagline: 'Votre première année, offerte.',
+      terms:
+        'Aucuns frais mensuels pendant 12 mois, puis 15,95 $ avec les mêmes exemptions que le compte Chèques Quotidien. Passeports étrangers et permis acceptés, et aucuns frais sur les transferts vers le Canada.',
+      trade: 'Le compte le plus généreux pour une première année ici, puis il passe à la tarification du compte Quotidien.',
+    },
+    student: {
+      name: 'Compte Chèques Étudiant',
+      tagline: 'Gratuit pendant vos études.',
+      terms:
+        'Aucuns frais mensuels pendant vos études et aucune limite de transactions. Une preuve d’inscription une fois par an.',
+      trade: 'Gratuit, mais il exige une preuve d’inscription chaque année et se termine à la fin des études.',
+    },
+    sixty: {
+      name: 'Compte Chèques Soixante Plus',
+      tagline: 'Sans frais dès soixante ans.',
+      terms:
+        'Aucuns frais mensuels à partir de 60 ans, sans frais pour les relevés papier, les traites ni les chèques certifiés.',
+      trade: 'Gratuit pour de bon, sans solde à maintenir — il faut simplement avoir 60 ans ou plus.',
+    },
+    everyday: {
+      name: 'Compte Chèques Quotidien',
+      tagline: 'Pour les dépenses de tous les jours.',
+      terms:
+        '15,95 $ par mois, sans frais avec un dépôt direct de 500 $ ou plus par période de relevé, ou un solde quotidien minimal de 2 000 $.',
+      trade: 'Transactions illimitées, et gratuit si votre paie y est déposée — sinon 15,95 $.',
+    },
+    simple: {
+      name: 'Compte Chèques Simple',
+      tagline: 'Petit prix, peu de transactions.',
+      terms:
+        '4,95 $ par mois pour 12 transactions, puis 0,65 $ chacune. Sans frais avec un solde quotidien minimal de 1 000 $.',
+      trade: 'Moins cher que le compte Quotidien, mais avantageux seulement sous une douzaine de transactions par mois.',
+    },
+    savings: {
+      name: 'Épargne Quotidienne',
+      tagline: 'À part, et qui fructifie.',
+      terms: 'Aucuns frais mensuels, aucun minimum. 2,75 % sur chaque dollar, versés mensuellement.',
+      trade: 'Il rapporte des intérêts, mais ce n’est pas un compte de dépenses — à jumeler à un compte chèques.',
+    },
+    builder: {
+      name: 'Carte Bâtisseur de Crédit',
+      tagline: 'Commencez votre historique de crédit.',
+      terms:
+        'Aucuns frais annuels. Un dépôt remboursable à partir de 300 $ fixe votre limite, et nous transmettons vos données aux deux bureaux chaque mois.',
+      trade: 'Le chemin le plus rapide vers un dossier de crédit canadien, mais le dépôt est immobilisé.',
+    },
+    invest: {
+      name: 'Compte Placement Débutant',
+      tagline: 'Commencez avec vingt-cinq dollars.',
+      terms:
+        'Aucuns frais de compte. À partir de 25 $ dans un CELI, un CELIAPP ou un REER, avec tous les frais et titres expliqués en langage clair. Un conseiller est là si vous le demandez.',
+      trade: 'Conçu pour apprendre en pratiquant : le solde peut donc baisser autant que monter.',
+    },
+  } as Record<string, ProductCopy>,
+
+  rec: {
+    title: 'Commencez avec ce compte.',
+    because: (said: string, product: string) =>
+      `Vous avez dit vouloir ${said}. ${product} est conçu pour cela.`,
+    generic: (product: string) => `${product} correspond le mieux à ce que vous nous avez dit.`,
+    badge: 'Suggéré',
+    cta: 'Continuer avec ce compte',
+    compare: 'Comparer les autres comptes',
+  },
+
+  compare: {
+    title: 'Ceux qui conviennent, et pourquoi.',
+    sub: 'Classés selon ce que vous nous avez dit, non selon ce qui nous rapporte le plus. Tous les frais sont ici.',
+    badge: 'Suggéré',
+    pick: 'Choisir celui-ci',
+    close: 'Revenir à la suggestion',
+  },
+
 
   goals: {
     title: 'Que voulez-vous faire avec votre compte ?',

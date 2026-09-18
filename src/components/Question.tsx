@@ -18,6 +18,7 @@ export function Question({
   ready,
   onNext,
   onSkip,
+  onAlt,
   onHelp,
   children,
 }: {
@@ -29,6 +30,7 @@ export function Question({
   ready?: boolean
   onNext?: () => void
   onSkip?: () => void
+  onAlt?: { label: string; onClick: () => void }
   onHelp: () => void
   children: ReactNode
 }) {
@@ -44,6 +46,12 @@ export function Question({
         {cta && onNext && (
           <button className="btn btn--primary" disabled={ready === false} onClick={onNext}>
             {cta}
+          </button>
+        )}
+
+        {onAlt && (
+          <button className="skip" onClick={onAlt.onClick}>
+            {onAlt.label}
           </button>
         )}
 

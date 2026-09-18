@@ -24,7 +24,7 @@ Each follow-up names what the customer said in its own subhead — "You said you
 moved" — so it reads as a reply rather than the next page of a form. Two answers means
 there is nothing to confirm: the tap is the answer and the screen advances.
 
-The closing question bends the same way, and it is the one the recommendation gets ranked
+The closing question bends the same way, and it is the one the recommendation is ranked
 against. A newcomer is asked **"What would you like to do as you settle into Canada?"**,
 grouped under *Get settled* and *Build for the future*, with transferring money into the
 country and building Canadian credit history on the list. Everyone else gets the general
@@ -36,6 +36,34 @@ says **why it is asked** and states plainly what it does *not* decide; progress 
 in **words and dots** on every screen, because "no visible application status" is on the
 current-state failure list; and the **assistant** sits in a floating Need help pill,
 reached when someone is stuck rather than standing between them and the account.
+
+## The recommendation
+
+Eight products, and a ranking that can be read and argued with — the rules live in
+`src/products.ts`, the words in `src/i18n.ts`.
+
+A product declares the goals it serves and, optionally, who it is *for*. A goal it serves
+scores two; being built for this customer's own situation scores three on top, but **only
+for a product that serves at least one stated goal** — otherwise a student account wins
+for a student who asked about credit history, which is the wrong answer dressed up as
+personalization. Anything scoring nothing is not shown. If nothing scores at all, because
+the customer picked "I'm not sure yet", it falls back to what they are eligible for
+rather than an empty screen.
+
+| Told us | Suggested |
+|---|---|
+| Newcomer · everyday expenses, receive pay | Polaris Newcomer Chequing |
+| Student · everyday expenses, receive pay | Student Chequing |
+| Retirement · surprises, learn investing | Everyday Savings |
+| Graduate · credit history only | Credit Builder Card |
+| Newcomer · not sure yet | Polaris Newcomer Chequing, generic reason |
+
+The reason quotes the customer rather than describing the product — "You said you want to
+cover everyday expenses and receive pay. Polaris Newcomer Chequing is built for that." —
+and every fee is on the card rather than behind a link. **Compare other accounts** shows
+the top three with the trade-off spelled out on each ("Cheaper than Everyday Chequing, but
+only worth it under about twelve transactions a month"), because a recommendation the
+customer cannot check is a sales pitch. Choosing a different one carries through.
 
 ## The assistant
 
@@ -111,8 +139,9 @@ src/main.tsx     React entry
 src/i18n.ts        All customer-facing copy, English and French
 src/Icons.tsx      Inline SVG set, including the compass rose
 src/App.tsx        The silhouette, app bar, language sheet and step router
+src/products.ts    The catalogue's rules and the ranking
 src/assistant.ts   Intent matcher and scoring for the assistant
 src/components/    The question shell, choice cards, the assistant and the sheet
-src/screens/       Launch, Profile, Follow (every branch) and Goals
+src/screens/       Launch, Profile, Follow (every branch), Goals, Recommend, Compare
 src/styles.css     Palette tokens, the silhouette and the component styles
 ```
