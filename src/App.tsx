@@ -6,6 +6,7 @@ import { Check, ChevronLeft, Compass, Globe, StatusIcons } from './Icons'
 import { dicts, langOrder, type LangCode } from './i18n'
 import Compare from './screens/Compare'
 import Follow from './screens/Follow'
+import Checks from './screens/Checks'
 import Details from './screens/Details'
 import Goals from './screens/Goals'
 import Identity from './screens/Identity'
@@ -30,6 +31,7 @@ type Step =
   | 'recommend'
   | 'details'
   | 'identity'
+  | 'checks'
   | 'end'
   | `follow:${string}`
 
@@ -57,7 +59,7 @@ export default function App() {
   /* Prefilled: everything Polaris already holds arrives filled in, and the
      customer confirms rather than types. */
   const [details, setDetails] = useState({
-    email: 'alex.rivera@gmail.com',
+    email: 'edward.philips@gmail.com',
     mobile: '416 555 0134',
     address: '219 Dundas St E, Toronto, ON M5A 1Z5',
   })
@@ -71,14 +73,13 @@ export default function App() {
     const opened = t.profile.options
       .filter((o) => profile.includes(o.id) && t.follow[o.id])
       .map((o) => `follow:${o.id}` as Step)
-    return ['profile', ...opened, 'goals', 'recommend', 'details', 'identity']
+    return ['profile', ...opened, 'goals', 'recommend', 'details', 'identity', 'checks']
   }, [profile, t])
 
   const index = queue.indexOf(step)
   const onQueue = index >= 0
 
-  /** Opening and activating the account is the one stage still to build. */
-  const dots = queue.length + 1
+  const dots = queue.length
 
   const next = () => setStep(queue[index + 1] ?? 'end')
   const back = () => setStep(index > 0 ? queue[index - 1] : 'launch')
@@ -213,6 +214,10 @@ export default function App() {
             />
           )}
 
+          {step === 'checks' && (
+            <Checks t={t} onNext={next} onHelp={() => setHelpOpen(true)} />
+          )}
+
           {step === 'end' && (
             <div className="screen end">
               <span className="mark">
@@ -220,8 +225,8 @@ export default function App() {
                 {t.brand}
               </span>
               <p className="end__note">
-                End of the built flow. Opening the account, and the 30-, 60- and
-                90-day newcomer plan, come next.
+                End of the built flow. The agreement, opening the account, and the
+                30-, 60- and 90-day newcomer plan come next.
               </p>
               <button className="btn btn--ghost" onClick={restart}>
                 Restart

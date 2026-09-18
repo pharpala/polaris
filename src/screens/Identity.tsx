@@ -27,7 +27,7 @@ export default function Identity({
   onNext: () => void
   onHelp: () => void
 }) {
-  const [phase, setPhase] = useState<'setup' | 'id' | 'selfie'>('setup')
+  const [phase, setPhase] = useState<'setup' | 'id' | 'selfie' | 'confirm'>('setup')
   const [open, setOpen] = useState(false)
   const [agreed, setAgreed] = useState(false)
   const i = t.identity
@@ -46,7 +46,40 @@ export default function Identity({
   }
 
   if (phase === 'selfie') {
-    return <Capture t={t} kind="selfie" onDone={onNext} onHelp={onHelp} />
+    return <Capture t={t} kind="selfie" onDone={() => setPhase('confirm')} onHelp={onHelp} />
+  }
+
+  /* Read off the document rather than typed in by the customer — and shown
+     back for confirmation before anything is submitted, which is the deck's
+     "customer confirms pre-filled information before submission". */
+  if (phase === 'confirm') {
+    const e = t.extracted
+    return (
+      <Question
+        t={t}
+        onHelp={onHelp}
+        title={e.title}
+        sub={e.sub}
+        cta={e.confirm}
+        onNext={onNext}
+        onAlt={{ label: e.edit, onClick: () => setPhase('id') }}
+      >
+        <div className="data">
+          <div className="data__row">
+            <span className="data__k">{e.name}</span>
+            <span className="data__v">{e.nameValue}</span>
+          </div>
+          <div className="data__row">
+            <span className="data__k">{e.dob}</span>
+            <span className="data__v">{e.dobValue}</span>
+          </div>
+          <div className="data__row">
+            <span className="data__k">{e.id}</span>
+            <span className="data__v">{picked?.label ?? ''}</span>
+          </div>
+        </div>
+      </Question>
+    )
   }
 
   return (

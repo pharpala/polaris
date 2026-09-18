@@ -131,7 +131,7 @@ export default function Capture({
                 <span>PASSPORT</span>
                 <span>CAN</span>
               </span>
-              <span className="idcard__name">RIVERA, ALEX</span>
+              <span className="idcard__name">PHILIPS, EDWARD</span>
               <span className="idcard__dob">DOB 14 MAR 1998</span>
             </span>
           )}

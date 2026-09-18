@@ -73,6 +73,17 @@ Order matters: telling someone to centre a document they cannot light is useless
 camera — permission denied, or a desktop without one — it walks the same messages, says so
 on screen, and shows the card outline the customer would be aiming at.
 
+### Confirm, then let the checks run
+
+What comes off the document is shown back before anything is submitted — **"Read from your
+document. Nothing here was typed by you."** — with Edit going straight back to the camera.
+
+Then screening runs behind the journey rather than in front of it. The rows move from
+*Next* to *In progress* to *Done* on their own, the bar fills, and **Leave for now** is the
+main action while it runs: the deck's finding is that customers abandon during a 48–72 hour
+manual review because nobody tells them anything, so the fix is status, not speed. When
+everything clears the screen changes to "You're verified." and the action becomes Continue.
+
 ## The recommendation
 
 Thirteen products across chequing, savings, the registered plans and self-directed
@@ -195,6 +206,7 @@ src/products.ts    The catalogue's rules and the ranking
 src/capture.ts     Frame measurement and capture coaching
 src/assistant.ts   Intent matcher and scoring for the assistant
 src/components/    The question shell, choice cards, the assistant and the sheet
-src/screens/       Launch, Profile, Follow, Goals, Recommend, Compare, Details, Identity
+src/screens/       Launch, Profile, Follow, Goals, Recommend, Compare, Details,
+                   Identity (pick, capture, confirm) and Checks
 src/styles.css     Palette tokens, the silhouette and the component styles
 ```

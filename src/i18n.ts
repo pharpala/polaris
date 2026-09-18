@@ -262,6 +262,35 @@ const en = {
     selfieFoot:
       'The photo is matched to your ID and kept for verification. Nothing is posted anywhere.',
   },
+  extracted: {
+    title: 'Does this look right?',
+    sub: 'Read from your document. Nothing here was typed by you.',
+    name: 'Name',
+    nameValue: 'Edward Philips',
+    dob: 'Date of birth',
+    dobValue: 'March 14, 1998',
+    id: 'ID',
+    confirm: 'Confirm',
+    edit: 'Edit',
+  },
+
+  checks: {
+    title: 'We’re confirming it’s you.',
+    sub: 'You can leave while these checks continue. We’ll email you when your documents have been verified.',
+    titleDone: 'You’re verified.',
+    subDone: 'Everything cleared automatically. Nothing needed a person, and nothing needs doing again.',
+    rows: [
+      { label: 'Photo ID and selfie' },
+      { label: 'Required checks' },
+      { label: 'Ready to agree' },
+    ],
+    state: { good: 'Done', wait: 'In progress', next: 'Next' } as Record<string, string>,
+    secure: 'Your data is secured',
+    leave: 'Leave for now',
+    continue: 'Continue',
+    foot:
+      'Screening runs behind the journey. If something needs judgment it goes to an authorised employee with your file attached — you are never asked to start again.',
+  },
   assist: assistEn,
   /** Phrases the recommendation quotes back, one per goal. */
   goalPhrase: {
@@ -681,6 +710,35 @@ const fr: Dict = {
       'Le déclencheur reste bloqué jusqu’à ce que l’image soit lisible : une photo que nous aurions refusée n’est jamais prise.',
     selfieFoot:
       'La photo est comparée à votre pièce d’identité et conservée pour la vérification. Rien n’est publié.',
+  },
+  extracted: {
+    title: 'Est-ce exact ?',
+    sub: 'Lu sur votre document. Vous n’avez rien saisi ici.',
+    name: 'Nom',
+    nameValue: 'Edward Philips',
+    dob: 'Date de naissance',
+    dobValue: '14 mars 1998',
+    id: 'Pièce d’identité',
+    confirm: 'Confirmer',
+    edit: 'Modifier',
+  },
+
+  checks: {
+    title: 'Nous confirmons votre identité.',
+    sub: 'Vous pouvez partir pendant ces vérifications. Nous vous écrirons dès que vos documents seront vérifiés.',
+    titleDone: 'Votre identité est confirmée.',
+    subDone: 'Tout a été validé automatiquement. Aucune intervention n’a été nécessaire, et rien n’est à refaire.',
+    rows: [
+      { label: 'Pièce d’identité et autoportrait' },
+      { label: 'Vérifications requises' },
+      { label: 'Prêt à signer' },
+    ],
+    state: { good: 'Terminé', wait: 'En cours', next: 'À venir' } as Record<string, string>,
+    secure: 'Vos données sont protégées',
+    leave: 'Partir pour l’instant',
+    continue: 'Continuer',
+    foot:
+      'Les vérifications se déroulent en arrière-plan. Si un point exige un jugement, il est confié à un employé autorisé avec votre dossier — on ne vous demande jamais de recommencer.',
   },
   assist: assistFr,
   goalPhrase: {

@@ -541,6 +541,84 @@ button {
 
 .select__value--empty { color: var(--faint); font-weight: 400; }
 
+/* ------------------------------------------------------------ data rows -- */
+
+/* Label left, value right, hairlines between. Used for the fields read off
+   the document and for the status of the checks. */
+.data {
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
+  padding: 0 16px;
+}
+
+.data__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 15px 0;
+}
+
+.data__row + .data__row { border-block-start: 1px solid var(--line-soft); }
+
+.data__k { font-size: 14px; color: var(--muted); }
+
+.data__v {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  text-align: end;
+}
+
+/* Status carries two colours beyond the palette, because "done" and "still
+   running" have to be told apart at a glance. Both are muted to sit inside
+   the paper ground rather than shout from it. */
+.status { font-size: 13.5px; font-weight: 600; }
+.status--good { color: #2f7d52; }
+.status--wait { color: #8a6218; }
+.status--next { color: var(--faint); font-weight: 500; }
+
+.bar {
+  block-size: 6px;
+  margin: 2px 0 16px;
+  border-radius: var(--pill);
+  background: rgba(24, 27, 31, 0.09);
+  overflow: hidden;
+}
+
+.bar__fill {
+  display: block;
+  block-size: 100%;
+  border-radius: var(--pill);
+  background: var(--ink);
+  transition: inline-size 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.secure {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 11px 0 0;
+  padding: 11px 13px;
+  border-radius: var(--r);
+  background: var(--blue-06);
+  color: var(--blue);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.secure__mark {
+  inline-size: 30px;
+  block-size: 30px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+}
+
 /* --------------------------------------------------------------- details -- */
 
 /* Pre-filled rather than asked for again, so the customer confirms instead
