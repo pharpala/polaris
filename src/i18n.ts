@@ -15,6 +15,9 @@ const en = {
 
   /* Disclosure by default — one of the program's Responsible AI controls. */
   aiNote: 'AI guides this application. A person is always one tap away.',
+  saved: 'Saved on this device. Stop and resume at any time.',
+  skip: 'Skip',
+  help: 'Need help?',
 
   lang: {
     open: 'Change language',
@@ -31,15 +34,16 @@ const en = {
   },
 
   profile: {
-    title: 'Which of these sounds most like you?',
-    sub: 'It decides which accounts we show you and which documents we ask for.',
+    title: 'Anything we should know about you?',
+    sub: 'Choose any that apply. You can skip.',
     foot: 'This shapes what we recommend. It has no bearing on whether you are approved.',
     cta: 'Continue',
     options: [
-      { id: 'newcomer', label: 'New to Canada', note: 'Arrived in the last five years, or arriving soon' },
-      { id: 'student', label: 'Student', note: 'Enrolled, or starting at a college or university' },
-      { id: 'working', label: 'Working and building', note: 'Employed or self-employed, banking day to day' },
-      { id: 'retirement', label: 'Near or in retirement', note: 'Winding down work, or already retired' },
+      { id: 'newcomer', label: 'I’m a newcomer to Canada' },
+      { id: 'student', label: 'I’m a student' },
+      { id: 'grad', label: 'I just graduated' },
+      { id: 'retirement', label: 'I’m retirement planning' },
+      { id: 'other', label: 'Other' },
     ],
   },
 
@@ -85,6 +89,9 @@ const fr: Dict = {
   legal: 'Banque Polaris du Canada · Membre de la SADC',
 
   aiNote: "L'IA vous guide dans cette demande. Une personne est toujours à un geste près.",
+  saved: 'Enregistré sur cet appareil. Arrêtez et reprenez quand vous voulez.',
+  skip: 'Passer',
+  help: 'Besoin d’aide ?',
 
   lang: {
     open: 'Changer de langue',
@@ -101,15 +108,16 @@ const fr: Dict = {
   },
 
   profile: {
-    title: 'Laquelle de ces situations vous ressemble le plus ?',
-    sub: 'Cela détermine les comptes que nous vous montrons et les documents que nous demandons.',
+    title: 'Y a-t-il quelque chose à savoir sur vous ?',
+    sub: 'Choisissez tout ce qui s’applique. Vous pouvez passer.',
     foot: 'Cela façonne nos recommandations. Cela n’influe pas sur l’acceptation de votre demande.',
     cta: 'Continuer',
     options: [
-      { id: 'newcomer', label: 'Nouvel arrivant au Canada', note: 'Arrivé depuis moins de cinq ans, ou bientôt' },
-      { id: 'student', label: 'Étudiant', note: 'Inscrit, ou en voie de l’être, au collège ou à l’université' },
-      { id: 'working', label: 'Au travail', note: 'Salarié ou travailleur autonome, au quotidien' },
-      { id: 'retirement', label: 'Proche de la retraite ou retraité', note: 'En fin de carrière, ou déjà retraité' },
+      { id: 'newcomer', label: 'Je suis nouvel arrivant au Canada' },
+      { id: 'student', label: 'Je suis étudiant' },
+      { id: 'grad', label: 'Je viens d’obtenir mon diplôme' },
+      { id: 'retirement', label: 'Je planifie ma retraite' },
+      { id: 'other', label: 'Autre' },
     ],
   },
 

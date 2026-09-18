@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './styles.css'
 import Sheet from './components/Sheet'
-import { ArrowLeft, Check, Compass, Globe, StatusIcons } from './Icons'
+import { Check, ChevronLeft, Compass, Globe, StatusIcons } from './Icons'
 import { dicts, langOrder, type LangCode } from './i18n'
 import Goals from './screens/Goals'
 import Launch from './screens/Launch'
@@ -17,6 +17,10 @@ type Step = 'launch' | 'profile' | 'status' | 'goals' | 'end'
 
 const RAIL: Step[] = ['profile', 'status', 'goals']
 
+/** The target design shows six dots: the three questions here, then the
+ *  recommendation, identity capture and review still to build. */
+const DOTS = 6
+
 function StatusBar() {
   return (
     <div className="statusbar" aria-hidden>
@@ -31,7 +35,7 @@ export default function App() {
   const [step, setStep] = useState<Step>('launch')
   const [langOpen, setLangOpen] = useState(false)
 
-  const [profile, setProfile] = useState<string | null>(null)
+  const [profile, setProfile] = useState<string[]>([])
   const [status, setStatus] = useState<string | null>(null)
   const [goals, setGoals] = useState<string[]>([])
 
@@ -42,7 +46,7 @@ export default function App() {
   const back = () => setStep(railIndex > 0 ? RAIL[railIndex - 1] : 'launch')
 
   const restart = () => {
-    setProfile(null)
+    setProfile([])
     setStatus(null)
     setGoals([])
     setStep('launch')
@@ -63,43 +67,40 @@ export default function App() {
 
           {onRail && (
             <div className="appbar">
-              <div className="appbar__row">
-                <button className="appbar__back" onClick={back} aria-label={t.back}>
-                  <ArrowLeft />
-                </button>
-                <span className="mark mark--sm">
-                  <Compass />
-                  {t.brand}
-                </span>
-                <span className="appbar__spacer" />
-                {/* Language sits in reach on every question, because for a
-                    newcomer the language of the disclosures is the first
-                    barrier, not the last. */}
-                <button className="chip" onClick={() => setLangOpen(true)} aria-label={t.lang.open}>
-                  <Globe />
-                  {t.meta.chip}
-                </button>
-              </div>
-
-              <div
-                className="rail"
+              <button className="appbar__back" onClick={back} aria-label={t.back}>
+                <ChevronLeft />
+              </button>
+              <span className="wordmark">{t.brand}</span>
+              <span
+                className="dots"
                 role="progressbar"
                 aria-valuenow={railIndex + 1}
-                aria-valuemax={RAIL.length}
+                aria-valuemax={DOTS}
               >
-                <span
-                  className="rail__fill"
-                  style={{ inlineSize: `${((railIndex + 1) / RAIL.length) * 100}%` }}
-                />
-              </div>
-              <span className="appbar__step">{t.q.step(railIndex + 1, RAIL.length)}</span>
+                {Array.from({ length: DOTS }, (_, i) => (
+                  <span key={i} className={`dot${i === railIndex ? ' dot--on' : ''}`} />
+                ))}
+              </span>
+              {/* Language stays in reach on every question, because for a
+                  newcomer the language of the disclosures is the first
+                  barrier, not the last. */}
+              <button className="langBtn" onClick={() => setLangOpen(true)} aria-label={t.lang.open}>
+                <Globe />
+              </button>
             </div>
           )}
 
           {step === 'launch' && <Launch t={t} onDone={() => setStep('profile')} />}
 
           {step === 'profile' && (
-            <Profile t={t} value={profile} onPick={setProfile} onNext={() => setStep('status')} />
+            <Profile
+              t={t}
+              value={profile}
+              onToggle={(id) =>
+                setProfile((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]))
+              }
+              onNext={() => setStep('status')}
+            />
           )}
 
           {step === 'status' && (

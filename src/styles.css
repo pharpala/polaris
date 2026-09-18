@@ -1,39 +1,37 @@
 /* ============================================================================
    Polaris design system
-   The palette is exactly three colours: #FFFFFF, #324AFE, #181B1F. Every
-   other value is one of the two non-white colours mixed with white, so there
-   is no fourth hue anywhere.
-   Corners are square. The only exceptions are the device silhouette and its
-   hardware, which are physical objects rather than UI.
-   Surfaces are flat: no gradients, no glows, no shadows. Separation comes
-   from hairlines and from adjoining blocks of ink, blue and white.
+
+   Surface treatment follows the target design: a warm paper ground, white
+   cards on soft radii, pill commits, and a display serif reserved for the
+   wordmark and headlines. Calibre does all the UI work.
+
+   #324AFE is the single accent — selection ticks, the active dot, the
+   assistant. #181B1F is type and the primary commit. Surfaces stay flat:
+   no gradients, no glows, no shadows except the one that lifts the
+   floating assistant off the page.
    ========================================================================== */
 
 :root {
+  --paper: #f7f6f2;
   --white: #ffffff;
   --blue: #324afe;
   --ink: #181b1f;
 
-  /* #181B1F over white */
-  --ink-06: #f1f1f2;
-  --ink-10: #e8e8e9;
-  --ink-14: #dfdfe0;
-  --ink-22: #cccdce;
-  --ink-45: #97989a;
-  --ink-62: #707274;
-
-  /* #324AFE over white */
+  --line: rgba(24, 27, 31, 0.13);
+  --line-soft: rgba(24, 27, 31, 0.08);
+  --muted: rgba(24, 27, 31, 0.56);
+  --faint: rgba(24, 27, 31, 0.34);
   --blue-06: #f3f4ff;
-  --blue-12: #e6e9ff;
 
-  --line: var(--ink-14);
-  --muted: var(--ink-62);
-
-  --edge: rgba(255, 255, 255, 0.16);
   --font: 'Calibre', 'Calibre Web', 'General Sans', 'Inter', -apple-system,
     'Segoe UI', sans-serif;
+  --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
 
-  --gut: 24px;
+  --r: 12px;
+  --pill: 999px;
+  --gut: 22px;
+
+  --edge: rgba(255, 255, 255, 0.16);
   --bezel: 11px;
   --device-h: 874px;
   --device-ratio: 415 / 874;
@@ -41,7 +39,6 @@
 
 * {
   box-sizing: border-box;
-  border-radius: 0;
 }
 
 html,
@@ -61,13 +58,9 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-button,
-input {
+button {
   font: inherit;
   color: inherit;
-}
-
-button {
   border: 0;
   background: none;
   padding: 0;
@@ -91,8 +84,6 @@ button {
 
 /* ------------------------------------------------------ iPhone silhouette -- */
 
-/* Ink on ink: the body reads as an outline and the white screen carries the
-   light. Sized from viewport height so the whole phone stays on screen. */
 .device {
   position: relative;
   block-size: min(var(--device-h), calc(100dvh - 56px));
@@ -109,7 +100,7 @@ button {
   block-size: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--white);
+  background: var(--paper);
   border-radius: 45px;
   overflow: hidden;
 }
@@ -126,11 +117,13 @@ button {
 .device__key--volDown {
   inset-inline-start: calc(-1px - var(--bezel) - 3px);
   border-inline-end: none;
+  border-radius: 2px 0 0 2px;
 }
 
 .device__key--power {
   inset-inline-end: calc(-1px - var(--bezel) - 3px);
   border-inline-start: none;
+  border-radius: 0 2px 2px 0;
 }
 
 .device__key--action { inset-block-start: 16.4%; block-size: 3.8%; }
@@ -146,8 +139,8 @@ button {
   inline-size: 126px;
   block-size: 37px;
   background: var(--ink);
-  border-radius: 999px;
-  z-index: 3;
+  border-radius: var(--pill);
+  z-index: 6;
 }
 
 .device__home {
@@ -158,8 +151,8 @@ button {
   inline-size: 139px;
   block-size: 5px;
   background: var(--ink);
-  border-radius: 999px;
-  z-index: 3;
+  border-radius: var(--pill);
+  z-index: 6;
 }
 
 /* ------------------------------------------------------------- statusbar -- */
@@ -169,7 +162,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 19px 30px 0;
+  padding: 19px 28px 0;
   color: var(--ink);
 }
 
@@ -188,78 +181,80 @@ button {
 /* ---------------------------------------------------------------- appbar -- */
 
 .appbar {
+  position: relative;
   flex: none;
-  padding-block-start: 14px;
-  border-block-end: 1px solid var(--line);
-}
-
-.appbar__row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 18px 12px;
+  gap: 8px;
+  padding: 16px var(--gut) 6px;
 }
 
 .appbar__back {
-  inline-size: 40px;
-  block-size: 40px;
+  inline-size: 34px;
+  block-size: 34px;
   display: grid;
   place-items: center;
   margin-inline-start: -8px;
+  border-radius: var(--pill);
 }
 
-.appbar__back:hover { background: var(--ink-06); }
+.appbar__back:hover { background: var(--line-soft); }
 
-.appbar__spacer { flex: 1; }
+/* Centred on the screen rather than in the remaining space, so the back
+   arrow and the dots do not pull it off axis. */
+.wordmark {
+  position: absolute;
+  inset-inline: 0;
+  text-align: center;
+  pointer-events: none;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
 
-.chip {
-  display: inline-flex;
+.dots {
+  margin-inline-start: auto;
+  display: flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 11px;
-  border: 1px solid var(--line);
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
 }
 
-.chip:hover { border-color: var(--ink); }
-
-.rail {
-  block-size: 2px;
-  background: var(--ink-10);
+.dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: var(--faint);
+  opacity: 0.45;
 }
 
-.rail__fill {
-  display: block;
-  block-size: 100%;
-  background: var(--blue);
-  transition: inline-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
+.dot--on { background: var(--ink); opacity: 1; }
 
-.appbar__step {
-  display: block;
-  padding: 8px 24px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.langBtn {
+  inline-size: 34px;
+  block-size: 34px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--pill);
   color: var(--muted);
 }
+
+.langBtn:hover { background: var(--line-soft); color: var(--ink); }
 
 /* --------------------------------------------------------------- screens -- */
 
 .screen {
+  position: relative;
   flex: 1;
   min-block-size: 0;
   display: flex;
   flex-direction: column;
-  background: var(--white);
-  animation: screenIn 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: screenIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes screenIn {
-  from { opacity: 0; transform: translateX(14px); }
+  from { opacity: 0; transform: translateX(12px); }
   to { opacity: 1; transform: none; }
 }
 
@@ -268,22 +263,20 @@ button {
 .mark {
   display: inline-flex;
   align-items: center;
-  gap: 0.36em;
-  font-size: 26px;
+  gap: 0.34em;
+  font-family: var(--serif);
+  font-size: 27px;
   font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.02em;
   color: var(--ink);
 }
 
-.mark--sm { font-size: 16px; letter-spacing: -0.015em; }
-
 /* Sized in em so the lockup holds together at any type size. */
 .mark__glyph {
-  inline-size: 1.08em;
-  block-size: 1.08em;
+  inline-size: 1em;
+  block-size: 1em;
   flex: none;
-  transform: translateY(0.02em);
+  transform: translateY(0.04em);
 }
 
 /* --------------------------------------------------------------- launch -- */
@@ -303,87 +296,74 @@ button {
 
 /* ------------------------------------------------------------- questions -- */
 
-.q { justify-content: space-between; }
-
 .q__scroll {
   flex: 1;
   min-block-size: 0;
   overflow-y: auto;
-  padding: 26px var(--gut) 8px;
+  padding: 4px var(--gut) 30px;
   scrollbar-width: none;
 }
 
 .q__scroll::-webkit-scrollbar { display: none; }
 
-/* The question is the first thing read, so it sits in the content at
-   display size rather than shrunk into the app bar. */
+/* Progress is stated in words as well as dots, because "no visible
+   application status" is on the current-state failure list. */
+.q__saved {
+  margin: 8px 0 14px;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
 .q__h {
-  margin: 0 0 10px;
-  font-size: 32px;
-  line-height: 1.05;
-  font-weight: 600;
-  letter-spacing: -0.034em;
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 30px;
+  line-height: 1.16;
+  font-weight: 700;
+  letter-spacing: -0.004em;
 }
 
 .q__sub {
   margin: 0 0 22px;
-  font-size: 15.5px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.45;
   color: var(--muted);
-  max-inline-size: 33ch;
-}
-
-.q__hint {
-  margin: 0 0 10px;
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-45);
-}
-
-.q__foot {
-  flex: none;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 14px var(--gut) 26px;
 }
 
 /* ---------------------------------------------------------------- choices -- */
 
-/* Adjacent cards share one hairline rather than stacking two. */
-.choices { display: flex; flex-direction: column; }
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .choice {
   display: flex;
   align-items: center;
   gap: 14px;
   inline-size: 100%;
-  padding: 16px 16px 15px;
-  margin-block-end: -1px;
+  min-block-size: 58px;
+  padding: 14px 18px;
   background: var(--white);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
   text-align: start;
-  transition: background 0.12s, border-color 0.12s;
+  transition: border-color 0.14s, background 0.14s;
 }
 
-.choice:hover { border-color: var(--ink-45); z-index: 1; }
+.choice:hover { border-color: var(--line); }
 
-/* Selection is a blue wash and a blue tick — never a fourth colour. */
-.choice--on {
-  background: var(--blue-06);
-  border-color: var(--blue);
-  z-index: 2;
-}
+.choice--on { border-color: var(--blue); background: var(--blue-06); }
 
 .choice__text { flex: 1; min-inline-size: 0; }
 
 .choice__label {
   display: block;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.012em;
+  font-size: 15.5px;
+  font-weight: 500;
+  letter-spacing: -0.008em;
 }
 
 .choice__note {
@@ -400,7 +380,8 @@ button {
   flex: none;
   display: grid;
   place-items: center;
-  border: 1px solid var(--ink-22);
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
   color: var(--white);
 }
 
@@ -408,52 +389,55 @@ button {
 
 /* ----------------------------------------------------------------- select -- */
 
-/* A single fact behind a field, the way the reference handles country. */
 .select {
   display: flex;
   align-items: center;
   gap: 12px;
   inline-size: 100%;
-  padding: 11px 14px 12px;
+  padding: 12px 18px 13px;
   background: var(--white);
-  border: 1px solid var(--ink-22);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
   text-align: start;
   color: var(--muted);
-  transition: border-color 0.12s;
+  transition: border-color 0.14s;
 }
 
-.select:hover { border-color: var(--ink); }
+.select:hover { border-color: var(--line); }
 
 .select__text { flex: 1; min-inline-size: 0; }
 
 .select__label {
   display: block;
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--muted);
 }
 
 .select__value {
   display: block;
   margin-block-start: 1px;
-  font-size: 17px;
+  font-size: 16.5px;
   font-weight: 500;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.01em;
   color: var(--ink);
 }
 
-.select__value--empty { color: var(--ink-45); font-weight: 400; }
+.select__value--empty { color: var(--faint); font-weight: 400; }
 
 /* --------------------------------------------------------------- buttons -- */
 
 .btn {
-  min-block-size: 52px;
+  inline-size: 100%;
+  min-block-size: 56px;
+  margin-block-start: 26px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   padding: 0 20px;
-  font-size: 16px;
+  border-radius: var(--pill);
+  font-size: 16.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
   transition: background 0.14s, color 0.14s, border-color 0.14s;
@@ -463,24 +447,78 @@ button {
 .btn--primary:hover:not(:disabled) { background: var(--blue); }
 
 .btn--primary:disabled {
-  background: var(--ink-06);
-  color: var(--ink-45);
+  background: rgba(24, 27, 31, 0.1);
+  color: var(--faint);
   cursor: not-allowed;
 }
 
 .btn--ghost {
-  background: var(--white);
+  background: transparent;
   color: var(--ink);
   border: 1px solid var(--line);
 }
 
 .btn--ghost:hover { border-color: var(--ink); }
 
+.skip {
+  inline-size: 100%;
+  min-block-size: 44px;
+  margin-block-start: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.skip:hover { color: var(--blue); }
+
 .legal {
-  margin: 0;
+  margin: 18px 0 0;
   font-size: 12px;
   line-height: 1.5;
-  color: var(--ink-45);
+  color: var(--faint);
+}
+
+/* Disclosure by default — one of the program's Responsible AI controls, so it
+   rides the first screen the customer reads rather than a settings page. */
+.legal--note {
+  margin-block-start: 8px;
+  padding-inline-start: 10px;
+  border-inline-start: 2px solid var(--blue);
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------- assistant -- */
+
+/* Reached when someone is stuck, never imposed on someone who is not. */
+.help {
+  position: absolute;
+  inset-block-end: 26px;
+  inset-inline-end: var(--gut);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px 11px 14px;
+  border-radius: var(--pill);
+  background: var(--blue);
+  color: var(--white);
+  font-size: 14.5px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(50, 74, 254, 0.28);
+  transition: background 0.14s;
+}
+
+.help:hover { background: var(--ink); box-shadow: none; }
+
+.help__mark {
+  inline-size: 19px;
+  block-size: 19px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 /* ----------------------------------------------------------------- sheet -- */
@@ -507,13 +545,13 @@ button {
   cursor: default;
 }
 
-.sheet--open .sheet__scrim { opacity: 0.45; }
+.sheet--open .sheet__scrim { opacity: 0.4; }
 
 .sheet__panel {
   position: relative;
-  background: var(--white);
-  border-block-start: 1px solid var(--line);
-  padding: 22px var(--gut) 30px;
+  background: var(--paper);
+  border-radius: 20px 20px 0 0;
+  padding: 24px var(--gut) 30px;
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -522,13 +560,14 @@ button {
 
 .sheet__h {
   margin: 0 0 6px;
-  font-size: 21px;
-  font-weight: 600;
-  letter-spacing: -0.022em;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.008em;
 }
 
 .sheet__p {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   font-size: 13.5px;
   line-height: 1.5;
   color: var(--muted);
@@ -541,7 +580,7 @@ button {
   justify-content: space-between;
   gap: 12px;
   padding: 15px 0;
-  border-block-start: 1px solid var(--line);
+  border-block-start: 1px solid var(--line-soft);
   font-size: 16px;
   font-weight: 500;
   text-align: start;
@@ -549,16 +588,13 @@ button {
 
 .row:hover { color: var(--blue); }
 
-.row:last-of-type {
-  border-block-end: 1px solid var(--line);
-  margin-block-end: 18px;
-}
+.row:last-of-type { border-block-end: 1px solid var(--line-soft); }
 
 .row__note {
   display: block;
   font-size: 12.5px;
-  font-weight: 500;
-  color: var(--ink-45);
+  font-weight: 400;
+  color: var(--faint);
 }
 
 .tick {
@@ -567,6 +603,7 @@ button {
   flex: none;
   display: grid;
   place-items: center;
+  border-radius: 6px;
   background: var(--blue);
   color: var(--white);
 }
@@ -580,6 +617,8 @@ button {
   padding: 0 var(--gut) 30px;
   text-align: center;
 }
+
+.end .btn { inline-size: auto; padding: 0 28px; margin-block-start: 0; }
 
 .end__note {
   margin: 0;
@@ -615,18 +654,11 @@ button {
     padding-inline: max(24px, env(safe-area-inset-left, 0px))
       max(24px, env(safe-area-inset-right, 0px));
   }
+
+  .help { inset-block-end: max(26px, env(safe-area-inset-bottom, 0px)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .screen,
   .launch { animation: none; }
-}
-
-/* Disclosure by default — one of the program's Responsible AI controls, so it
-   rides the first screen the customer reads rather than a settings page. */
-.legal--note {
-  margin-block-start: -6px;
-  padding-inline-start: 11px;
-  border-inline-start: 2px solid var(--blue);
-  color: var(--muted);
 }

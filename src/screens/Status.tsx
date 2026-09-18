@@ -26,6 +26,7 @@ export default function Status({
 
   return (
     <Question
+      t={t}
       title={t.status.title}
       sub={t.status.sub}
       foot={t.status.foot}

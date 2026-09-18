@@ -53,15 +53,19 @@ lockup holds together at any type size.
 
 ## Design system
 
-Three colours, and nothing else: `#FFFFFF`, `#324AFE` electric blue, `#181B1F` ink.
-Corners are square — `border-radius: 0` is set globally. The only exceptions are the
-device mockup and its hardware, which are physical objects rather than UI. Surfaces
-are flat: no gradients, no glows, no shadows.
+Surface treatment follows the target design: a warm paper ground (`#F7F6F2`), white cards
+on 12px radii, pill commits, and a display serif — [Source Serif
+4](https://fonts.google.com/specimen/Source+Serif+4) — reserved for the wordmark and
+headlines. **Calibre** does all the UI work: the stack loads [General
+Sans](https://www.fontshare.com/fonts/general-sans) as the closest licensable stand-in and
+lists Calibre first, so installing it locally upgrades the page with no code change.
 
-Type is **Calibre**, the brand face. It is not freely licensable, so the stack loads
-[General Sans](https://www.fontshare.com/fonts/general-sans) as the closest available
-stand-in and lists Calibre first — install Calibre locally and the page picks it up
-with no code change.
+`#324AFE` is the single accent — selection ticks, the active dot, the assistant. `#181B1F`
+is type and the primary commit. Surfaces are flat: no gradients, no glows, and the only
+shadow in the sheet lifts the floating assistant off the page.
+
+This replaces the earlier square-corner, pure-white treatment. The radii live in two
+tokens (`--r`, `--pill`), so reverting is a two-line change.
 
 ## Structure
 

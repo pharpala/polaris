@@ -16,9 +16,9 @@ export default function Goals({
 }) {
   return (
     <Question
+      t={t}
       title={t.goals.title}
       sub={t.goals.sub}
-      hint={t.q.chooseAny}
       foot={t.goals.foot}
       cta={t.goals.cta}
       ready={value.length > 0}

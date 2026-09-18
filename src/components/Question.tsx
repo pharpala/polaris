@@ -4,52 +4,64 @@ import { Check } from '../Icons'
 export type Option = { id: string; label: string; note?: string }
 
 /**
- * The shape every question shares: a large headline, the reason underneath,
- * the control, then the footnote and the commit. The headline lives in the
- * content rather than the app bar so the question is the first thing read.
+ * The shape every question shares, following the target design: the saved
+ * note, a serif headline, the reason underneath, the control, then the
+ * commit, an optional skip, and the assistant within reach.
  */
 export function Question({
+  t,
   title,
   sub,
-  hint,
   foot,
-  note,
   cta,
   ready,
   onNext,
+  onSkip,
   children,
 }: {
+  t: { saved: string; skip: string; help: string }
   title: string
   sub: string
-  hint?: string
-  foot: string
-  note?: string
+  foot?: string
   cta: string
   ready: boolean
   onNext: () => void
+  onSkip?: () => void
   children: ReactNode
 }) {
   return (
     <div className="screen q">
       <div className="q__scroll">
+        <p className="q__saved">{t.saved}</p>
         <h1 className="q__h">{title}</h1>
         <p className="q__sub">{sub}</p>
-        {hint && <p className="q__hint">{hint}</p>}
-        {children}
-      </div>
 
-      <div className="q__foot">
-        <p className="legal">{foot}</p>
-        {note && <p className="legal legal--note">{note}</p>}
+        {children}
+
         <button className="btn btn--primary" disabled={!ready} onClick={onNext}>
           {cta}
         </button>
+
+        {onSkip && (
+          <button className="skip" onClick={onSkip}>
+            {t.skip}
+          </button>
+        )}
+
+        {foot && <p className="legal">{foot}</p>}
       </div>
+
+      {/* The assistant is help reached when someone is stuck, never a
+          gate standing between the customer and the account. */}
+      <button className="help">
+        <span className="help__mark">?</span>
+        {t.help}
+      </button>
     </div>
   )
 }
 
-/** Selection is carried by a blue wash and a blue tick, never by a new hue. */
+/** Selection is a blue tick; the card itself stays white. */
 export function Choice({
   option,
   on,
