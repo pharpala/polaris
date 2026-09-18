@@ -78,16 +78,25 @@ on screen, and shows the card outline the customer would be aiming at.
 What comes off the document is shown back before anything is submitted — **"Read from your
 document. Nothing here was typed by you."** — with Edit going straight back to the camera.
 
-Then screening runs behind the journey, and the screen is **deliberately an end state**
-rather than a sequence that completes on camera. The bar is indeterminate and keeps
-sweeping, because there is no honest percentage to show for sanctions and AML checks —
-they take as long as they take.
-
-That is the point. The deck's finding is that customers abandon during a 48–72 hour manual
-review because nobody tells them anything, so the fix is status rather than speed: the
-primary action is **Leave for now**, the journey is safe to walk away from, and the email
+Then screening runs behind the journey. For the first three seconds the bar is
+**indeterminate** and keeps sweeping, because there is no honest percentage to show for
+sanctions and AML — and while it runs the primary action is **Leave for now**. The deck's
+finding is that customers abandon a 48–72 hour review because nobody tells them anything,
+so the fix is status rather than speed: the journey is safe to walk away from and the email
 brings them back. The footnote says the rest out loud — if something needs judgment it goes
 to an authorised employee with the file attached, and nobody is asked to start again.
+
+Once the checks clear, the bar completes and the action becomes Continue.
+
+### Review, then open
+
+Everything the customer gave, everything Polaris read, the account they chose and its price
+— on one screen before anything opens. The agreement text is fixed and unaltered; the AI
+explains around it rather than rewriting it. **Open my account** stays disabled until the
+terms are agreed to.
+
+The arrival screen is the only one in the journey with no app bar and no dots: the account
+number, the account's name, and nothing left to do.
 
 ## The recommendation
 

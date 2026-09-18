@@ -125,7 +125,7 @@ export function Compass({ className = 'mark__glyph' }: { className?: string }) {
         fill="currentColor"
       />
       {/* The hub is knocked out to the screen colour rather than drawn. */}
-      <rect x="14.4" y="14.4" width="3.2" height="3.2" fill="var(--white)" />
+      <rect x="14.4" y="14.4" width="3.2" height="3.2" fill="var(--hub, var(--white))" />
     </svg>
   )
 }

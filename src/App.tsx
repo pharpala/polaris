@@ -2,17 +2,19 @@ import { useMemo, useState } from 'react'
 import './styles.css'
 import Assistant from './components/Assistant'
 import Sheet from './components/Sheet'
-import { Check, ChevronLeft, Compass, Globe, StatusIcons } from './Icons'
+import { Check, ChevronLeft, Globe, StatusIcons } from './Icons'
 import { dicts, langOrder, type LangCode } from './i18n'
 import Compare from './screens/Compare'
 import Follow from './screens/Follow'
 import Checks from './screens/Checks'
 import Details from './screens/Details'
+import Done from './screens/Done'
 import Goals from './screens/Goals'
 import Identity from './screens/Identity'
 import Launch from './screens/Launch'
 import Profile from './screens/Profile'
 import Recommend from './screens/Recommend'
+import Review from './screens/Review'
 
 /**
  * The customer is already signed in, so there is no home screen and no
@@ -32,7 +34,8 @@ type Step =
   | 'details'
   | 'identity'
   | 'checks'
-  | 'end'
+  | 'review'
+  | 'done'
   | `follow:${string}`
 
 function StatusBar() {
@@ -73,7 +76,7 @@ export default function App() {
     const opened = t.profile.options
       .filter((o) => profile.includes(o.id) && t.follow[o.id])
       .map((o) => `follow:${o.id}` as Step)
-    return ['profile', ...opened, 'goals', 'recommend', 'details', 'identity', 'checks']
+    return ['profile', ...opened, 'goals', 'recommend', 'details', 'identity', 'checks', 'review']
   }, [profile, t])
 
   const index = queue.indexOf(step)
@@ -218,20 +221,21 @@ export default function App() {
             <Checks t={t} onNext={next} onHelp={() => setHelpOpen(true)} />
           )}
 
-          {step === 'end' && (
-            <div className="screen end">
-              <span className="mark">
-                <Compass />
-                {t.brand}
-              </span>
-              <p className="end__note">
-                End of the built flow. The agreement, opening the account, and the
-                30-, 60- and 90-day newcomer plan come next.
-              </p>
-              <button className="btn btn--ghost" onClick={restart}>
-                Restart
-              </button>
-            </div>
+          {step === 'review' && (
+            <Review
+              t={t}
+              profile={profile}
+              goals={goals}
+              product={product}
+              email={details.email}
+              doc={doc}
+              onNext={() => setStep('done')}
+              onHelp={() => setHelpOpen(true)}
+            />
+          )}
+
+          {step === 'done' && (
+            <Done t={t} profile={profile} goals={goals} product={product} onRestart={restart} />
           )}
 
           <Compare

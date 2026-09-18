@@ -278,6 +278,9 @@ const en = {
     title: 'We’re confirming it’s you.',
     sub: 'You can leave while these checks continue. We’ll email you when your documents have been verified.',
     running: 'Checks in progress',
+    titleDone: 'Your identity is confirmed.',
+    subDone: 'Everything cleared automatically. Nothing needed a person, and nothing needs doing twice.',
+    continue: 'Continue',
     rows: [
       { label: 'Photo ID and selfie', state: 'good' },
       { label: 'Required checks', state: 'wait' },
@@ -288,6 +291,26 @@ const en = {
     leave: 'Leave for now',
     foot:
       'Screening runs behind the journey. If something needs judgment it goes to an authorised employee with your file attached — you are never asked to start again.',
+  },
+  review: {
+    title: 'Review and agree.',
+    sub: 'Everything you gave us and everything we read, with the price, before anything opens.',
+    name: 'Name',
+    email: 'Email',
+    id: 'ID',
+    account: 'Account',
+    termsLabel: 'Account terms',
+    terms:
+      'Deposits may be held before you can use them. We’ll contact you using the email and phone on this application. This account does not pay interest. You can close it at any time.',
+    agree: 'I agree to these terms and want to open this account',
+    cta: 'Open my account',
+  },
+
+  done: {
+    title: 'Congratulations, your account is open.',
+    ready: (product: string) => `${product} is ready.`,
+    number: 'Account number',
+    restart: 'Run it again',
   },
   assist: assistEn,
   /** Phrases the recommendation quotes back, one per goal. */
@@ -725,6 +748,9 @@ const fr: Dict = {
     title: 'Nous confirmons votre identité.',
     sub: 'Vous pouvez partir pendant ces vérifications. Nous vous écrirons dès que vos documents seront vérifiés.',
     running: 'Vérifications en cours',
+    titleDone: 'Votre identité est confirmée.',
+    subDone: 'Tout a été validé automatiquement. Aucune intervention n’a été nécessaire, et rien n’est à refaire.',
+    continue: 'Continuer',
     rows: [
       { label: 'Pièce d’identité et autoportrait', state: 'good' },
       { label: 'Vérifications requises', state: 'wait' },
@@ -735,6 +761,26 @@ const fr: Dict = {
     leave: 'Partir pour l’instant',
     foot:
       'Les vérifications se déroulent en arrière-plan. Si un point exige un jugement, il est confié à un employé autorisé avec votre dossier — on ne vous demande jamais de recommencer.',
+  },
+  review: {
+    title: 'Vérifiez et acceptez.',
+    sub: 'Tout ce que vous nous avez donné et tout ce que nous avons lu, avec le prix, avant l’ouverture.',
+    name: 'Nom',
+    email: 'Courriel',
+    id: 'Pièce d’identité',
+    account: 'Compte',
+    termsLabel: 'Conditions du compte',
+    terms:
+      'Les dépôts peuvent être retenus avant que vous puissiez les utiliser. Nous vous joindrons au courriel et au numéro indiqués dans cette demande. Ce compte ne porte pas intérêt. Vous pouvez le fermer à tout moment.',
+    agree: 'J’accepte ces conditions et je veux ouvrir ce compte',
+    cta: 'Ouvrir mon compte',
+  },
+
+  done: {
+    title: 'Félicitations, votre compte est ouvert.',
+    ready: (product: string) => `${product} est prêt.`,
+    number: 'Numéro de compte',
+    restart: 'Recommencer',
   },
   assist: assistFr,
   goalPhrase: {

@@ -542,6 +542,86 @@ button {
 
 .select__value--empty { color: var(--faint); font-weight: 400; }
 
+/* ---------------------------------------------------------------- review -- */
+
+.q__hint--spaced { margin-block-start: 20px; }
+
+.card__terms--loose { margin-block-start: 11px; }
+
+.terms {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* The mock fills this one in ink rather than blue: it is the agreement, not
+   a preference. */
+.consent--ink.consent--on .choice__box {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* ------------------------------------------------------------------ open -- */
+
+/* The only screen in the journey that is an arrival rather than a step: no
+   app bar, no dots, nothing left to do. */
+.open {
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--gut) 40px;
+  text-align: center;
+}
+
+.open__mark {
+  inline-size: 68px;
+  block-size: 68px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+  --hub: var(--blue);
+  margin-block-end: 24px;
+  animation: markIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.open__glyph { inline-size: 34px; block-size: 34px; }
+
+.open__h {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 27px;
+  line-height: 1.16;
+  font-weight: 700;
+  letter-spacing: -0.008em;
+}
+
+.open__p {
+  margin: 0 0 30px;
+  font-size: 14.5px;
+  color: var(--muted);
+}
+
+.open__label {
+  margin: 0 0 3px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.open__number {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.open__restart { inline-size: auto; padding: 0 24px; margin-block-start: 34px; }
+
+/* The bar completes rather than sweeping once the checks clear. */
+.bar--done .bar__fill { inline-size: 100%; animation: none; transform: none; }
+
 /* ------------------------------------------------------------ data rows -- */
 
 /* Label left, value right, hairlines between. Used for the fields read off
