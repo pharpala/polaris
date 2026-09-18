@@ -4,13 +4,13 @@ import { Check } from '../Icons'
 export type Option = { id: string; label: string; note?: string }
 
 /**
- * The shape every question shares, following the target design: the saved
- * note, a serif headline, the reason underneath, the control, then the
- * commit, an optional skip, and the assistant within reach.
+ * The shape every question shares: the saved note, a serif headline, the
+ * reason underneath, the control, and the assistant within reach. The commit
+ * is optional — a question that offers a straight choice between two answers
+ * advances on the tap, with nothing left to confirm.
  */
 export function Question({
   t,
-  chip,
   title,
   sub,
   foot,
@@ -21,32 +21,29 @@ export function Question({
   children,
 }: {
   t: { saved: string; skip: string; help: string }
-  chip?: string
   title: string
   sub: string
   foot?: string
-  cta: string
-  ready: boolean
-  onNext: () => void
+  cta?: string
+  ready?: boolean
+  onNext?: () => void
   onSkip?: () => void
   children: ReactNode
 }) {
   return (
     <div className="screen q">
       <div className="q__scroll">
-        {chip ? (
-          <p className="q__chip">{chip}</p>
-        ) : (
-          <p className="q__saved">{t.saved}</p>
-        )}
+        <p className="q__saved">{t.saved}</p>
         <h1 className="q__h">{title}</h1>
         <p className="q__sub">{sub}</p>
 
         {children}
 
-        <button className="btn btn--primary" disabled={!ready} onClick={onNext}>
-          {cta}
-        </button>
+        {cta && onNext && (
+          <button className="btn btn--primary" disabled={ready === false} onClick={onNext}>
+            {cta}
+          </button>
+        )}
 
         {onSkip && (
           <button className="skip" onClick={onSkip}>
@@ -67,7 +64,8 @@ export function Question({
   )
 }
 
-/** Selection is a blue tick; the card itself stays white. */
+/** Selection is a blue tick; the card itself stays white. Single answers get
+ *  a round marker, the multi-selects a square one. */
 export function Choice({
   option,
   on,
@@ -90,7 +88,9 @@ export function Choice({
         <span className="choice__label">{option.label}</span>
         {option.note && <span className="choice__note">{option.note}</span>}
       </span>
-      <span className="choice__box">{on && <Check size={13} />}</span>
+      <span className={`choice__box${multi ? '' : ' choice__box--round'}`}>
+        {on && <Check size={12} />}
+      </span>
     </button>
   )
 }

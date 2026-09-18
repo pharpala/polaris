@@ -1,11 +1,15 @@
+import { useEffect, useRef, useState } from 'react'
 import { Choice, Question } from '../components/Question'
 import type { Dict, FollowQ } from '../i18n'
 
+/** Long enough to see the answer land, short enough not to feel like a wait. */
+const ADVANCE_MS = 340
+
 /**
  * A follow-up opened by one of the first answers. The customer sees only the
- * ones their own answers opened, and the chip above the headline names which
- * answer it is responding to — so the journey visibly bends around them
- * rather than marching through a fixed form.
+ * ones their own answers opened, and each names what they said in its own
+ * subhead — so the journey reads as a reply rather than the next page of a
+ * form. Two answers, so there is nothing to confirm: the tap is the answer.
  */
 export default function Follow({
   t,
@@ -24,21 +28,35 @@ export default function Follow({
   onText: (v: string) => void
   onNext: () => void
 }) {
+  const [leaving, setLeaving] = useState<string | null>(null)
+  const timer = useRef<number | null>(null)
+
+  useEffect(() => () => { if (timer.current) window.clearTimeout(timer.current) }, [])
+
+  const pick = (id: string) => {
+    onPick(id)
+    setLeaving(id)
+    timer.current = window.setTimeout(onNext, ADVANCE_MS)
+  }
+
   return (
     <Question
       t={t}
-      chip={q.chip}
       title={q.title}
       sub={q.sub}
-      cta={t.profile.cta}
-      ready
-      onNext={onNext}
-      onSkip={onNext}
+      cta={q.input ? t.profile.cta : undefined}
+      onNext={q.input ? onNext : undefined}
+      onSkip={q.input ? onNext : undefined}
     >
       {q.options && (
         <div className="choices" role="radiogroup" aria-label={q.title}>
           {q.options.map((o) => (
-            <Choice key={o.id} option={o} on={value === o.id} onPick={() => onPick(o.id)} />
+            <Choice
+              key={o.id}
+              option={o}
+              on={leaving === o.id || value === o.id}
+              onPick={() => pick(o.id)}
+            />
           ))}
         </div>
       )}

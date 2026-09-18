@@ -13,7 +13,6 @@ export type LangCode = 'en' | 'fr'
  * never walk the same path.
  */
 export type FollowQ = {
-  chip: string
   title: string
   sub: string
   options?: { id: string; label: string }[]
@@ -22,56 +21,40 @@ export type FollowQ = {
 
 const followEn: Record<string, FollowQ> = {
   newcomer: {
-    chip: 'Newcomer to Canada',
-    title: 'How long have you been here?',
-    sub: 'Newcomers get different guidance in the first year than in the fifth.',
+    title: 'Let’s get your banking set up in Canada.',
+    sub: 'You said you just moved. Where are you in the move?',
     options: [
-      { id: 'soon', label: 'I haven’t arrived yet' },
-      { id: 'u6', label: 'Less than 6 months' },
-      { id: '6to12', label: '6 to 12 months' },
-      { id: '1to3', label: '1 to 3 years' },
-      { id: 'o3', label: 'More than 3 years' },
+      { id: 'here', label: 'I’m already in Canada' },
+      { id: 'soon', label: 'I’m preparing to arrive' },
     ],
   },
   student: {
-    chip: 'Student',
-    title: 'Where are you in your studies?',
-    sub: 'It changes what a student account should waive and for how long.',
+    title: 'Let’s build this around school.',
+    sub: 'You said you’re a student. Where are you with it?',
     options: [
-      { id: 'starting', label: 'Just starting' },
-      { id: 'partway', label: 'Partway through' },
-      { id: 'final', label: 'Final year' },
-      { id: 'between', label: 'Between programs' },
+      { id: 'now', label: 'I’m studying now' },
+      { id: 'soon', label: 'I start soon' },
     ],
   },
   grad: {
-    chip: 'Just graduated',
-    title: 'What comes next for you?',
-    sub: 'The account that suits a first salary is not the one that suits a job hunt.',
+    title: 'Let’s set you up for what’s next.',
+    sub: 'You said you just graduated. What does the year ahead look like?',
     options: [
-      { id: 'job', label: 'Starting a job' },
-      { id: 'looking', label: 'Looking for work' },
-      { id: 'study', label: 'More study' },
-      { id: 'travel', label: 'Travelling first' },
-      { id: 'unsure', label: 'Still working it out' },
+      { id: 'work', label: 'I’ve lined up work' },
+      { id: 'looking', label: 'I’m still looking' },
     ],
   },
   retirement: {
-    chip: 'Retirement planning',
-    title: 'How far off is retirement?',
-    sub: 'Nearer means income and access matter more than growth.',
+    title: 'Let’s plan around retirement.',
+    sub: 'You said you’re planning for it. How close is it?',
     options: [
       { id: 'already', label: 'I’m already retired' },
-      { id: 'u2', label: 'Within 2 years' },
-      { id: '2to5', label: '2 to 5 years' },
-      { id: '5to10', label: '5 to 10 years' },
-      { id: 'o10', label: 'More than 10 years' },
+      { id: 'soon', label: 'It’s still a few years off' },
     ],
   },
   other: {
-    chip: 'Something else',
     title: 'Tell us in your own words.',
-    sub: 'A sentence is plenty. It goes to the person who reviews your file, if one needs to.',
+    sub: 'You said there’s something else. A sentence is plenty.',
     input: {
       label: 'What should we know?',
       placeholder: 'I’m self-employed and my income varies month to month…',
@@ -140,56 +123,40 @@ export type Dict = typeof en
 
 const followFr: Record<string, FollowQ> = {
   newcomer: {
-    chip: 'Nouvel arrivant',
-    title: 'Depuis combien de temps êtes-vous ici ?',
-    sub: 'Les conseils de la première année ne sont pas ceux de la cinquième.',
+    title: 'Mettons en place vos services bancaires au Canada.',
+    sub: 'Vous avez dit que vous venez d’arriver. Où en êtes-vous ?',
     options: [
-      { id: 'soon', label: 'Je ne suis pas encore arrivé' },
-      { id: 'u6', label: 'Moins de 6 mois' },
-      { id: '6to12', label: 'De 6 à 12 mois' },
-      { id: '1to3', label: 'De 1 à 3 ans' },
-      { id: 'o3', label: 'Plus de 3 ans' },
+      { id: 'here', label: 'Je suis déjà au Canada' },
+      { id: 'soon', label: 'Je prépare mon arrivée' },
     ],
   },
   student: {
-    chip: 'Étudiant',
-    title: 'Où en êtes-vous dans vos études ?',
-    sub: 'Cela change ce qu’un compte étudiant devrait exempter, et pour combien de temps.',
+    title: 'Construisons cela autour de vos études.',
+    sub: 'Vous avez dit que vous êtes étudiant. Où en êtes-vous ?',
     options: [
-      { id: 'starting', label: 'Je commence' },
-      { id: 'partway', label: 'En cours de programme' },
-      { id: 'final', label: 'Dernière année' },
-      { id: 'between', label: 'Entre deux programmes' },
+      { id: 'now', label: 'J’étudie en ce moment' },
+      { id: 'soon', label: 'Je commence bientôt' },
     ],
   },
   grad: {
-    chip: 'Nouveau diplômé',
-    title: 'Qu’est-ce qui suit pour vous ?',
-    sub: 'Le compte qui convient à un premier salaire n’est pas celui d’une recherche d’emploi.',
+    title: 'Préparons la suite.',
+    sub: 'Vous avez dit que vous venez d’obtenir votre diplôme. À quoi ressemble l’année à venir ?',
     options: [
-      { id: 'job', label: 'Je commence un emploi' },
-      { id: 'looking', label: 'Je cherche du travail' },
-      { id: 'study', label: 'Je poursuis mes études' },
-      { id: 'travel', label: 'Je voyage d’abord' },
-      { id: 'unsure', label: 'Je ne sais pas encore' },
+      { id: 'work', label: 'J’ai trouvé un emploi' },
+      { id: 'looking', label: 'Je cherche encore' },
     ],
   },
   retirement: {
-    chip: 'Planification de la retraite',
-    title: 'Dans combien de temps la retraite ?',
-    sub: 'Plus c’est proche, plus le revenu et l’accès comptent davantage que la croissance.',
+    title: 'Planifions autour de la retraite.',
+    sub: 'Vous avez dit que vous la préparez. Est-elle proche ?',
     options: [
       { id: 'already', label: 'Je suis déjà retraité' },
-      { id: 'u2', label: 'D’ici 2 ans' },
-      { id: '2to5', label: 'De 2 à 5 ans' },
-      { id: '5to10', label: 'De 5 à 10 ans' },
-      { id: 'o10', label: 'Plus de 10 ans' },
+      { id: 'soon', label: 'Encore quelques années' },
     ],
   },
   other: {
-    chip: 'Autre situation',
     title: 'Dites-le dans vos mots.',
-    sub: 'Une phrase suffit. Elle ira à la personne qui examinera votre dossier, si nécessaire.',
+    sub: 'Vous avez dit qu’il y a autre chose. Une phrase suffit.',
     input: {
       label: 'Que devrions-nous savoir ?',
       placeholder: 'Je suis travailleur autonome et mes revenus varient chaque mois…',

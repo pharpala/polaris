@@ -53,6 +53,9 @@ export default function App() {
   const index = queue.indexOf(step)
   const onQueue = index >= 0
 
+  /** Recommendation, identity capture and review are still to come. */
+  const dots = queue.length + 3
+
   const next = () => setStep(queue[index + 1] ?? 'end')
   const back = () => setStep(index > 0 ? queue[index - 1] : 'launch')
 
@@ -89,10 +92,10 @@ export default function App() {
                 className="dots"
                 role="progressbar"
                 aria-valuenow={index + 1}
-                aria-valuemax={queue.length}
+                aria-valuemax={dots}
               >
-                {queue.map((s, i) => (
-                  <span key={s} className={`dot${i === index ? ' dot--on' : ''}`} />
+                {Array.from({ length: dots }, (_, i) => (
+                  <span key={i} className={`dot${i === index ? ' dot--on' : ''}`} />
                 ))}
               </span>
               {/* Language stays in reach on every question, because for a

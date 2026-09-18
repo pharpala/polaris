@@ -12,17 +12,18 @@ against and what decides which identity documents the capture step has to accept
 customer picks opens its own follow-up, so the question set is built from their answers
 rather than declared up front. The dot count in the app bar changes as they choose.
 
-| Answer | The follow-up it opens |
-|---|---|
-| I'm a newcomer to Canada | How long have you been here? — first year and fifth year need different guidance |
-| I'm a student | Where are you in your studies? — changes what a student account waives, and for how long |
-| I just graduated | What comes next? — a first salary and a job hunt are not the same account |
-| I'm retirement planning | How far off is it? — nearer means income and access over growth |
-| Other | Free text, routed to whoever reviews the file |
+| Answer | The follow-up it opens | The two answers |
+|---|---|---|
+| I'm a newcomer to Canada | Let's get your banking set up in Canada. | Already in Canada · Preparing to arrive |
+| I'm a student | Let's build this around school. | Studying now · Starting soon |
+| I just graduated | Let's set you up for what's next. | Lined up work · Still looking |
+| I'm retirement planning | Let's plan around retirement. | Already retired · A few years off |
+| Other | Tell us in your own words. | Free text, routed to whoever reviews the file |
 
-Every follow-up carries a chip naming the answer that opened it, and every question can be
-skipped. The last question — what the account is for — is what the recommendation gets
-ranked against.
+Each follow-up names what the customer said in its own subhead — "You said you just
+moved" — so it reads as a reply rather than the next page of a form. Two answers means
+there is nothing to confirm: the tap is the answer and the screen advances. The last
+question, what the account is for, is what the recommendation gets ranked against.
 
 Three things carried from the deck that a stock sign-up flow does not have: every question
 says **why it is asked** and states plainly what it does *not* decide; progress is stated
