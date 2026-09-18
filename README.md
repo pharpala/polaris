@@ -22,8 +22,14 @@ rather than declared up front. The dot count in the app bar changes as they choo
 
 Each follow-up names what the customer said in its own subhead — "You said you just
 moved" — so it reads as a reply rather than the next page of a form. Two answers means
-there is nothing to confirm: the tap is the answer and the screen advances. The last
-question, what the account is for, is what the recommendation gets ranked against.
+there is nothing to confirm: the tap is the answer and the screen advances.
+
+The closing question bends the same way, and it is the one the recommendation gets ranked
+against. A newcomer is asked **"What would you like to do as you settle into Canada?"**,
+grouped under *Get settled* and *Build for the future*, with transferring money into the
+country and building Canadian credit history on the list. Everyone else gets the general
+set under *Day to day*. "I'm not sure yet" is exclusive: picking it clears the rest, and
+picking anything else clears it.
 
 Three things carried from the deck that a stock sign-up flow does not have: every question
 says **why it is asked** and states plainly what it does *not* decide; progress is stated

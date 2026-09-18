@@ -149,10 +149,9 @@ export default function App() {
           {step === 'goals' && (
             <Goals
               t={t}
+              newcomer={isNewcomer}
               value={goals}
-              onToggle={(id) =>
-                setGoals((g) => (g.includes(id) ? g.filter((x) => x !== id) : [...g, id]))
-              }
+              onChange={setGoals}
               onNext={next}
               onHelp={() => setHelpOpen(true)}
             />

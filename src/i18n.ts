@@ -14,6 +14,16 @@ export type LangCode = 'en' | 'fr'
  * The set a customer sees is built from what they told us, so two people
  * never walk the same path.
  */
+/** The closing question, grouped. Two sets exist: one for the newcomer path
+ *  and one for everyone else, so the wording and the options both bend to
+ *  what the customer told us. */
+export type GoalSet = {
+  title: string
+  sub: string
+  cta: string
+  groups: { label: string; options: { id: string; label: string }[] }[]
+}
+
 export type FollowQ = {
   title: string
   sub: string
@@ -190,18 +200,61 @@ const en = {
   assist: assistEn,
 
   goals: {
-    title: 'What do you need the account for?',
-    sub: 'Your answers narrow the catalogue to the two or three accounts that fit.',
-    foot: 'Nothing here is a credit check, and none of it is shared outside Polaris.',
-    cta: 'See what fits',
-    options: [
-      { id: 'everyday', label: 'Everyday spending and bills', note: 'Debit, transfers, pre-authorised payments' },
-      { id: 'paid', label: 'Getting paid', note: 'Direct deposit from an employer or client' },
-      { id: 'saving', label: 'Saving toward something', note: 'A goal with a date on it' },
-      { id: 'credit', label: 'Building a credit history', note: 'Starting from nothing, or starting again' },
-      { id: 'abroad', label: 'Sending money abroad', note: 'Supporting family in another country' },
+    title: 'What would you like your banking to do?',
+    sub: 'Choose any that apply. We’ll use your answers to personalise your banking and guidance.',
+    cta: 'Continue',
+    groups: [
+      {
+        label: 'Day to day',
+        options: [
+          { id: 'rent', label: 'Pay rent and everyday expenses' },
+          { id: 'pay', label: 'Receive my pay' },
+          { id: 'budget', label: 'Plan my monthly spending' },
+          { id: 'abroad', label: 'Send money to family abroad' },
+        ],
+      },
+      {
+        label: 'Build for the future',
+        options: [
+          { id: 'credit', label: 'Build my credit history' },
+          { id: 'rainy', label: 'Save for unexpected expenses' },
+          { id: 'home', label: 'Save for a home' },
+          { id: 'learn', label: 'Learn about saving and investing' },
+          { id: 'debt', label: 'Pay down debt' },
+          { id: 'unsure', label: 'I’m not sure yet' },
+        ],
+      },
     ],
-  },
+  } as GoalSet,
+
+  goalsNewcomer: {
+    title: 'What would you like to do as you settle into Canada?',
+    sub: 'Choose any that apply. We’ll use your answers to personalise your banking and guidance.',
+    cta: 'Continue',
+    groups: [
+      {
+        label: 'Get settled',
+        options: [
+          { id: 'rent', label: 'Pay rent and everyday expenses' },
+          { id: 'pay', label: 'Receive my pay' },
+          { id: 'transfer', label: 'Transfer money to Canada' },
+          { id: 'abroad', label: 'Send money to family abroad' },
+          { id: 'budget', label: 'Plan my monthly spending' },
+        ],
+      },
+      {
+        label: 'Build for the future',
+        options: [
+          { id: 'credit', label: 'Build my credit history in Canada' },
+          { id: 'rainy', label: 'Save for unexpected expenses' },
+          { id: 'home', label: 'Save for a home' },
+          { id: 'learn', label: 'Learn about saving and investing' },
+          { id: 'debt', label: 'Pay down debt' },
+          { id: 'unsure', label: 'I’m not sure yet' },
+        ],
+      },
+    ],
+  } as GoalSet,
 }
 
 export type Dict = typeof en
@@ -373,18 +426,61 @@ const fr: Dict = {
   assist: assistFr,
 
   goals: {
-    title: 'À quoi vous servira ce compte ?',
-    sub: 'Vos réponses ramènent le catalogue aux deux ou trois comptes qui vous conviennent.',
-    foot: 'Rien ici n’est une vérification de crédit, et rien n’est communiqué à l’extérieur de Polaris.',
-    cta: 'Voir ce qui convient',
-    options: [
-      { id: 'everyday', label: 'Dépenses et factures courantes', note: 'Débit, virements, paiements préautorisés' },
-      { id: 'paid', label: 'Recevoir ma paie', note: 'Dépôt direct d’un employeur ou d’un client' },
-      { id: 'saving', label: 'Épargner pour un projet', note: 'Un objectif avec une date' },
-      { id: 'credit', label: 'Bâtir un historique de crédit', note: 'En partant de zéro, ou en recommençant' },
-      { id: 'abroad', label: 'Envoyer de l’argent à l’étranger', note: 'Soutenir ma famille dans un autre pays' },
+    title: 'Que voulez-vous faire avec votre compte ?',
+    sub: 'Choisissez tout ce qui s’applique. Vos réponses nous servent à personnaliser vos services et nos conseils.',
+    cta: 'Continuer',
+    groups: [
+      {
+        label: 'Au quotidien',
+        options: [
+          { id: 'rent', label: 'Payer le loyer et les dépenses courantes' },
+          { id: 'pay', label: 'Recevoir ma paie' },
+          { id: 'budget', label: 'Planifier mes dépenses mensuelles' },
+          { id: 'abroad', label: 'Envoyer de l’argent à ma famille à l’étranger' },
+        ],
+      },
+      {
+        label: 'Bâtir pour l’avenir',
+        options: [
+          { id: 'credit', label: 'Bâtir mon historique de crédit' },
+          { id: 'rainy', label: 'Épargner pour les imprévus' },
+          { id: 'home', label: 'Épargner pour une maison' },
+          { id: 'learn', label: 'En apprendre sur l’épargne et le placement' },
+          { id: 'debt', label: 'Rembourser mes dettes' },
+          { id: 'unsure', label: 'Je ne sais pas encore' },
+        ],
+      },
     ],
-  },
+  } as GoalSet,
+
+  goalsNewcomer: {
+    title: 'Que voulez-vous faire en vous installant au Canada ?',
+    sub: 'Choisissez tout ce qui s’applique. Vos réponses nous servent à personnaliser vos services et nos conseils.',
+    cta: 'Continuer',
+    groups: [
+      {
+        label: 'S’installer',
+        options: [
+          { id: 'rent', label: 'Payer le loyer et les dépenses courantes' },
+          { id: 'pay', label: 'Recevoir ma paie' },
+          { id: 'transfer', label: 'Transférer de l’argent au Canada' },
+          { id: 'abroad', label: 'Envoyer de l’argent à ma famille à l’étranger' },
+          { id: 'budget', label: 'Planifier mes dépenses mensuelles' },
+        ],
+      },
+      {
+        label: 'Bâtir pour l’avenir',
+        options: [
+          { id: 'credit', label: 'Bâtir mon historique de crédit au Canada' },
+          { id: 'rainy', label: 'Épargner pour les imprévus' },
+          { id: 'home', label: 'Épargner pour une maison' },
+          { id: 'learn', label: 'En apprendre sur l’épargne et le placement' },
+          { id: 'debt', label: 'Rembourser mes dettes' },
+          { id: 'unsure', label: 'Je ne sais pas encore' },
+        ],
+      },
+    ],
+  } as GoalSet,
 }
 
 export const dicts: Record<LangCode, Dict> = { en, fr }
