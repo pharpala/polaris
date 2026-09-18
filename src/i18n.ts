@@ -277,17 +277,15 @@ const en = {
   checks: {
     title: 'We’re confirming it’s you.',
     sub: 'You can leave while these checks continue. We’ll email you when your documents have been verified.',
-    titleDone: 'You’re verified.',
-    subDone: 'Everything cleared automatically. Nothing needed a person, and nothing needs doing again.',
+    running: 'Checks in progress',
     rows: [
-      { label: 'Photo ID and selfie' },
-      { label: 'Required checks' },
-      { label: 'Ready to agree' },
+      { label: 'Photo ID and selfie', state: 'good' },
+      { label: 'Required checks', state: 'wait' },
+      { label: 'Ready to agree', state: 'next' },
     ],
     state: { good: 'Done', wait: 'In progress', next: 'Next' } as Record<string, string>,
     secure: 'Your data is secured',
     leave: 'Leave for now',
-    continue: 'Continue',
     foot:
       'Screening runs behind the journey. If something needs judgment it goes to an authorised employee with your file attached — you are never asked to start again.',
   },
@@ -726,17 +724,15 @@ const fr: Dict = {
   checks: {
     title: 'Nous confirmons votre identité.',
     sub: 'Vous pouvez partir pendant ces vérifications. Nous vous écrirons dès que vos documents seront vérifiés.',
-    titleDone: 'Votre identité est confirmée.',
-    subDone: 'Tout a été validé automatiquement. Aucune intervention n’a été nécessaire, et rien n’est à refaire.',
+    running: 'Vérifications en cours',
     rows: [
-      { label: 'Pièce d’identité et autoportrait' },
-      { label: 'Vérifications requises' },
-      { label: 'Prêt à signer' },
+      { label: 'Pièce d’identité et autoportrait', state: 'good' },
+      { label: 'Vérifications requises', state: 'wait' },
+      { label: 'Prêt à signer', state: 'next' },
     ],
     state: { good: 'Terminé', wait: 'En cours', next: 'À venir' } as Record<string, string>,
     secure: 'Vos données sont protégées',
     leave: 'Partir pour l’instant',
-    continue: 'Continuer',
     foot:
       'Les vérifications se déroulent en arrière-plan. Si un point exige un jugement, il est confié à un employé autorisé avec votre dossier — on ne vous demande jamais de recommencer.',
   },

@@ -78,11 +78,16 @@ on screen, and shows the card outline the customer would be aiming at.
 What comes off the document is shown back before anything is submitted — **"Read from your
 document. Nothing here was typed by you."** — with Edit going straight back to the camera.
 
-Then screening runs behind the journey rather than in front of it. The rows move from
-*Next* to *In progress* to *Done* on their own, the bar fills, and **Leave for now** is the
-main action while it runs: the deck's finding is that customers abandon during a 48–72 hour
-manual review because nobody tells them anything, so the fix is status, not speed. When
-everything clears the screen changes to "You're verified." and the action becomes Continue.
+Then screening runs behind the journey, and the screen is **deliberately an end state**
+rather than a sequence that completes on camera. The bar is indeterminate and keeps
+sweeping, because there is no honest percentage to show for sanctions and AML checks —
+they take as long as they take.
+
+That is the point. The deck's finding is that customers abandon during a 48–72 hour manual
+review because nobody tells them anything, so the fix is status rather than speed: the
+primary action is **Leave for now**, the journey is safe to walk away from, and the email
+brings them back. The footnote says the rest out loud — if something needs judgment it goes
+to an authorised employee with the file attached, and nobody is asked to start again.
 
 ## The recommendation
 

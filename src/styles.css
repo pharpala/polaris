@@ -589,10 +589,16 @@ button {
 
 .bar__fill {
   display: block;
+  inline-size: 27%;
   block-size: 100%;
   border-radius: var(--pill);
   background: var(--ink);
-  transition: inline-size 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: sweep 1.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(370%); }
 }
 
 .secure {
@@ -1330,5 +1336,8 @@ button {
   .launch,
   .bubble,
   .view__flash { animation: none; }
+
+  /* Still clearly unfinished, without the movement. */
+  .bar__fill { animation: none; transform: translateX(120%); }
   .bubble--typing span { animation-duration: 3s; }
 }
