@@ -39,24 +39,40 @@ reached when someone is stuck rather than standing between them and the account.
 
 ## The recommendation
 
-Eight products, and a ranking that can be read and argued with — the rules live in
+Thirteen products across chequing, savings, the registered plans and self-directed
+investing, with a ranking that can be read and argued with — the rules live in
 `src/products.ts`, the words in `src/i18n.ts`.
 
-A product declares the goals it serves and, optionally, who it is *for*. A goal it serves
-scores two; being built for this customer's own situation scores three on top, but **only
-for a product that serves at least one stated goal** — otherwise a student account wins
-for a student who asked about credit history, which is the wrong answer dressed up as
-personalization. Anything scoring nothing is not shown. If nothing scores at all, because
-the customer picked "I'm not sure yet", it falls back to what they are eligible for
-rather than an empty screen.
-
-| Told us | Suggested |
+| | |
 |---|---|
-| Newcomer · everyday expenses, receive pay | Polaris Newcomer Chequing |
-| Student · everyday expenses, receive pay | Student Chequing |
-| Retirement · surprises, learn investing | Everyday Savings |
-| Graduate · credit history only | Credit Builder Card |
-| Newcomer · not sure yet | Polaris Newcomer Chequing, generic reason |
+| **Day to day** | Newcomer Chequing · Student Chequing · Sixty Plus Chequing · Everyday Chequing · Simple Chequing |
+| **Saving and credit** | Everyday Savings · Credit Builder Card · GIC |
+| **Registered** | TFSA · FHSA · RRSP · RESP |
+| **Investing** | Self-Directed Investing |
+
+A product declares the goals it serves, optionally who it is *for*, and optionally the
+goals it is the purpose-built answer to. A served goal scores two; being the purpose-built
+answer adds two, so an FHSA beats a savings account for a first home; being built for this
+customer's situation adds three. That last bonus applies **only to a product that serves
+at least one stated goal** — otherwise a student account wins for a student who asked
+about credit history, which is the wrong answer dressed up as personalization. Anything
+scoring nothing is not shown, and if nothing scores at all — the customer picked "I'm not
+sure yet" — it falls back to what they are eligible for rather than an empty screen.
+
+| Told us | Suggested | Alternatives offered |
+|---|---|---|
+| Newcomer · expenses, receive pay | Polaris Newcomer Chequing | Everyday, Simple Chequing |
+| Student · expenses, receive pay | Student Chequing | — |
+| Graduate · save toward a home | First Home Savings Account | Everyday Savings, TFSA |
+| Retirement · save for retirement | RRSP | TFSA, GIC |
+| Student · a child's education | RESP | — |
+| Graduate · learn about investing | Self-Directed Investing | — |
+| Graduate · credit history only | Credit Builder Card | — |
+| Newcomer · not sure yet | Polaris Newcomer Chequing, generic reason | — |
+
+The reason only quotes the goals the suggested product actually answers, so a customer who
+asked about both surprises and retirement and is shown an RRSP is told about retirement
+rather than being sold a second story.
 
 The reason quotes the customer rather than describing the product — "You said you want to
 cover everyday expenses and receive pay. Polaris Newcomer Chequing is built for that." —

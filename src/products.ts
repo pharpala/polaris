@@ -13,17 +13,30 @@ export type Product = {
   requires?: string[]
   /** The goal ids this product actually serves. */
   fits: string[]
+  /** Goals this product is the purpose-built answer to, rather than merely a
+   *  workable one. An FHSA beats a savings account for a first home. */
+  best?: string[]
 }
 
 export const products: Product[] = [
+  /* Day to day. Order matters: it settles ties. */
   { id: 'newcomer', requires: ['newcomer'], fits: ['rent', 'pay', 'transfer', 'abroad', 'budget'] },
   { id: 'student', requires: ['student', 'grad'], fits: ['rent', 'pay', 'budget'] },
   { id: 'sixty', requires: ['retirement'], fits: ['rent', 'pay', 'budget'] },
   { id: 'everyday', fits: ['rent', 'pay', 'budget'] },
   { id: 'simple', fits: ['rent', 'budget'] },
+
+  /* Saving, and the credit file. */
   { id: 'savings', fits: ['rainy', 'home', 'budget'] },
-  { id: 'builder', fits: ['credit'] },
-  { id: 'invest', fits: ['learn', 'home'] },
+  { id: 'builder', fits: ['credit'], best: ['credit'] },
+
+  /* Registered plans. Each is the purpose-built answer to one goal. */
+  { id: 'fhsa', fits: ['home'], best: ['home'] },
+  { id: 'rrsp', fits: ['retire'], best: ['retire'] },
+  { id: 'resp', fits: ['education'], best: ['education'] },
+  { id: 'tfsa', fits: ['rainy', 'home', 'retire', 'learn'] },
+  { id: 'gic', fits: ['rainy', 'retire'] },
+  { id: 'invest', fits: ['learn'], best: ['learn'] },
 ]
 
 /** A goal a product serves is worth two; being built for this customer's own
@@ -34,6 +47,7 @@ export const products: Product[] = [
  *  dressed up as personalization. */
 const GOAL = 2
 const TARGETED = 3
+const PURPOSE_BUILT = 2
 
 export function rank(profile: string[], goals: string[]) {
   const eligible = products.filter(
@@ -43,7 +57,12 @@ export function rank(profile: string[], goals: string[]) {
   const scored = eligible
     .map((p) => {
       const hits = goals.filter((g) => p.fits.includes(g)).length
-      return { product: p, score: hits === 0 ? 0 : hits * GOAL + (p.requires ? TARGETED : 0) }
+      if (hits === 0) return { product: p, score: 0 }
+      const purpose = (p.best ?? []).filter((b) => goals.includes(b)).length
+      return {
+        product: p,
+        score: hits * GOAL + purpose * PURPOSE_BUILT + (p.requires ? TARGETED : 0),
+      }
     })
     .filter((r) => r.score > 0)
     .sort((a, b) => b.score - a.score)

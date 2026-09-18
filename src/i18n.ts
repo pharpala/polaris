@@ -215,6 +215,8 @@ const en = {
     home: 'save toward a home',
     learn: 'learn about investing',
     debt: 'pay down debt',
+    retire: 'save for retirement',
+    education: 'save for a child’s education',
     unsure: '',
   } as Record<string, string>,
 
@@ -267,12 +269,47 @@ const en = {
         'No annual fee. A refundable deposit from $300 sets your limit, and we report to both credit bureaus every month.',
       trade: 'The fastest way to a Canadian credit file, but the deposit is money you cannot spend.',
     },
-    invest: {
-      name: 'Starter Investing Account',
-      tagline: 'Begin with twenty-five dollars.',
+    fhsa: {
+      name: 'First Home Savings Account',
+      tagline: 'For a first home, twice over.',
       terms:
-        'No account fee. Start from $25 in a TFSA, FHSA or RRSP, with every fee and holding explained in plain language. An advisor is there when you ask for one.',
-      trade: 'Built for learning by doing, so the balance can move down as well as up.',
+        'No account fee. $8,000 a year to a $40,000 lifetime limit. Contributions come off your taxable income, and withdrawals for a first home are not taxed at all.',
+      trade: 'The best deal there is for a first home — but it has to be your first, and unused money moves to an RRSP after fifteen years.',
+    },
+    rrsp: {
+      name: 'Registered Retirement Savings Plan',
+      tagline: 'Deduct now, pay tax later.',
+      terms:
+        'No account fee. Contribute up to 18% of last year’s income to the annual cap, deduct it from this year’s tax, and pay tax only when you withdraw.',
+      trade: 'The biggest tax break today, but taking money out early is taxed as income and the room does not come back.',
+    },
+    resp: {
+      name: 'Registered Education Savings Plan',
+      tagline: 'Ottawa adds twenty per cent.',
+      terms:
+        'No account fee. The government adds 20% on the first $2,500 you put in each year — up to $500 a year and $7,200 per child in total.',
+      trade: 'Free money for school, but if the child does not go on to study you hand the grant back.',
+    },
+    tfsa: {
+      name: 'Tax-Free Savings Account',
+      tagline: 'Grow it and withdraw it, untaxed.',
+      terms:
+        'No account fee. $7,000 of new room in 2026, plus anything you never used. No tax on the growth, no tax on withdrawal, and the room returns the following year.',
+      trade: 'The most flexible registered account, but going over your room costs 1% a month on the excess.',
+    },
+    gic: {
+      name: 'Guaranteed Investment Certificate',
+      tagline: 'A fixed rate, guaranteed.',
+      terms:
+        '4.10% on a one-year term, from $500. The principal is guaranteed and CDIC insured, and the rate is locked for the whole term.',
+      trade: 'The rate cannot fall, but the money is locked in until the term ends.',
+    },
+    invest: {
+      name: 'Self-Directed Investing',
+      tagline: 'Trade it yourself.',
+      terms:
+        'No account fee and no commission on Canadian-listed stocks and ETFs. Start from $25, with every fee and holding explained in plain language.',
+      trade: 'The cheapest way in, but nobody is choosing for you — the balance can fall as well as rise.',
     },
   } as Record<string, ProductCopy>,
 
@@ -317,6 +354,8 @@ const en = {
           { id: 'rainy', label: 'Save for unexpected expenses' },
           { id: 'home', label: 'Save for a home' },
           { id: 'learn', label: 'Learn about saving and investing' },
+          { id: 'retire', label: 'Save for retirement' },
+          { id: 'education', label: 'Save for a child’s education' },
           { id: 'debt', label: 'Pay down debt' },
           { id: 'unsure', label: 'I’m not sure yet' },
         ],
@@ -346,6 +385,8 @@ const en = {
           { id: 'rainy', label: 'Save for unexpected expenses' },
           { id: 'home', label: 'Save for a home' },
           { id: 'learn', label: 'Learn about saving and investing' },
+          { id: 'retire', label: 'Save for retirement' },
+          { id: 'education', label: 'Save for a child’s education' },
           { id: 'debt', label: 'Pay down debt' },
           { id: 'unsure', label: 'I’m not sure yet' },
         ],
@@ -533,6 +574,8 @@ const fr: Dict = {
     home: 'épargner pour une maison',
     learn: 'en apprendre sur le placement',
     debt: 'rembourser vos dettes',
+    retire: 'épargner pour la retraite',
+    education: 'épargner pour les études d’un enfant',
     unsure: '',
   } as Record<string, string>,
 
@@ -585,12 +628,47 @@ const fr: Dict = {
         'Aucuns frais annuels. Un dépôt remboursable à partir de 300 $ fixe votre limite, et nous transmettons vos données aux deux bureaux chaque mois.',
       trade: 'Le chemin le plus rapide vers un dossier de crédit canadien, mais le dépôt est immobilisé.',
     },
-    invest: {
-      name: 'Compte Placement Débutant',
-      tagline: 'Commencez avec vingt-cinq dollars.',
+    fhsa: {
+      name: 'Compte d’épargne libre d’impôt pour l’achat d’une première propriété',
+      tagline: 'Pour une première maison, doublement avantageux.',
       terms:
-        'Aucuns frais de compte. À partir de 25 $ dans un CELI, un CELIAPP ou un REER, avec tous les frais et titres expliqués en langage clair. Un conseiller est là si vous le demandez.',
-      trade: 'Conçu pour apprendre en pratiquant : le solde peut donc baisser autant que monter.',
+        'Aucuns frais de compte. 8 000 $ par an jusqu’à 40 000 $ à vie. Les cotisations réduisent votre revenu imposable et les retraits pour une première maison ne sont pas imposés.',
+      trade: 'La meilleure offre pour une première maison — mais ce doit être la première, et les sommes non utilisées passent au REER après quinze ans.',
+    },
+    rrsp: {
+      name: 'Régime enregistré d’épargne-retraite',
+      tagline: 'Déduisez maintenant, payez plus tard.',
+      terms:
+        'Aucuns frais de compte. Cotisez jusqu’à 18 % du revenu de l’an dernier, jusqu’au plafond annuel, déduisez-le de l’impôt de cette année et payez l’impôt seulement au retrait.',
+      trade: 'La plus grande économie d’impôt aujourd’hui, mais un retrait hâtif est imposé comme un revenu et les droits ne reviennent pas.',
+    },
+    resp: {
+      name: 'Régime enregistré d’épargne-études',
+      tagline: 'Ottawa ajoute vingt pour cent.',
+      terms:
+        'Aucuns frais de compte. Le gouvernement ajoute 20 % sur les premiers 2 500 $ versés chaque année — jusqu’à 500 $ par an et 7 200 $ par enfant au total.',
+      trade: 'De l’argent gratuit pour les études, mais si l’enfant ne poursuit pas ses études, la subvention est remboursée.',
+    },
+    tfsa: {
+      name: 'Compte d’épargne libre d’impôt',
+      tagline: 'Faites-le croître et retirez-le, sans impôt.',
+      terms:
+        'Aucuns frais de compte. 7 000 $ de nouveaux droits en 2026, plus tout ce que vous n’avez jamais utilisé. Aucun impôt sur la croissance ni sur les retraits, et les droits reviennent l’année suivante.',
+      trade: 'Le compte enregistré le plus souple, mais dépasser vos droits coûte 1 % par mois sur l’excédent.',
+    },
+    gic: {
+      name: 'Certificat de placement garanti',
+      tagline: 'Un taux fixe, garanti.',
+      terms:
+        '4,10 % sur un terme d’un an, à partir de 500 $. Le capital est garanti et assuré par la SADC, et le taux est bloqué pour toute la durée.',
+      trade: 'Le taux ne peut pas baisser, mais l’argent est immobilisé jusqu’à l’échéance.',
+    },
+    invest: {
+      name: 'Placement autonome',
+      tagline: 'Investissez vous-même.',
+      terms:
+        'Aucuns frais de compte et aucune commission sur les actions et FNB cotés au Canada. À partir de 25 $, avec tous les frais et titres expliqués en langage clair.',
+      trade: 'La façon la moins chère de commencer, mais personne ne choisit pour vous : le solde peut baisser autant que monter.',
     },
   } as Record<string, ProductCopy>,
 
@@ -634,6 +712,8 @@ const fr: Dict = {
           { id: 'rainy', label: 'Épargner pour les imprévus' },
           { id: 'home', label: 'Épargner pour une maison' },
           { id: 'learn', label: 'En apprendre sur l’épargne et le placement' },
+          { id: 'retire', label: 'Épargner pour la retraite' },
+          { id: 'education', label: 'Épargner pour les études d’un enfant' },
           { id: 'debt', label: 'Rembourser mes dettes' },
           { id: 'unsure', label: 'Je ne sais pas encore' },
         ],
@@ -663,6 +743,8 @@ const fr: Dict = {
           { id: 'rainy', label: 'Épargner pour les imprévus' },
           { id: 'home', label: 'Épargner pour une maison' },
           { id: 'learn', label: 'En apprendre sur l’épargne et le placement' },
+          { id: 'retire', label: 'Épargner pour la retraite' },
+          { id: 'education', label: 'Épargner pour les études d’un enfant' },
           { id: 'debt', label: 'Rembourser mes dettes' },
           { id: 'unsure', label: 'Je ne sais pas encore' },
         ],
