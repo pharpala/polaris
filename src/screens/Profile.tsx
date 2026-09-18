@@ -12,15 +12,18 @@ export default function Profile({
   value,
   onToggle,
   onNext,
+  onHelp,
 }: {
   t: Dict
   value: string[]
   onToggle: (id: string) => void
   onNext: () => void
+  onHelp: () => void
 }) {
   return (
     <Question
       t={t}
+      onHelp={onHelp}
       title={t.profile.title}
       sub={t.profile.sub}
       cta={t.profile.cta}

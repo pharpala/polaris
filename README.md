@@ -31,6 +31,26 @@ in **words and dots** on every screen, because "no visible application status" i
 current-state failure list; and the **assistant** sits in a floating Need help pill,
 reached when someone is stuck rather than standing between them and the account.
 
+## The assistant
+
+Replies are scripted. The routing is not. What the customer types is normalised and scored
+against the keyword sets in `src/assistant.ts`, the best-scoring intent answers, and a
+question that scores nothing gets an honest "I don't have that one" plus a route to a
+person — which is what the deck requires of customer-facing AI.
+
+Two things make it read as smart rather than canned:
+
+- **It knows the step.** The offered questions are the ones people actually ask there, and
+  each one drops off the list once asked.
+- **It knows what the customer said.** Once someone has told us they are new to Canada,
+  the answers about documents, fees and branch visits change — the ID answer lists foreign
+  passports and PR cards, and the fee answer leads with the first year free.
+
+Free text routes without help from the offered chips: "how much does it cost every month"
+finds the fee, "do i need to go into a branch" finds the branch answer, "what happens to
+my data" finds the privacy answer, "can i speak to someone please" hands off, and "what is
+the capital of peru" declines and offers a person.
+
 Copy is complete in **English and French**, switchable from the globe chip on every
 question — the deck's claim is that translation is embedded in the journey rather than
 bolted on, so the copy lives per language in `src/i18n.ts` instead of wrapping an English
@@ -85,7 +105,8 @@ src/main.tsx     React entry
 src/i18n.ts        All customer-facing copy, English and French
 src/Icons.tsx      Inline SVG set, including the compass rose
 src/App.tsx        The silhouette, app bar, language sheet and step router
-src/components/    The question shell, choice cards and the bottom sheet
+src/assistant.ts   Intent matcher and scoring for the assistant
+src/components/    The question shell, choice cards, the assistant and the sheet
 src/screens/       Launch, Profile, Follow (every branch) and Goals
 src/styles.css     Palette tokens, the silhouette and the component styles
 ```

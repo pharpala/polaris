@@ -18,6 +18,7 @@ export function Question({
   ready,
   onNext,
   onSkip,
+  onHelp,
   children,
 }: {
   t: { saved: string; skip: string; help: string }
@@ -28,6 +29,7 @@ export function Question({
   ready?: boolean
   onNext?: () => void
   onSkip?: () => void
+  onHelp: () => void
   children: ReactNode
 }) {
   return (
@@ -56,7 +58,7 @@ export function Question({
 
       {/* The assistant is help reached when someone is stuck, never a
           gate standing between the customer and the account. */}
-      <button className="help">
+      <button className="help" onClick={onHelp}>
         <span className="help__mark">?</span>
         {t.help}
       </button>

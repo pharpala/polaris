@@ -629,6 +629,212 @@ button {
   max-inline-size: 26ch;
 }
 
+/* ------------------------------------------------------------- assistant -- */
+
+/* A full-screen panel inside the device. Replies are scripted; the routing
+   is not, and a question it cannot answer offers a person instead. */
+.assist {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.assist--open { pointer-events: auto; visibility: visible; }
+
+.assist__panel {
+  flex: 1;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border-radius: 45px 45px 0 0;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.assist--open .assist__panel { transform: none; }
+
+.assist__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 44px 16px 14px;
+  background: var(--blue);
+  color: var(--white);
+}
+
+.assist__badge {
+  inline-size: 28px;
+  block-size: 28px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.assist__id { flex: 1; min-inline-size: 0; }
+
+.assist__title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.assist__sub {
+  display: block;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.assist__close {
+  inline-size: 30px;
+  block-size: 30px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--white);
+}
+
+.assist__close:hover { background: rgba(255, 255, 255, 0.28); }
+
+.assist__log {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  scrollbar-width: none;
+}
+
+.assist__log::-webkit-scrollbar { display: none; }
+
+.bubble {
+  max-inline-size: 84%;
+  padding: 10px 13px 11px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  animation: bubbleIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+
+.bubble--ai {
+  align-self: flex-start;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+}
+
+.bubble--me {
+  align-self: flex-end;
+  background: var(--blue);
+  color: var(--white);
+  font-weight: 500;
+}
+
+.bubble--typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 13px;
+}
+
+.bubble--typing span {
+  inline-size: 5px;
+  block-size: 5px;
+  border-radius: 50%;
+  background: var(--faint);
+  animation: blink 1.1s infinite;
+}
+
+.bubble--typing span:nth-child(2) { animation-delay: 0.18s; }
+.bubble--typing span:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes blink {
+  0%, 60%, 100% { opacity: 0.3; }
+  30% { opacity: 1; }
+}
+
+/* The questions people actually ask at this step; each disappears once
+   asked, so the shortlist stays useful. */
+.assist__prompts {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 0 16px 12px;
+}
+
+.prompt {
+  padding: 7px 13px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--pill);
+  background: var(--paper);
+  font-size: 12.5px;
+  font-weight: 500;
+  transition: border-color 0.14s, color 0.14s;
+}
+
+.prompt:hover { border-color: var(--blue); color: var(--blue); }
+
+.assist__compose {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 16px 26px;
+  border-block-start: 1px solid var(--line-soft);
+  background: var(--white);
+}
+
+.assist__input {
+  flex: 1;
+  min-inline-size: 0;
+  min-block-size: 40px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: var(--pill);
+  background: var(--white);
+  font: inherit;
+  font-size: 13.5px;
+  outline: none;
+}
+
+.assist__input:focus { border-color: var(--blue); }
+.assist__input::placeholder { color: var(--faint); }
+
+.assist__send {
+  inline-size: 40px;
+  block-size: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+  transition: background 0.14s;
+}
+
+.assist__send:disabled { background: rgba(24, 27, 31, 0.12); color: var(--faint); cursor: not-allowed; }
+.assist__send:not(:disabled):hover { background: var(--ink); }
+
 /* ---------------------------------------------------------------- phones -- */
 
 /* On a real handset there is no handset to draw. */
@@ -656,10 +862,20 @@ button {
       max(24px, env(safe-area-inset-right, 0px));
   }
 
-  .help { inset-block-end: max(26px, env(safe-area-inset-bottom, 0px)); }
+  .help { inset-block-end: max(22px, env(safe-area-inset-bottom, 0px)); }
+
+  .assist__panel { border-radius: 0; }
+
+  .assist__bar { padding-block-start: max(44px, calc(env(safe-area-inset-top, 0px) + 14px)); }
+
+  .assist__compose {
+    padding-block-end: max(26px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .screen,
-  .launch { animation: none; }
+  .launch,
+  .bubble { animation: none; }
+  .bubble--typing span { animation-duration: 3s; }
 }

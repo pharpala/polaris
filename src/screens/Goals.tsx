@@ -8,15 +8,18 @@ export default function Goals({
   value,
   onToggle,
   onNext,
+  onHelp,
 }: {
   t: Dict
   value: string[]
   onToggle: (id: string) => void
   onNext: () => void
+  onHelp: () => void
 }) {
   return (
     <Question
       t={t}
+      onHelp={onHelp}
       title={t.goals.title}
       sub={t.goals.sub}
       foot={t.goals.foot}

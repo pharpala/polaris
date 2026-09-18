@@ -5,6 +5,8 @@
  * around an English original.
  */
 
+import type { Intent } from './assistant'
+
 export type LangCode = 'en' | 'fr'
 
 /**
@@ -17,6 +19,88 @@ export type FollowQ = {
   sub: string
   options?: { id: string; label: string }[]
   input?: { label: string; placeholder: string }
+}
+
+const assistEn = {
+  title: 'Polaris help',
+  sub: 'We’ll reply right away',
+  greeting: 'Hi! I can help while you set up your account. Ask me anything.',
+  placeholder: 'Ask a question...',
+  send: 'Send',
+  close: 'Close help',
+  typing: 'Polaris is typing',
+  fallback:
+    'I don’t have a good answer for that one. Want me to pass you to a person? They’ll have your answers already, so you won’t repeat yourself.',
+  handoff:
+    'Passing you to someone now. They’ll see everything you’ve told us so far, so you won’t start over. The wait is about four minutes.',
+  /** Offered per step: the questions people actually ask there. */
+  prompts: {
+    profile: ['id', 'time', 'resume'],
+    follow: ['id', 'branch', 'privacy'],
+    goals: ['fee', 'credit', 'privacy'],
+  },
+  intents: [
+    {
+      id: 'id',
+      q: 'Which ID should I use?',
+      a: 'You can use a Canadian passport, a provincial photo ID, or a driver’s licence. Choose the one you have with you now.',
+      aNewcomer:
+        'You can use a Foreign passport, PR card, Canadian driver’s licence, Canadian passport, or a provincial photo ID. Choose the one you have with you now.',
+      match: ['id', 'identification', 'identity', 'passport', 'licence', 'license', 'document', 'documents', 'pr card', 'permit'],
+    },
+    {
+      id: 'fee',
+      q: 'What is the monthly fee?',
+      a: '$4.95 a month, waived if you keep $3,000 in the account or set up a direct deposit.',
+      aNewcomer:
+        'Nothing for the first year on the newcomer account. After that it’s $4.95 a month, waived if you keep $3,000 in the account or set up a direct deposit.',
+      match: ['fee', 'fees', 'monthly fee', 'cost', 'costs', 'charge', 'price', 'how much', 'free'],
+    },
+    {
+      id: 'resume',
+      q: 'Can I leave and come back?',
+      a: 'Yes. Everything is saved on this device as you answer, so you can stop here and pick up exactly where you left off.',
+      match: ['leave', 'come back', 'save', 'saved', 'resume', 'later', 'pause', 'stop', 'lose', 'start over'],
+    },
+    {
+      id: 'time',
+      q: 'How long does this take?',
+      a: 'About five minutes if nothing needs extra review. If something does, we ask for the one missing thing rather than making you restart.',
+      match: ['how long', 'long', 'time', 'minutes', 'quick', 'fast', 'take'],
+    },
+    {
+      id: 'branch',
+      q: 'Do I have to go to a branch?',
+      a: 'No. You can finish this on your phone.',
+      aNewcomer:
+        'No. Foreign passports, work permits and study permits are all accepted right here, so a newcomer does not need a branch visit.',
+      match: ['branch', 'in person', 'visit', 'office', 'location', 'appointment'],
+    },
+    {
+      id: 'credit',
+      q: 'I have no Canadian credit history',
+      a: 'That’s fine. These accounts don’t involve a credit check, and “build my credit history” is one of the things you can pick on the next screen.',
+      match: ['credit', 'credit history', 'credit check', 'score', 'no history', 'thin file'],
+    },
+    {
+      id: 'privacy',
+      q: 'Who sees my answers?',
+      a: 'Only Polaris, and only to shape what we recommend and which documents we ask for. None of it is shared outside Polaris, and none of it is a credit check.',
+      match: ['who sees', 'privacy', 'private', 'share', 'shared', 'data', 'sell', 'safe', 'secure', 'why ask', 'why do you'],
+    },
+    {
+      id: 'ai',
+      q: 'Am I talking to a bot?',
+      a: 'You’re talking to Polaris AI. A person is always one tap away, and they get everything you’ve told me so far.',
+      match: ['bot', 'robot', 'ai', 'human', 'real person', 'chatbot', 'automated'],
+    },
+    {
+      id: 'human',
+      q: 'I’d like to talk to a person',
+      a: '',
+      match: ['talk to a person', 'talk to someone', 'speak to', 'agent', 'advisor', 'representative', 'call'],
+    },
+  ] as Intent[],
 }
 
 const followEn: Record<string, FollowQ> = {
@@ -103,6 +187,7 @@ const en = {
   },
 
   follow: followEn,
+  assist: assistEn,
 
   goals: {
     title: 'What do you need the account for?',
@@ -120,6 +205,87 @@ const en = {
 }
 
 export type Dict = typeof en
+
+const assistFr: typeof assistEn = {
+  title: 'Aide Polaris',
+  sub: 'Nous répondons tout de suite',
+  greeting: 'Bonjour ! Je peux vous aider pendant l’ouverture de votre compte. Posez-moi vos questions.',
+  placeholder: 'Posez une question...',
+  send: 'Envoyer',
+  close: 'Fermer l’aide',
+  typing: 'Polaris écrit',
+  fallback:
+    'Je n’ai pas de bonne réponse à celle-là. Voulez-vous parler à une personne ? Elle aura déjà vos réponses, vous n’aurez rien à répéter.',
+  handoff:
+    'Je vous mets en relation. La personne verra tout ce que vous nous avez dit, vous ne recommencez donc pas. L’attente est d’environ quatre minutes.',
+  prompts: {
+    profile: ['id', 'time', 'resume'],
+    follow: ['id', 'branch', 'privacy'],
+    goals: ['fee', 'credit', 'privacy'],
+  },
+  intents: [
+    {
+      id: 'id',
+      q: 'Quelle pièce d’identité utiliser ?',
+      a: 'Un passeport canadien, une carte d’identité provinciale avec photo ou un permis de conduire. Choisissez celle que vous avez sur vous.',
+      aNewcomer:
+        'Un passeport étranger, une carte de RP, un permis de conduire canadien, un passeport canadien ou une pièce d’identité provinciale avec photo. Choisissez celle que vous avez sur vous.',
+      match: ['identite', 'identité', 'piece', 'pièce', 'passeport', 'permis', 'document', 'documents', 'carte de rp', 'rp'],
+    },
+    {
+      id: 'fee',
+      q: 'Quels sont les frais mensuels ?',
+      a: '4,95 $ par mois, sans frais si vous gardez 3 000 $ dans le compte ou si vous y faites déposer votre paie.',
+      aNewcomer:
+        'Rien la première année avec le compte nouvel arrivant. Ensuite 4,95 $ par mois, sans frais si vous gardez 3 000 $ dans le compte ou si vous y faites déposer votre paie.',
+      match: ['frais', 'cout', 'coût', 'prix', 'combien', 'gratuit', 'mensuel'],
+    },
+    {
+      id: 'resume',
+      q: 'Puis-je partir et revenir ?',
+      a: 'Oui. Tout est enregistré sur cet appareil à mesure que vous répondez : vous pouvez vous arrêter et reprendre exactement où vous étiez.',
+      match: ['partir', 'revenir', 'enregistre', 'enregistré', 'reprendre', 'plus tard', 'pause', 'arreter', 'arrêter', 'perdre', 'recommencer'],
+    },
+    {
+      id: 'time',
+      q: 'Combien de temps cela prend-il ?',
+      a: 'Environ cinq minutes si rien ne demande d’examen supplémentaire. Si c’est le cas, nous demandons l’élément manquant plutôt que de vous faire recommencer.',
+      match: ['combien de temps', 'temps', 'minutes', 'rapide', 'duree', 'durée', 'long'],
+    },
+    {
+      id: 'branch',
+      q: 'Dois-je aller en succursale ?',
+      a: 'Non. Vous pouvez tout terminer sur votre téléphone.',
+      aNewcomer:
+        'Non. Les passeports étrangers, les permis de travail et les permis d’études sont acceptés ici même : un nouvel arrivant n’a pas besoin d’aller en succursale.',
+      match: ['succursale', 'en personne', 'rendez-vous', 'bureau', 'agence', 'deplacer', 'déplacer'],
+    },
+    {
+      id: 'credit',
+      q: 'Je n’ai pas d’historique de crédit canadien',
+      a: 'Ce n’est pas un problème. Ces comptes ne demandent aucune vérification de crédit, et « bâtir mon historique de crédit » figure parmi les choix de l’écran suivant.',
+      match: ['credit', 'crédit', 'historique', 'cote', 'verification', 'vérification', 'dossier mince'],
+    },
+    {
+      id: 'privacy',
+      q: 'Qui voit mes réponses ?',
+      a: 'Seulement Polaris, et uniquement pour adapter nos recommandations et les documents demandés. Rien n’est communiqué à l’extérieur, et rien n’est une vérification de crédit.',
+      match: ['qui voit', 'confidentialite', 'confidentialité', 'prive', 'privé', 'partage', 'partagé', 'donnees', 'données', 'vendre', 'securite', 'sécurité', 'pourquoi'],
+    },
+    {
+      id: 'ai',
+      q: 'Est-ce que je parle à un robot ?',
+      a: 'Vous parlez à l’IA de Polaris. Une personne est toujours à un geste près, et elle reçoit tout ce que vous m’avez dit.',
+      match: ['robot', 'bot', 'ia', 'humain', 'vraie personne', 'automatise', 'automatisé'],
+    },
+    {
+      id: 'human',
+      q: 'Je veux parler à une personne',
+      a: '',
+      match: ['parler a une personne', 'parler à une personne', 'parler a quelquun', 'conseiller', 'agent', 'representant', 'représentant', 'appeler'],
+    },
+  ] as Intent[],
+}
 
 const followFr: Record<string, FollowQ> = {
   newcomer: {
@@ -204,6 +370,7 @@ const fr: Dict = {
   },
 
   follow: followFr,
+  assist: assistFr,
 
   goals: {
     title: 'À quoi vous servira ce compte ?',

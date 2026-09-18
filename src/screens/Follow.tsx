@@ -19,6 +19,7 @@ export default function Follow({
   onPick,
   onText,
   onNext,
+  onHelp,
 }: {
   t: Dict
   q: FollowQ
@@ -27,6 +28,7 @@ export default function Follow({
   onPick: (id: string) => void
   onText: (v: string) => void
   onNext: () => void
+  onHelp: () => void
 }) {
   const [leaving, setLeaving] = useState<string | null>(null)
   const timer = useRef<number | null>(null)
@@ -42,6 +44,7 @@ export default function Follow({
   return (
     <Question
       t={t}
+      onHelp={onHelp}
       title={q.title}
       sub={q.sub}
       cta={q.input ? t.profile.cta : undefined}

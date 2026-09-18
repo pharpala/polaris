@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import './styles.css'
+import Assistant from './components/Assistant'
 import Sheet from './components/Sheet'
 import { Check, ChevronLeft, Compass, Globe, StatusIcons } from './Icons'
 import { dicts, langOrder, type LangCode } from './i18n'
@@ -33,6 +34,7 @@ export default function App() {
   const [lang, setLang] = useState<LangCode>('en')
   const [step, setStep] = useState<Step>('launch')
   const [langOpen, setLangOpen] = useState(false)
+  const [helpOpen, setHelpOpen] = useState(false)
 
   const [profile, setProfile] = useState<string[]>([])
   const [follows, setFollows] = useState<Record<string, string>>({})
@@ -68,6 +70,11 @@ export default function App() {
   }
 
   const followId = step.startsWith('follow:') ? step.slice('follow:'.length) : null
+
+  /** What the assistant needs to know: where it was opened from, and whether
+   *  the customer has told us they are new to Canada. */
+  const helpStep = followId ? 'follow' : step === 'goals' ? 'goals' : 'profile'
+  const isNewcomer = profile.includes('newcomer')
 
   return (
     <div className="stage">
@@ -121,6 +128,7 @@ export default function App() {
                 setProfile((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]))
               }
               onNext={next}
+              onHelp={() => setHelpOpen(true)}
             />
           )}
 
@@ -134,6 +142,7 @@ export default function App() {
               onPick={(id) => setFollows((f) => ({ ...f, [followId]: id }))}
               onText={setOtherText}
               onNext={next}
+              onHelp={() => setHelpOpen(true)}
             />
           )}
 
@@ -145,6 +154,7 @@ export default function App() {
                 setGoals((g) => (g.includes(id) ? g.filter((x) => x !== id) : [...g, id]))
               }
               onNext={next}
+              onHelp={() => setHelpOpen(true)}
             />
           )}
 
@@ -163,6 +173,14 @@ export default function App() {
               </button>
             </div>
           )}
+
+          <Assistant
+            t={t}
+            open={helpOpen}
+            onClose={() => setHelpOpen(false)}
+            step={helpStep}
+            newcomer={isNewcomer}
+          />
 
           <Sheet
             open={langOpen}
