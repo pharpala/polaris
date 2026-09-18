@@ -178,6 +178,25 @@ npm run dev
 The camera needs a secure context, which `localhost` counts as. Over plain HTTP from
 another machine `getUserMedia` is refused and capture falls back to its coaching sequence.
 
+## On a phone
+
+Audited at 375×667, 393×852, 430×932 and 360×740, walking every screen:
+
+- **No horizontal overflow** anywhere, at any of those widths.
+- **The silhouette drops** on all of them — border, radius and side keys gone, app fills
+  the glass, safe-area insets applied to the status bar, the assistant pill and the
+  assistant's compose bar.
+- **Every touch target is at least 44px.** Scaling the interface down 15% had quietly taken
+  the back arrow, the language button, the sheet closers, the send button, the prompt chips,
+  the skip links, the consent row and the assistant pill under the line. The icons are
+  unchanged; only the hit areas grew, with negative margins keeping them where they were.
+- **Every field is 16px**, which is the size below which iOS Safari zooms the whole page the
+  moment a field takes focus.
+
+The one thing the audit still flags is the bare `<input>` inside each field at 25px tall.
+That is a false positive: the field is a `<label>`, so the real target is the whole 64px
+box — tapping the caption focuses the input.
+
 ## Deploy it
 
 Pushing to `main` builds and publishes to GitHub Pages via
