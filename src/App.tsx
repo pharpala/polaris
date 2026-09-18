@@ -6,7 +6,9 @@ import { Check, ChevronLeft, Compass, Globe, StatusIcons } from './Icons'
 import { dicts, langOrder, type LangCode } from './i18n'
 import Compare from './screens/Compare'
 import Follow from './screens/Follow'
+import Details from './screens/Details'
 import Goals from './screens/Goals'
+import Identity from './screens/Identity'
 import Launch from './screens/Launch'
 import Profile from './screens/Profile'
 import Recommend from './screens/Recommend'
@@ -21,7 +23,15 @@ import Recommend from './screens/Recommend'
  * from their answers rather than declared up front. Two people never see the
  * same set of questions, and the dot count changes as they choose.
  */
-type Step = 'launch' | 'profile' | 'goals' | 'recommend' | 'end' | `follow:${string}`
+type Step =
+  | 'launch'
+  | 'profile'
+  | 'goals'
+  | 'recommend'
+  | 'details'
+  | 'identity'
+  | 'end'
+  | `follow:${string}`
 
 function StatusBar() {
   return (
@@ -43,6 +53,14 @@ export default function App() {
   const [otherText, setOtherText] = useState('')
   const [goals, setGoals] = useState<string[]>([])
   const [product, setProduct] = useState<string | null>(null)
+  const [doc, setDoc] = useState<string | null>(null)
+  /* Prefilled: everything Polaris already holds arrives filled in, and the
+     customer confirms rather than types. */
+  const [details, setDetails] = useState({
+    email: 'alex.rivera@gmail.com',
+    mobile: '416 555 0134',
+    address: '219 Dundas St E, Toronto, ON M5A 1Z5',
+  })
   const [compareOpen, setCompareOpen] = useState(false)
 
   const t = dicts[lang]
@@ -53,14 +71,14 @@ export default function App() {
     const opened = t.profile.options
       .filter((o) => profile.includes(o.id) && t.follow[o.id])
       .map((o) => `follow:${o.id}` as Step)
-    return ['profile', ...opened, 'goals', 'recommend']
+    return ['profile', ...opened, 'goals', 'recommend', 'details', 'identity']
   }, [profile, t])
 
   const index = queue.indexOf(step)
   const onQueue = index >= 0
 
-  /** Identity capture and review are still to come. */
-  const dots = queue.length + 2
+  /** Opening and activating the account is the one stage still to build. */
+  const dots = queue.length + 1
 
   const next = () => setStep(queue[index + 1] ?? 'end')
   const back = () => setStep(index > 0 ? queue[index - 1] : 'launch')
@@ -71,6 +89,7 @@ export default function App() {
     setOtherText('')
     setGoals([])
     setProduct(null)
+    setDoc(null)
     setStep('launch')
   }
 
@@ -174,6 +193,26 @@ export default function App() {
             />
           )}
 
+          {step === 'details' && (
+            <Details
+              t={t}
+              value={details}
+              onChange={setDetails}
+              onNext={next}
+              onHelp={() => setHelpOpen(true)}
+            />
+          )}
+
+          {step === 'identity' && (
+            <Identity
+              t={t}
+              doc={doc}
+              onDoc={setDoc}
+              onNext={next}
+              onHelp={() => setHelpOpen(true)}
+            />
+          )}
+
           {step === 'end' && (
             <div className="screen end">
               <span className="mark">
@@ -181,8 +220,8 @@ export default function App() {
                 {t.brand}
               </span>
               <p className="end__note">
-                End of the built flow. Identity capture — where a newcomer’s documents
-                are read at the point they are taken — comes next.
+                End of the built flow. Opening the account, and the 30-, 60- and
+                90-day newcomer plan, come next.
               </p>
               <button className="btn btn--ghost" onClick={restart}>
                 Restart

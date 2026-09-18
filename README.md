@@ -37,6 +37,42 @@ in **words and dots** on every screen, because "no visible application status" i
 current-state failure list; and the **assistant** sits in a floating Need help pill,
 reached when someone is stuck rather than standing between them and the account.
 
+## Collect once, and the camera
+
+The details screen arrives **pre-filled** from what Polaris already holds, so the customer
+confirms rather than types — and the name is deliberately absent, because it comes off the
+ID and asking here would be asking twice. Two links underneath cover the cases that push a
+newcomer into a branch today: a phone number that is not Canadian yet, and an address that
+is a hotel or a friend's sofa. Both are accepted.
+
+Identity capture accepts a **foreign passport, a PR card or a permit** as first-class
+choices, and the camera will not open until a document is chosen *and* verification is
+consented to.
+
+### The shutter stays shut until the frame is readable
+
+48% of ID uploads fail today and most abandonment sits at capture, so the camera measures
+the live frame four or five times a second — real pixels off `getUserMedia`, downscaled to
+160px — and says the single most useful thing. It only opens the shutter once the frame has
+been clean for three samples running, so a photo Polaris would have rejected never gets
+taken.
+
+The measurements are pure functions in `src/capture.ts`, so they can be checked without a
+camera attached:
+
+| Frame | Says |
+|---|---|
+| mean luminance below 62 | Too dark. Move somewhere brighter. |
+| more than 5.5% blown highlights | Glare on it. Tilt away from the light. |
+| gradient energy below 7.5 | Hold steady — it's blurry. |
+| edge density in the middle below 0.08 | Move closer. Fill the frame with the card. |
+| bright mass more than 17% off centre | Centre your face in the oval. |
+| none of the above | Looks good. |
+
+Order matters: telling someone to centre a document they cannot light is useless. With no
+camera — permission denied, or a desktop without one — it walks the same messages, says so
+on screen, and shows the card outline the customer would be aiming at.
+
 ## The recommendation
 
 Thirteen products across chequing, savings, the registered plans and self-directed
@@ -156,8 +192,9 @@ src/i18n.ts        All customer-facing copy, English and French
 src/Icons.tsx      Inline SVG set, including the compass rose
 src/App.tsx        The silhouette, app bar, language sheet and step router
 src/products.ts    The catalogue's rules and the ranking
+src/capture.ts     Frame measurement and capture coaching
 src/assistant.ts   Intent matcher and scoring for the assistant
 src/components/    The question shell, choice cards, the assistant and the sheet
-src/screens/       Launch, Profile, Follow (every branch), Goals, Recommend, Compare
+src/screens/       Launch, Profile, Follow, Goals, Recommend, Compare, Details, Identity
 src/styles.css     Palette tokens, the silhouette and the component styles
 ```

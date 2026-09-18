@@ -502,6 +502,221 @@ button {
   color: var(--muted);
 }
 
+/* The label above a control, and the field a single fact sits behind. Both
+   came back with identity capture after the status page was removed. */
+.q__hint {
+  margin: 0 0 9px;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  inline-size: 100%;
+  padding: 14px 16px 15px;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
+  text-align: start;
+  color: var(--muted);
+  transition: border-color 0.14s;
+}
+
+.select:hover { border-color: var(--line); }
+
+.select__text { flex: 1; min-inline-size: 0; }
+
+.select__value {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+}
+
+.select__value--empty { color: var(--faint); font-weight: 400; }
+
+/* --------------------------------------------------------------- details -- */
+
+/* Pre-filled rather than asked for again, so the customer confirms instead
+   of typing. The blue rule marks what Polaris already knew. */
+.prefill {
+  margin: 0 0 14px;
+  padding-inline-start: 10px;
+  border-inline-start: 2px solid var(--blue);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.prefill--note { margin: -4px 0 12px; }
+
+.field {
+  display: block;
+  margin-block-end: 12px;
+  padding: 9px 15px 11px;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
+  transition: border-color 0.14s;
+}
+
+.field:focus-within { border-color: var(--blue); }
+
+.field__label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.field__input {
+  display: block;
+  inline-size: 100%;
+  border: 0;
+  outline: none;
+  padding: 2px 0 0;
+  background: none;
+  font: inherit;
+  font-size: 15.5px;
+  letter-spacing: -0.008em;
+}
+
+.skip--inline {
+  inline-size: auto;
+  min-block-size: 34px;
+  margin-block-start: 0;
+  display: block;
+  font-size: 13.5px;
+}
+
+/* -------------------------------------------------------------- identity -- */
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  inline-size: 100%;
+  margin-block-start: 14px;
+  text-align: start;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.consent .choice__box { margin-block-start: 1px; }
+.consent--on .choice__box { background: var(--blue); border-color: var(--blue); }
+
+/* --------------------------------------------------------------- capture -- */
+
+/* The shutter stays shut until the frame is readable, so a photo Polaris
+   would have rejected never gets taken. */
+.view {
+  position: relative;
+  margin-block-start: 4px;
+  aspect-ratio: 3 / 4;
+  background: #0d0f11;
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.view--selfie { aspect-ratio: 4 / 5; }
+
+.view__feed {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.view__feed--mirror { transform: scaleX(-1); }
+
+.guide {
+  position: absolute;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  transition: border-color 0.2s;
+}
+
+.guide--id {
+  inset: 11% 8%;
+  border-radius: 10px;
+}
+
+.guide--selfie {
+  inset: 8% 16%;
+  border-radius: 50% / 38%;
+}
+
+.view--ready .guide { border-color: #6fbf8f; border-width: 2px; }
+
+.view__coach {
+  position: absolute;
+  inset-inline: 12px;
+  inset-block-end: 12px;
+  margin: 0;
+  padding: 8px 12px 9px;
+  border-radius: 8px;
+  background: rgba(13, 15, 17, 0.72);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.view--ready .view__coach { color: #9ad9b3; }
+
+.view__note {
+  position: absolute;
+  inset-inline: 12px;
+  inset-block-start: 12px;
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+/* What the customer is aiming at, drawn only when there is no camera to
+   aim. Mirrors the target design's illustration. */
+.idcard {
+  position: absolute;
+  inset: 26% 18%;
+  display: flex;
+  flex-direction: column;
+  padding: 11px 12px 12px;
+  border-radius: 8px;
+  background: #35507d;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.idcard__row { display: flex; justify-content: space-between; }
+.idcard__name { margin-block-start: auto; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+.idcard__dob { font-size: 10px; color: rgba(255, 255, 255, 0.72); }
+
+/* A shutter, not a transition. */
+.view__flash {
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  animation: flash 0.42s ease-out both;
+}
+
+@keyframes flash {
+  from { opacity: 0.9; }
+  to { opacity: 0; }
+}
+
 /* ----------------------------------------------------------------- cards -- */
 
 /* Every fee on the card rather than behind a link: a recommendation the
@@ -1035,6 +1250,7 @@ button {
 @media (prefers-reduced-motion: reduce) {
   .screen,
   .launch,
-  .bubble { animation: none; }
+  .bubble,
+  .view__flash { animation: none; }
   .bubble--typing span { animation-duration: 3s; }
 }

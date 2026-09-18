@@ -202,6 +202,66 @@ const en = {
   },
 
   follow: followEn,
+  details: {
+    title: 'Let’s get your information so we can set up your account.',
+    sub: 'We’ll take your name from your ID next.',
+    prefilled: 'Filled in from what Polaris already holds. Check it before you continue.',
+    email: 'Email',
+    mobile: 'Mobile number',
+    mobileIntl: 'Mobile number (international)',
+    address: 'Address in Canada',
+    intl: 'I have an international number',
+    intlNote:
+      'Fine. We’ll text your codes to it and switch to a Canadian number whenever you get one.',
+    temp: 'I’m in temporary housing',
+    tempNote:
+      'Fine. Give us where you are staying now — a hotel or a friend’s place is accepted — and update it from the app when you move.',
+    cta: 'Continue',
+  },
+
+  identity: {
+    title: 'Have your ID ready.',
+    sub: 'We’ll help you photograph your ID, then take a selfie.',
+    which: 'Which photo ID will you use?',
+    placeholder: 'Select your document',
+    sheetBody:
+      'A foreign passport, a PR card or a permit is as good as a Canadian licence here. No branch visit either way.',
+    none: 'I don’t have these documents',
+    consent: 'I agree to identity verification for this application',
+    open: 'Open camera',
+    docs: [
+      { id: 'foreign', label: 'Foreign passport' },
+      { id: 'pr', label: 'Permanent resident (PR) card' },
+      { id: 'licence', label: 'Canadian driver’s licence' },
+      { id: 'passport', label: 'Canadian passport' },
+      { id: 'provincial', label: 'Provincial or territorial photo ID' },
+      { id: 'other', label: 'Other accepted photo ID' },
+    ],
+  },
+
+  capture: {
+    idTitle: 'Photo of your ID.',
+    idSub: (doc: string) => `Using your ${doc.toLowerCase()}.`,
+    selfieTitle: 'Take a selfie.',
+    selfieSub: 'Look at the camera. We’ll match it to your ID.',
+    takeId: 'Take photo',
+    takeSelfie: 'Take selfie',
+    ok: 'Looks good.',
+    /** Said one at a time, worst problem first. */
+    issue: {
+      dark: 'Too dark. Move somewhere brighter.',
+      glare: 'Glare on it. Tilt away from the light.',
+      blur: 'Hold steady — it’s blurry.',
+      frame: 'Move closer. Fill the frame with the card.',
+      centre: 'Centre your face in the oval.',
+      ok: 'Looks good.',
+    } as Record<string, string>,
+    noCamera: 'No camera here — showing the coaching sequence.',
+    idFoot:
+      'The shutter stays shut until the frame is readable, so a photo we would have rejected never gets taken.',
+    selfieFoot:
+      'The photo is matched to your ID and kept for verification. Nothing is posted anywhere.',
+  },
   assist: assistEn,
   /** Phrases the recommendation quotes back, one per goal. */
   goalPhrase: {
@@ -562,6 +622,66 @@ const fr: Dict = {
   },
 
   follow: followFr,
+  details: {
+    title: 'Vos coordonnées, pour créer votre compte.',
+    sub: 'Nous prendrons votre nom sur votre pièce d’identité à l’étape suivante.',
+    prefilled:
+      'Rempli à partir de ce que Polaris détient déjà. Vérifiez avant de continuer.',
+    email: 'Courriel',
+    mobile: 'Numéro de mobile',
+    mobileIntl: 'Numéro de mobile (international)',
+    address: 'Adresse au Canada',
+    intl: 'J’ai un numéro international',
+    intlNote:
+      'Aucun problème. Nous y enverrons vos codes et passerons à un numéro canadien dès que vous en aurez un.',
+    temp: 'Je suis en logement temporaire',
+    tempNote:
+      'Aucun problème. Indiquez où vous séjournez — un hôtel ou le domicile d’un proche est accepté — et modifiez-la depuis l’application au déménagement.',
+    cta: 'Continuer',
+  },
+
+  identity: {
+    title: 'Préparez votre pièce d’identité.',
+    sub: 'Nous vous aiderons à la photographier, puis à prendre un autoportrait.',
+    which: 'Quelle pièce d’identité avec photo ?',
+    placeholder: 'Choisissez votre document',
+    sheetBody:
+      'Un passeport étranger, une carte de RP ou un permis vaut ici un permis canadien. Aucune visite en succursale dans les deux cas.',
+    none: 'Je n’ai pas ces documents',
+    consent: 'J’accepte la vérification d’identité pour cette demande',
+    open: 'Ouvrir la caméra',
+    docs: [
+      { id: 'foreign', label: 'Passeport étranger' },
+      { id: 'pr', label: 'Carte de résident permanent (RP)' },
+      { id: 'licence', label: 'Permis de conduire canadien' },
+      { id: 'passport', label: 'Passeport canadien' },
+      { id: 'provincial', label: 'Pièce d’identité provinciale avec photo' },
+      { id: 'other', label: 'Autre pièce d’identité acceptée' },
+    ],
+  },
+
+  capture: {
+    idTitle: 'Photo de votre pièce d’identité.',
+    idSub: (doc: string) => `Avec votre ${doc.toLowerCase()}.`,
+    selfieTitle: 'Prenez un autoportrait.',
+    selfieSub: 'Regardez la caméra. Nous la comparerons à votre pièce d’identité.',
+    takeId: 'Prendre la photo',
+    takeSelfie: 'Prendre l’autoportrait',
+    ok: 'C’est bon.',
+    issue: {
+      dark: 'Trop sombre. Placez-vous dans un endroit plus éclairé.',
+      glare: 'Il y a un reflet. Inclinez pour éviter la lumière.',
+      blur: 'Ne bougez plus — c’est flou.',
+      frame: 'Approchez-vous. Remplissez le cadre avec la carte.',
+      centre: 'Centrez votre visage dans l’ovale.',
+      ok: 'C’est bon.',
+    } as Record<string, string>,
+    noCamera: 'Aucune caméra ici — voici la séquence d’accompagnement.',
+    idFoot:
+      'Le déclencheur reste bloqué jusqu’à ce que l’image soit lisible : une photo que nous aurions refusée n’est jamais prise.',
+    selfieFoot:
+      'La photo est comparée à votre pièce d’identité et conservée pour la vérification. Rien n’est publié.',
+  },
   assist: assistFr,
   goalPhrase: {
     rent: 'payer le loyer et les dépenses courantes',
