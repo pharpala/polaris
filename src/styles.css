@@ -210,15 +210,20 @@ button {
 
 .appbar__back:hover { background: var(--ink-06); }
 
-.appbar__title {
-  flex: 1;
-  text-align: center;
-  font-size: 16px;
+.appbar__spacer { flex: 1; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: 0.04em;
 }
 
-.appbar__pad { inline-size: 40px; flex: none; }
+.chip:hover { border-color: var(--ink); }
 
 .rail {
   block-size: 2px;
@@ -271,7 +276,7 @@ button {
   color: var(--ink);
 }
 
-.mark--sm { font-size: 17px; letter-spacing: -0.015em; }
+.mark--sm { font-size: 16px; letter-spacing: -0.015em; }
 
 /* Sized in em so the lockup holds together at any type size. */
 .mark__glyph {
@@ -296,118 +301,148 @@ button {
   to { opacity: 1; transform: none; }
 }
 
-/* -------------------------------------------------------------- welcome -- */
+/* ------------------------------------------------------------- questions -- */
 
-.welcome { padding-block-end: 22px; }
+.q { justify-content: space-between; }
 
-.welcome__bar {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px var(--gut) 0;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 11px;
-  border: 1px solid var(--line);
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.chip:hover { border-color: var(--ink); }
-
-.welcome__deck {
+.q__scroll {
   flex: 1;
   min-block-size: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  padding: 0 var(--gut);
-  touch-action: pan-y;
+  overflow-y: auto;
+  padding: 26px var(--gut) 8px;
+  scrollbar-width: none;
 }
 
-.welcome__art {
-  display: block;
-  padding-block-end: 12px;
-  animation: fadeUp 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+.q__scroll::-webkit-scrollbar { display: none; }
 
-.art { inline-size: 100%; block-size: auto; }
-
-.art__label {
-  font-family: var(--font);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  fill: var(--ink-45);
-}
-
-.art__label--on { fill: var(--blue); }
-
-.art__glyph {
-  font-family: var(--font);
-  font-size: 24px;
-  font-weight: 600;
-  text-anchor: middle;
-}
-
-.welcome__copy {
-  animation: fadeUp 0.42s 0.05s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: none; }
-}
-
-.welcome__h {
+/* The question is the first thing read, so it sits in the content at
+   display size rather than shrunk into the app bar. */
+.q__h {
   margin: 0 0 10px;
-  font-size: 29px;
-  line-height: 1.08;
+  font-size: 32px;
+  line-height: 1.05;
   font-weight: 600;
-  letter-spacing: -0.032em;
+  letter-spacing: -0.034em;
 }
 
-.welcome__p {
-  margin: 0;
+.q__sub {
+  margin: 0 0 22px;
   font-size: 15.5px;
   line-height: 1.5;
   color: var(--muted);
-  max-inline-size: 31ch;
+  max-inline-size: 33ch;
 }
 
-/* Square language for a square system: bars, not dots. */
-.pips {
-  flex: none;
-  display: flex;
-  gap: 6px;
-  padding: 20px var(--gut) 18px;
+.q__hint {
+  margin: 0 0 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-45);
 }
 
-.pip {
-  inline-size: 26px;
-  block-size: 3px;
-  background: var(--ink-14);
-}
-
-.pip--on { background: var(--blue); }
-.pip:hover { background: var(--ink-45); }
-.pip--on:hover { background: var(--blue); }
-
-.welcome__foot {
+.q__foot {
   flex: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 0 var(--gut);
+  gap: 14px;
+  padding: 14px var(--gut) 26px;
 }
+
+/* ---------------------------------------------------------------- choices -- */
+
+/* Adjacent cards share one hairline rather than stacking two. */
+.choices { display: flex; flex-direction: column; }
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  inline-size: 100%;
+  padding: 16px 16px 15px;
+  margin-block-end: -1px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  text-align: start;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.choice:hover { border-color: var(--ink-45); z-index: 1; }
+
+/* Selection is a blue wash and a blue tick — never a fourth colour. */
+.choice--on {
+  background: var(--blue-06);
+  border-color: var(--blue);
+  z-index: 2;
+}
+
+.choice__text { flex: 1; min-inline-size: 0; }
+
+.choice__label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+.choice__note {
+  display: block;
+  margin-block-start: 2px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.choice__box {
+  inline-size: 22px;
+  block-size: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--ink-22);
+  color: var(--white);
+}
+
+.choice--on .choice__box { background: var(--blue); border-color: var(--blue); }
+
+/* ----------------------------------------------------------------- select -- */
+
+/* A single fact behind a field, the way the reference handles country. */
+.select {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  inline-size: 100%;
+  padding: 11px 14px 12px;
+  background: var(--white);
+  border: 1px solid var(--ink-22);
+  text-align: start;
+  color: var(--muted);
+  transition: border-color 0.12s;
+}
+
+.select:hover { border-color: var(--ink); }
+
+.select__text { flex: 1; min-inline-size: 0; }
+
+.select__label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.select__value {
+  display: block;
+  margin-block-start: 1px;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+.select__value--empty { color: var(--ink-45); font-weight: 400; }
 
 /* --------------------------------------------------------------- buttons -- */
 
@@ -424,11 +459,7 @@ button {
   transition: background 0.14s, color 0.14s, border-color 0.14s;
 }
 
-.btn--primary {
-  background: var(--ink);
-  color: var(--white);
-}
-
+.btn--primary { background: var(--ink); color: var(--white); }
 .btn--primary:hover:not(:disabled) { background: var(--blue); }
 
 .btn--primary:disabled {
@@ -445,116 +476,12 @@ button {
 
 .btn--ghost:hover { border-color: var(--ink); }
 
-.btn__busy { display: inline-flex; align-items: center; gap: 10px; }
-
-.spinner {
-  inline-size: 15px;
-  block-size: 15px;
-  border: 2px solid var(--ink-22);
-  border-block-start-color: var(--ink-62);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.note {
-  margin: 4px 0 0;
-  font-size: 12px;
-  line-height: 1.45;
-  text-align: center;
-  color: var(--muted);
-}
-
-.note--faint { margin-top: 2px; color: var(--ink-45); }
-
-/* ----------------------------------------------------------------- forms -- */
-
-.form { justify-content: space-between; }
-
-.form__body { padding: 22px var(--gut) 0; }
-
-.field {
-  position: relative;
-  display: block;
-  border: 1px solid var(--ink-22);
-  padding: 9px 14px 8px;
-  background: var(--white);
-  transition: border-color 0.14s;
-}
-
-.field:focus-within { border-color: var(--blue); box-shadow: inset 0 0 0 1px var(--blue); }
-
-.field__label {
-  display: block;
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  color: var(--muted);
-}
-
-.field__input {
-  inline-size: 100%;
-  border: 0;
-  outline: none;
-  padding: 2px 0 1px;
-  font-size: 16.5px;
-  background: none;
-}
-
-.field__input:disabled { color: var(--ink-45); }
-
-.field__prefix {
-  position: absolute;
-  inset-block-end: 9px;
-  inset-inline-start: 14px;
-  font-size: 16.5px;
-  color: var(--muted);
-}
-
-.field__input--prefixed { padding-inline-start: 28px; }
-
-.field__toggle {
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-end: 10px;
-  transform: translateY(-50%);
-  inline-size: 38px;
-  block-size: 38px;
-  display: grid;
-  place-items: center;
-  color: var(--muted);
-}
-
-.field__toggle:hover { color: var(--ink); background: var(--ink-06); }
-
-/* The deck's future state explains why each piece of information is asked
-   for at the point it is asked. The blue rule marks that line. */
-.why {
-  margin: 8px 0 20px;
-  padding-inline-start: 11px;
-  border-inline-start: 2px solid var(--blue);
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--muted);
-}
-
-.form__foot {
-  flex: none;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 0 var(--gut) 26px;
-}
-
 .legal {
   margin: 0;
   font-size: 12px;
   line-height: 1.5;
   color: var(--ink-45);
 }
-
-.legal a { color: var(--ink); text-underline-offset: 3px; }
 
 /* ----------------------------------------------------------------- sheet -- */
 
@@ -595,9 +522,9 @@ button {
 
 .sheet__h {
   margin: 0 0 6px;
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.022em;
 }
 
 .sheet__p {
@@ -607,7 +534,7 @@ button {
   color: var(--muted);
 }
 
-.langRow {
+.row {
   inline-size: 100%;
   display: flex;
   align-items: center;
@@ -620,9 +547,14 @@ button {
   text-align: start;
 }
 
-.langRow:last-of-type { border-block-end: 1px solid var(--line); margin-block-end: 18px; }
+.row:hover { color: var(--blue); }
 
-.langRow__note {
+.row:last-of-type {
+  border-block-end: 1px solid var(--line);
+  margin-block-end: 18px;
+}
+
+.row__note {
   display: block;
   font-size: 12.5px;
   font-weight: 500;
@@ -687,8 +619,14 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   .screen,
-  .launch,
-  .welcome__art,
-  .welcome__copy { animation: none; }
-  .spinner { animation-duration: 2s; }
+  .launch { animation: none; }
+}
+
+/* Disclosure by default — one of the program's Responsible AI controls, so it
+   rides the first screen the customer reads rather than a settings page. */
+.legal--note {
+  margin-block-start: -6px;
+  padding-inline-start: 11px;
+  border-inline-start: 2px solid var(--blue);
+  color: var(--muted);
 }

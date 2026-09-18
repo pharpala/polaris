@@ -16,31 +16,6 @@ const en = {
   /* Disclosure by default — one of the program's Responsible AI controls. */
   aiNote: 'AI guides this application. A person is always one tap away.',
 
-  slides: [
-    {
-      title: 'Open an account in about five minutes.',
-      body: 'A few questions, one photo of your ID, and it is open. No branch visit, no paperwork.',
-    },
-    {
-      title: 'We narrow it down to the accounts that fit you.',
-      body: 'Answer a few questions and you get two or three options — not a catalogue — with the fees and trade-offs in plain language.',
-    },
-    {
-      title: 'Bank in the language you think in.',
-      body: 'The questions, the guidance and the disclosures. All of it, not just this screen.',
-    },
-    {
-      title: 'Stop anywhere. Nothing is lost.',
-      body: 'Your progress saves as you go. If something needs a person, they pick up where you stopped — you never start over.',
-    },
-  ],
-
-  welcome: {
-    start: 'Get started',
-    signIn: 'I already bank with Polaris',
-    slideLabel: (n: number) => `Go to slide ${n}`,
-  },
-
   lang: {
     open: 'Change language',
     title: 'Choose your language',
@@ -48,29 +23,56 @@ const en = {
     done: 'Done',
   },
 
-  signup: {
-    stage: 'Create your login',
-    step: (n: number, of: number) => `Step ${n} of ${of}`,
-    email: 'Email',
-    emailWhy: 'Your application status goes here, so you can leave and come back to it.',
-    password: 'Password',
-    passwordWhy: 'At least 8 characters.',
-    show: 'Show password',
-    hide: 'Hide password',
-    legal:
-      'By continuing you agree to the Polaris Terms of Use and Privacy Policy. We will only message you about this application unless you ask us for more.',
-    terms: 'Terms of Use',
-    privacy: 'Privacy Policy',
-    next: 'Next',
-    checking: 'Checking your email',
+  q: {
+    step: (n: number, of: number) => `Question ${n} of ${of}`,
+    change: 'You can change any of this later.',
+    choose: 'Choose one',
+    chooseAny: 'Pick as many as apply',
   },
 
-  phone: {
-    stage: 'Confirm it is you',
-    label: 'Phone number',
-    why: 'We use it to confirm it is you when you sign in, and to reach you if your application needs something. One Polaris account per number.',
-    hint: 'A six-digit code arrives by text in a few seconds.',
+  profile: {
+    title: 'Which of these sounds most like you?',
+    sub: 'It decides which accounts we show you and which documents we ask for.',
+    foot: 'This shapes what we recommend. It has no bearing on whether you are approved.',
     cta: 'Continue',
+    options: [
+      { id: 'newcomer', label: 'New to Canada', note: 'Arrived in the last five years, or arriving soon' },
+      { id: 'student', label: 'Student', note: 'Enrolled, or starting at a college or university' },
+      { id: 'working', label: 'Working and building', note: 'Employed or self-employed, banking day to day' },
+      { id: 'retirement', label: 'Near or in retirement', note: 'Winding down work, or already retired' },
+    ],
+  },
+
+  status: {
+    title: 'Your status in Canada',
+    sub: 'The accounts we can open and the documents we can accept depend on it.',
+    label: 'Status',
+    placeholder: 'Choose your status',
+    sheetTitle: 'Your status in Canada',
+    sheetBody: 'Pick the one on your document. Foreign passports, work permits and study permits are all accepted here.',
+    foot: 'We ask so we know which identity documents to accept — not to decide whether you are eligible.',
+    cta: 'Continue',
+    options: [
+      { id: 'citizen', label: 'Canadian citizen' },
+      { id: 'pr', label: 'Permanent resident' },
+      { id: 'work', label: 'Work permit' },
+      { id: 'study', label: 'Study permit' },
+      { id: 'other', label: 'Visitor, or something else' },
+    ],
+  },
+
+  goals: {
+    title: 'What do you need the account for?',
+    sub: 'Your answers narrow the catalogue to the two or three accounts that fit.',
+    foot: 'Nothing here is a credit check, and none of it is shared outside Polaris.',
+    cta: 'See what fits',
+    options: [
+      { id: 'everyday', label: 'Everyday spending and bills', note: 'Debit, transfers, pre-authorised payments' },
+      { id: 'paid', label: 'Getting paid', note: 'Direct deposit from an employer or client' },
+      { id: 'saving', label: 'Saving toward something', note: 'A goal with a date on it' },
+      { id: 'credit', label: 'Building a credit history', note: 'Starting from nothing, or starting again' },
+      { id: 'abroad', label: 'Sending money abroad', note: 'Supporting family in another country' },
+    ],
   },
 }
 
@@ -84,31 +86,6 @@ const fr: Dict = {
 
   aiNote: "L'IA vous guide dans cette demande. Une personne est toujours à un geste près.",
 
-  slides: [
-    {
-      title: 'Ouvrez un compte en cinq minutes environ.',
-      body: "Quelques questions, une photo de votre pièce d'identité, et c'est ouvert. Aucune visite en succursale, aucune paperasse.",
-    },
-    {
-      title: 'Nous ramenons le choix aux comptes qui vous conviennent.',
-      body: "Répondez à quelques questions et vous obtenez deux ou trois options — pas un catalogue — avec les frais et les compromis en langage clair.",
-    },
-    {
-      title: 'Faites vos opérations dans la langue où vous pensez.',
-      body: 'Les questions, les explications et les documents à signer. Tout, pas seulement cet écran.',
-    },
-    {
-      title: 'Arrêtez quand vous voulez. Rien ne se perd.',
-      body: "Votre progression est enregistrée. Si une personne doit intervenir, elle reprend là où vous vous êtes arrêté — vous ne recommencez jamais.",
-    },
-  ],
-
-  welcome: {
-    start: 'Commencer',
-    signIn: 'Je suis déjà client de Polaris',
-    slideLabel: (n: number) => `Aller à la diapositive ${n}`,
-  },
-
   lang: {
     open: 'Changer de langue',
     title: 'Choisissez votre langue',
@@ -116,29 +93,56 @@ const fr: Dict = {
     done: 'Terminé',
   },
 
-  signup: {
-    stage: 'Créez votre identifiant',
-    step: (n: number, of: number) => `Étape ${n} sur ${of}`,
-    email: 'Courriel',
-    emailWhy: "L'état de votre demande y sera envoyé, pour que vous puissiez partir et y revenir.",
-    password: 'Mot de passe',
-    passwordWhy: 'Au moins 8 caractères.',
-    show: 'Afficher le mot de passe',
-    hide: 'Masquer le mot de passe',
-    legal:
-      "En continuant, vous acceptez les conditions d'utilisation et la politique de confidentialité de Polaris. Nous ne vous écrirons qu'au sujet de cette demande, sauf si vous demandez autre chose.",
-    terms: "Conditions d'utilisation",
-    privacy: 'Politique de confidentialité',
-    next: 'Suivant',
-    checking: 'Vérification de votre courriel',
+  q: {
+    step: (n: number, of: number) => `Question ${n} sur ${of}`,
+    change: 'Vous pourrez modifier tout cela plus tard.',
+    choose: 'Choisissez une réponse',
+    chooseAny: 'Choisissez tout ce qui s’applique',
   },
 
-  phone: {
-    stage: "Confirmez qu'il s'agit de vous",
-    label: 'Numéro de téléphone',
-    why: "Nous l'utilisons pour confirmer votre identité à la connexion et pour vous joindre si votre demande nécessite quelque chose. Un seul compte Polaris par numéro.",
-    hint: 'Un code à six chiffres arrive par texto en quelques secondes.',
+  profile: {
+    title: 'Laquelle de ces situations vous ressemble le plus ?',
+    sub: 'Cela détermine les comptes que nous vous montrons et les documents que nous demandons.',
+    foot: 'Cela façonne nos recommandations. Cela n’influe pas sur l’acceptation de votre demande.',
     cta: 'Continuer',
+    options: [
+      { id: 'newcomer', label: 'Nouvel arrivant au Canada', note: 'Arrivé depuis moins de cinq ans, ou bientôt' },
+      { id: 'student', label: 'Étudiant', note: 'Inscrit, ou en voie de l’être, au collège ou à l’université' },
+      { id: 'working', label: 'Au travail', note: 'Salarié ou travailleur autonome, au quotidien' },
+      { id: 'retirement', label: 'Proche de la retraite ou retraité', note: 'En fin de carrière, ou déjà retraité' },
+    ],
+  },
+
+  status: {
+    title: 'Votre statut au Canada',
+    sub: 'Les comptes que nous pouvons ouvrir et les documents que nous acceptons en dépendent.',
+    label: 'Statut',
+    placeholder: 'Choisissez votre statut',
+    sheetTitle: 'Votre statut au Canada',
+    sheetBody: 'Choisissez celui qui figure sur votre document. Les passeports étrangers, les permis de travail et les permis d’études sont tous acceptés.',
+    foot: 'Nous le demandons pour savoir quels documents d’identité accepter, non pour juger votre admissibilité.',
+    cta: 'Continuer',
+    options: [
+      { id: 'citizen', label: 'Citoyen canadien' },
+      { id: 'pr', label: 'Résident permanent' },
+      { id: 'work', label: 'Permis de travail' },
+      { id: 'study', label: 'Permis d’études' },
+      { id: 'other', label: 'Visiteur, ou autre situation' },
+    ],
+  },
+
+  goals: {
+    title: 'À quoi vous servira ce compte ?',
+    sub: 'Vos réponses ramènent le catalogue aux deux ou trois comptes qui vous conviennent.',
+    foot: 'Rien ici n’est une vérification de crédit, et rien n’est communiqué à l’extérieur de Polaris.',
+    cta: 'Voir ce qui convient',
+    options: [
+      { id: 'everyday', label: 'Dépenses et factures courantes', note: 'Débit, virements, paiements préautorisés' },
+      { id: 'paid', label: 'Recevoir ma paie', note: 'Dépôt direct d’un employeur ou d’un client' },
+      { id: 'saving', label: 'Épargner pour un projet', note: 'Un objectif avec une date' },
+      { id: 'credit', label: 'Bâtir un historique de crédit', note: 'En partant de zéro, ou en recommençant' },
+      { id: 'abroad', label: 'Envoyer de l’argent à l’étranger', note: 'Soutenir ma famille dans un autre pays' },
+    ],
   },
 }
 

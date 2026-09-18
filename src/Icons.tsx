@@ -9,22 +9,11 @@ export function ArrowLeft({ size = 20 }: P) {
   )
 }
 
-export function Eye({ size = 19 }: P) {
+export function Chevron({ size = 20 }: P) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.7" aria-hidden>
-      <path d="M2 12s3.8-6.4 10-6.4S22 12 22 12s-3.8 6.4-10 6.4S2 12 2 12Z" />
-      <circle cx="12" cy="12" r="2.9" />
-    </svg>
-  )
-}
-
-export function EyeOff({ size = 19 }: P) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.7" aria-hidden>
-      <path d="M2 12s3.8-6.4 10-6.4c1.6 0 3 .3 4.3.9M22 12s-1.5 2.6-4.4 4.4M9.3 9.4a2.9 2.9 0 0 0 4.1 4.1" />
-      <path d="M4 3l16 18" />
+      strokeWidth="1.9" strokeLinecap="square" aria-hidden>
+      <path d="M6 9.5l6 6 6-6" />
     </svg>
   )
 }

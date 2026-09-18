@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/icons.tsx","./src/illustrations.tsx","./src/i18n.ts","./src/main.tsx","./src/screens/launch.tsx","./src/screens/phone.tsx","./src/screens/signup.tsx","./src/screens/welcome.tsx"],"version":"6.0.3"}
+{"root":["./src/app.tsx","./src/icons.tsx","./src/i18n.ts","./src/main.tsx","./src/components/question.tsx","./src/components/sheet.tsx","./src/screens/goals.tsx","./src/screens/launch.tsx","./src/screens/profile.tsx","./src/screens/status.tsx"],"version":"6.0.3"}
